@@ -48,6 +48,21 @@ def has_symbol(cell):
     return result
 
 
+def symbol_lines_in_file(input_file_name):
+    file = read_file(input_file_name)
+    assert 'cells' in file
+
+    result = []
+
+    cells = file['cells']
+    for k, cell in enumerate(cells):
+        cell_result = has_symbol(cell)
+        if cell_result:
+            result.append((k, cell_result))
+
+    return result
+
+
 def remove_cell_output(cell):
     if 'code' == cell['cell_type']:
         if 'outputs' in cell:
