@@ -8,9 +8,12 @@ null = dir(nbutils)
 
 
 class TestNButils(unittest.TestCase):
+    def setUp(self):
+        self.input_file_name = 'sample.ipynb'
+
     def test_sample_ipynb(self):
         # should run without an exception
-        _exec_notebook('sample.ipynb')
+        _exec_notebook(self.input_file_name)
 
 
 def _exec_notebook(path):
