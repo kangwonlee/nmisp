@@ -26,13 +26,17 @@ def read_file(nb_filename):
 
 def process_nb_node(nb_node):
     for cell in nb_node['cells']:
-        if 'code' == cell['cell_type']:
-            if 'outputs' in cell:
-                cell['outputs'] = []
-            if 'execution_count' in cell:
-                cell['execution_count'] = None
+        remove_cell_output(cell)
 
     return nb_node
+
+
+def remove_cell_output(cell):
+    if 'code' == cell['cell_type']:
+        if 'outputs' in cell:
+            cell['outputs'] = []
+        if 'execution_count' in cell:
+            cell['execution_count'] = None
 
 
 def write_file(nb_node, nb_filename):
