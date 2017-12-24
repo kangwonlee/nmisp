@@ -19,7 +19,7 @@ def read_file(nb_filename):
     with open(nb_filename, 'rb') as nb_file:
         txt = nb_file.read()
 
-    nb_node = nbformat.reads(txt, nbformat.NO_CONVERT)
+    nb_node = nbformat.reads(txt.decode(), nbformat.NO_CONVERT)
 
     return nb_node
 
