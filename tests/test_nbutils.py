@@ -1,5 +1,4 @@
 import subprocess
-import tempfile
 import unittest
 
 import ipynb_remove_output as nbutils
@@ -14,6 +13,12 @@ class TestNButils(unittest.TestCase):
     def test_sample_ipynb(self):
         # should run without an exception
         _exec_notebook(self.input_file_name)
+
+    def test_read_notebook(self):
+        result = nbutils.read_file(self.input_file_name)
+        self.assertIn('cells', result)
+        self.assertIn('nbformat', result)
+        self.assertIn('nbformat_minor', result)
 
 
 def _exec_notebook(path):
