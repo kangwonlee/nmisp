@@ -31,6 +31,23 @@ def process_nb_node(nb_node):
     return nb_node
 
 
+def has_symbol(cell):
+    """
+     if symbol definition line included, return the line numbers and the contents in a list
+
+    :param nbformat.notebooknode.NotebookNode cell:
+    :return: list of tuple([line_number, line_content])
+    """
+    result = []
+    if 'code' == cell['cell_type']:
+        if 'source' in cell:
+            for k, source_line in enumerate(cell['source'].splitlines()):
+                if ('sy.symbols' in source_line) or ('sy.Symbol' in source_line):
+                    result.append((k, source_line))
+
+    return result
+
+
 def remove_cell_output(cell):
     if 'code' == cell['cell_type']:
         if 'outputs' in cell:
