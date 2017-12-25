@@ -15,13 +15,13 @@ class TestNButils(unittest.TestCase):
         self.file_processor.execute()
 
     def test_read_notebook(self):
-        result = nbutils.read_file(self.input_file_name)
+        result = self.file_processor.read_file()
         self.assertIn('cells', result)
         self.assertIn('nbformat', result)
         self.assertIn('nbformat_minor', result)
 
     def test_has_symbol(self):
-        file = nbutils.read_file(self.input_file_name)
+        file = self.file_processor.read_file()
         cells = file['cells']
         result = []
         for k, cell in enumerate(cells):
@@ -51,7 +51,7 @@ class TestNButils(unittest.TestCase):
         self.assertSequenceEqual(expected, result)
 
     def test_replace_symbol(self):
-        file = nbutils.read_file(self.input_file_name)
+        file = self.file_processor.read_file()
         cells = file['cells']
         result = []
         for k, cell in enumerate(cells):
