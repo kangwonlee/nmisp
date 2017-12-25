@@ -4,12 +4,52 @@ Before release in class, output generated during testing and execution number ne
 """
 
 import os
+import subprocess
 import sys
 
 import nbformat
 
 
 # Use this module to read or write notebook files as particular nbformat versions.
+
+class FileProcessor(object):
+    """
+    Interface to jupyter notebook file
+    """
+
+    def __init__(self, nb_filename):
+        self.nb_filename = nb_filename
+        self.nb_node = self.read_file()
+
+    def read_file(self, nb_filename=None):
+        nb_filename = self.use_default_filename_if_missing(nb_filename)
+        assert os.path.exists(nb_filename)
+
+        with open(nb_filename, 'rb') as nb_file:
+            txt = nb_file.read()
+
+        nb_node = nbformat.reads(txt.decode(), nbformat.NO_CONVERT)
+
+        return nb_node
+
+    def use_default_filename_if_missing(self, nb_filename):
+        if nb_filename is None:
+            nb_filename = self.nb_filename
+        return nb_filename
+
+    def write_file(self, nb_filename=None):
+        nb_filename = self.use_default_filename_if_missing(nb_filename)
+        nbformat.write(self.nb_node, nb_filename)
+
+    def execute(self, nb_filename=None):
+        nb_filename = self.use_default_filename_if_missing(nb_filename)
+        # http://nbconvert.readthedocs.io/en/latest/execute_api.html
+        # ijstokes et al, Command line execution of a jupyter notebook fails in default Anaconda 4.1, https://github.com/Anaconda-Platform/nb_conda_kernels/issues/34
+        args = ["jupyter", "nbconvert", "--to", "notebook", "--execute",
+                "--ExecutePreprocessor.timeout=1000",
+                "--ExecutePreprocessor.kernel_name=python", nb_filename]
+        subprocess.check_call(args)
+
 
 def read_file(nb_filename):
     assert os.path.exists(nb_filename)
