@@ -76,3 +76,19 @@ class TestSymbolLister(unittest.TestCase):
                    'source': "R_A_N, M_A_Nm, R_B_N = sy.symbols('R_{A}[N], M_{A}[Nm], R_{B}[N]', real=True)"}])]
 
         self.assertSequenceEqual(expected, result)
+
+
+class TestSymbolConverter(unittest.TestCase):
+    def setUp(self):
+        self.input_file_name = 'sample.ipynb'
+
+        # class under test
+        self.cp = sc.SymbolConverter()
+
+        self.file_processor = fu.FileProcessor(self.input_file_name, self.cp)
+
+    def test_wrap_symbol_name(self):
+        result = self.cp.wrap_symbol_name('L_AB_m')
+        expected = 'L_{AB}_{m}'
+
+        self.assertEqual(expected, result)
