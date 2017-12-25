@@ -24,7 +24,7 @@ if __name__ == '__main__':
     def main(argv):
         if 1 < len(argv):
             filename = argv[1]
-            p = fu.FileProcessor(filename)
+            p = fu.FileProcessor(filename, CellProcessorDeleteOutput())
             p.process_nb_file()
         else:
             print("Usage : python %s <notebook file path>" % os.path.split(__file__)[-1])
