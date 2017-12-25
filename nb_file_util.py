@@ -74,13 +74,13 @@ class CellListProcessor(object):
         self.cell_list = cell_list
 
     def remove_outputs(self):
-        cp = CellProcessor()
+        cp = CellProcessorBase()
         for cell in self.cell_list:
             cp.set_cell(cell)
             cp.remove_cell_output()
 
     def process_cells(self):
-        cp = CellProcessor()
+        cp = CellProcessorBase()
         result = []
 
         for cell_number, cell in enumerate(self.cell_list):
@@ -92,7 +92,7 @@ class CellListProcessor(object):
         return result
 
 
-class CellProcessor(object):
+class CellProcessorBase(object):
     def __init__(self, cell=None):
         """
 

@@ -27,7 +27,7 @@ class TestNotebookFileUtil(unittest.TestCase):
         cells = file['cells']
         result = []
 
-        cp = nbutils.CellProcessor()
+        cp = nbutils.CellProcessorBase()
 
         for k, cell in enumerate(cells):
             cp.set_cell(cell)
@@ -51,7 +51,7 @@ class TestNotebookFileUtil(unittest.TestCase):
         cells = file['cells']
         result = []
 
-        cp = nbutils.CellProcessor()
+        cp = nbutils.CellProcessorBase()
 
         for k, cell in enumerate(cells):
             cp.set_cell(cell)
