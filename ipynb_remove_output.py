@@ -19,7 +19,7 @@ class FileProcessor(object):
 
     def __init__(self, nb_filename):
         self.nb_filename = nb_filename
-        self.nb_node = self.read_file()
+        self.nb_node = None
 
     def read_file(self, nb_filename=None):
         nb_filename = self.use_default_filename_if_missing(nb_filename)
@@ -50,25 +50,23 @@ class FileProcessor(object):
                 "--ExecutePreprocessor.kernel_name=python", nb_filename]
         subprocess.check_call(args)
 
+    def process_nb_file(self, nb_filename=None):
+        nb_filename = self.use_default_filename_if_missing(nb_filename)
+        self.nb_node = self.read_file()
 
-def read_file(nb_filename):
-    assert os.path.exists(nb_filename)
+        self.process_nb_node()
 
-    txt = ''
+        self.write_file(nb_filename)
 
-    with open(nb_filename, 'rb') as nb_file:
-        txt = nb_file.read()
+    def process_nb_node(self):
+        if self.nb_node is None:
+            self.read_file()
 
-    nb_node = nbformat.reads(txt.decode(), nbformat.NO_CONVERT)
-
-    return nb_node
-
-
-def process_nb_node(nb_node):
-    for cell in nb_node['cells']:
-        remove_cell_output(cell)
-
-    return nb_node
+        if 'cells' in self.nb_node:
+            for cell in self.nb_node['cells']:
+                remove_cell_output(cell)
+        else:
+            raise ValueError("nb node does not have 'cells'")
 
 
 def has_symbol(cell):
@@ -89,7 +87,8 @@ def has_symbol(cell):
 
 
 def symbol_lines_in_file(input_file_name):
-    file = read_file(input_file_name)
+    file_processor = FileProcessor(input_file_name)
+    file = file_processor.read_file()
     assert 'cells' in file
 
     result = []
@@ -111,24 +110,13 @@ def remove_cell_output(cell):
             cell['execution_count'] = None
 
 
-def write_file(nb_node, nb_filename):
-    nbformat.write(nb_node, nb_filename)
-
-
-def process_nb_file(nb_filename):
-    nb_node = read_file(nb_filename)
-
-    processed_node = process_nb_node(nb_node)
-
-    write_file(processed_node, nb_filename)
-
-
 if __name__ == '__main__':
 
     def main(argv):
         if 1 < len(argv):
             filename = argv[1]
-            process_nb_file(filename)
+            p = FileProcessor(filename)
+            p.process_nb_file()
         else:
             print("Usage : python %s <notebook file path>" % os.path.split(__file__)[-1])
             help(nbformat)
