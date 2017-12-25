@@ -1,15 +1,15 @@
 import unittest
 
-import ipynb_remove_output as nbutils
+import symbol_converter as sc
 
 
-class TestRemoveOutput(unittest.TestCase):
+class TestSymbolConverter(unittest.TestCase):
     def setUp(self):
         self.input_file_name = 'sample.ipynb'
 
     def test_cells_with_symbol(self):
         self.maxDiff = None
-        result = nbutils.symbol_lines_in_file(self.input_file_name)
+        result = sc.symbol_lines_in_file(self.input_file_name)
 
         # compare with an expected list
         expected_result = [{'cell number': 8, 'result': [
