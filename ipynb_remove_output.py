@@ -63,10 +63,29 @@ class FileProcessor(object):
             self.read_file()
 
         if 'cells' in self.nb_node:
-            for cell in self.nb_node['cells']:
-                remove_cell_output(cell)
+
+            cell_list_processor = CellListProcessor(self.nb_node['cells'])
+            cell_list_processor.remove_outputs()
+
         else:
             raise ValueError("nb node does not have 'cells'")
+
+
+class CellListProcessor(object):
+    def __init__(self, cell_list=None):
+        self.cell_list = cell_list
+
+    def remove_outputs(self):
+        for cell in self.cell_list:
+            self.remove_cell_output(cell)
+
+    @staticmethod
+    def remove_cell_output(cell):
+        if 'code' == cell['cell_type']:
+            if 'outputs' in cell:
+                cell['outputs'] = []
+            if 'execution_count' in cell:
+                cell['execution_count'] = None
 
 
 def has_symbol(cell):
@@ -100,14 +119,6 @@ def symbol_lines_in_file(input_file_name):
             result.append((k, cell_result))
 
     return result
-
-
-def remove_cell_output(cell):
-    if 'code' == cell['cell_type']:
-        if 'outputs' in cell:
-            cell['outputs'] = []
-        if 'execution_count' in cell:
-            cell['execution_count'] = None
 
 
 if __name__ == '__main__':
