@@ -50,25 +50,31 @@ class FileProcessor(object):
                 "--ExecutePreprocessor.kernel_name=python", nb_filename]
         subprocess.check_call(args)
 
-    def process_nb_file(self, nb_filename=None):
+    def process_nb_file(self, nb_filename=None, b_write_file=False):
         nb_filename = self.use_default_filename_if_missing(nb_filename)
         self.nb_node = self.read_file()
 
-        self.process_nb_node()
+        result = {'file name': nb_filename, 'result': self.process_nb_node()}
 
-        self.write_file(nb_filename)
+        if b_write_file:
+            self.write_file(nb_filename)
+
+        return result
 
     def process_nb_node(self):
         if self.nb_node is None:
             self.read_file()
 
+        result = None
+
         if 'cells' in self.nb_node:
 
             cell_list_processor = CellListProcessor(self.nb_node['cells'])
-            cell_list_processor.remove_outputs()
-
+            result = cell_list_processor.process_cells()
         else:
             raise ValueError("nb node does not have 'cells'")
+
+        return result
 
 
 class CellListProcessor(object):
@@ -80,6 +86,18 @@ class CellListProcessor(object):
         for cell in self.cell_list:
             cp.set_cell(cell)
             cp.remove_cell_output()
+
+    def process_cells(self):
+        cp = CellProcessor()
+        result = []
+
+        for cell_number, cell in enumerate(self.cell_list):
+            cp.set_cell(cell)
+            cell_result = cp.process_cell()
+            if cell_result:
+                result.append({'cell number': cell_number, 'result': cell_result})
+
+        return result
 
 
 class CellProcessor(object):
@@ -101,59 +119,52 @@ class CellProcessor(object):
     def is_code(self):
         """
 
-        :param dict cell:
         :return:
         """
         return 'code' == self.cell['cell_type']
 
-    def has_output(self):
+    def has_field(self, field):
         """
 
-        :param dict cell:
+        :param str field:
         :return:
         """
-        return 'outputs' in self.cell
+        return field in self.cell
+
+    def has_output(self):
+        return self.has_field('outputs')
+
+    def has_source(self):
+        return self.has_field('source')
 
     def remove_cell_output(self):
-        """
-
-        :param dict cell:
-        :return:
-        """
         if self.is_code():
             self.cell.setdefault('outputs', [])
             self.cell.setdefault('execution_count', None)
 
+    def has_symbol(self):
+        """
+         if symbol definition line included, return the line numbers and the contents in a list
 
-def has_symbol(cell):
-    """
-     if symbol definition line included, return the line numbers and the contents in a list
+        :param nbformat.notebooknode.NotebookNode cell:
+        :return: list of tuple([line_number, line_content])
+        """
+        result = []
+        if self.is_code():
+            if self.has_source():
+                for line_number, source_line in enumerate(self.cell['source'].splitlines()):
+                    if ('sy.symbols' in source_line) or ('sy.Symbol' in source_line):
+                        result.append({'line number': line_number, 'source': source_line})
 
-    :param nbformat.notebooknode.NotebookNode cell:
-    :return: list of tuple([line_number, line_content])
-    """
-    result = []
-    if 'code' == cell['cell_type']:
-        if 'source' in cell:
-            for k, source_line in enumerate(cell['source'].splitlines()):
-                if ('sy.symbols' in source_line) or ('sy.Symbol' in source_line):
-                    result.append((k, source_line))
+        return result
 
-    return result
+    def process_cell(self):
+        return self.has_symbol()
 
 
 def symbol_lines_in_file(input_file_name):
     file_processor = FileProcessor(input_file_name)
-    file = file_processor.read_file()
-    assert 'cells' in file
-
-    result = []
-
-    cells = file['cells']
-    for k, cell in enumerate(cells):
-        cell_result = has_symbol(cell)
-        if cell_result:
-            result.append((k, cell_result))
+    result = file_processor.process_nb_file()
 
     return result
 
