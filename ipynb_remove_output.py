@@ -80,12 +80,32 @@ class CellListProcessor(object):
             self.remove_cell_output(cell)
 
     @staticmethod
-    def remove_cell_output(cell):
-        if 'code' == cell['cell_type']:
-            if 'outputs' in cell:
-                cell['outputs'] = []
-            if 'execution_count' in cell:
-                cell['execution_count'] = None
+    def is_code(cell):
+        """
+
+        :param dict cell:
+        :return:
+        """
+        return 'code' == cell['cell_type']
+
+    @staticmethod
+    def has_output(cell):
+        """
+
+        :param dict cell:
+        :return:
+        """
+        return 'outputs' in cell
+
+    def remove_cell_output(self, cell):
+        """
+
+        :param dict cell:
+        :return:
+        """
+        if self.is_code(cell):
+            cell.setdefault('outputs', [])
+            cell.setdefault('execution_count', None)
 
 
 def has_symbol(cell):
