@@ -46,6 +46,16 @@ class SymbolConverter(SymbolLister):
 
         return symbol_name
 
+    def unit_underline_wrap_bracket(self):
+        conversion_table_dict = {}
+        for unit in self.units_set:
+            key = '_{%s}' % unit
+            value = '[%s]' % unit.replace('_', '/').replace('4', '^{4}').replace('3', '^{3}').replace('2', '^{2}')
+
+            conversion_table_dict[key] = value
+
+        return conversion_table_dict
+
 
 def symbol_lines_in_file(input_file_name):
     sc = SymbolLister()
