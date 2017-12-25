@@ -1,7 +1,7 @@
 import nb_file_util as fu
 
 
-class SymbolConverter(fu.CellProcessorBase):
+class SymbolLister(fu.CellProcessorBase):
     def has_symbol(self):
         """
          if symbol definition line included, return the line numbers and the contents in a list
@@ -22,7 +22,7 @@ class SymbolConverter(fu.CellProcessorBase):
 
 
 def symbol_lines_in_file(input_file_name):
-    sc = SymbolConverter()
+    sc = SymbolLister()
     file_processor = fu.FileProcessor(input_file_name, sc)
     result = file_processor.process_nb_file()
 

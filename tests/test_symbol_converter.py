@@ -4,12 +4,12 @@ import nb_file_util as fu
 import symbol_converter as sc
 
 
-class TestSymbolConverter(unittest.TestCase):
+class TestSymbolLister(unittest.TestCase):
     def setUp(self):
         self.input_file_name = 'sample.ipynb'
         self.file_processor = fu.FileProcessor(self.input_file_name)
         # class under test
-        self.cp = sc.SymbolConverter()
+        self.cp = sc.SymbolLister()
 
     def test_cells_with_symbol(self):
         self.maxDiff = None
