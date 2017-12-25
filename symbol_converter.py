@@ -47,6 +47,13 @@ class SymbolConverter(SymbolLister):
         return symbol_name
 
     def unit_underline_wrap_bracket(self):
+        """
+        '_{m_s2}': '[m/s^{2}]'
+        '_{N_m}': '[N/m]'
+
+        :return: dictionary
+        :rtype dict
+        """
         conversion_table_dict = {}
         for unit in self.units_set:
             key = '_{%s}' % unit
