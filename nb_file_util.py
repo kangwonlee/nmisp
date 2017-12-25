@@ -9,9 +9,12 @@ class FileProcessor(object):
     Interface to jupyter notebook file
     """
 
-    def __init__(self, nb_filename):
+    def __init__(self, nb_filename, cell_processor=None):
         self.nb_filename = nb_filename
         self.nb_node = None
+        if cell_processor is None:
+            cell_processor = CellProcessorBase()
+        self.cell_list_processor = CellListProcessor(cell_processor=cell_processor)
 
     def read_file(self, nb_filename=None):
         nb_filename = self.use_default_filename_if_missing(nb_filename)
@@ -61,8 +64,8 @@ class FileProcessor(object):
 
         if 'cells' in self.nb_node:
 
-            cell_list_processor = CellListProcessor(self.nb_node['cells'])
-            result = cell_list_processor.process_cells()
+            self.cell_list_processor.set_cell_list(self.nb_node['cells'])
+            result = self.cell_list_processor.process_cells()
         else:
             raise ValueError("nb node does not have 'cells'")
 
@@ -70,7 +73,13 @@ class FileProcessor(object):
 
 
 class CellListProcessor(object):
-    def __init__(self, cell_list=None):
+    def __init__(self, cell_list=None, cell_processor=None):
+        self.cell_list = cell_list
+        if cell_processor is None:
+            cell_processor = CellProcessorBase()
+        self.cp = cell_processor
+
+    def set_cell_list(self, cell_list):
         self.cell_list = cell_list
 
     def remove_outputs(self):
@@ -80,12 +89,11 @@ class CellListProcessor(object):
             cp.remove_cell_output()
 
     def process_cells(self):
-        cp = CellProcessorBase()
         result = []
 
         for cell_number, cell in enumerate(self.cell_list):
-            cp.set_cell(cell)
-            cell_result = cp.process_cell()
+            self.cp.set_cell(cell)
+            cell_result = self.cp.process_cell()
             if cell_result:
                 result.append({'cell number': cell_number, 'result': cell_result})
 
@@ -134,20 +142,6 @@ class CellProcessorBase(object):
             self.cell['outputs'] = []
             self.cell['execution_count'] = None
 
-    def has_symbol(self):
-        """
-         if symbol definition line included, return the line numbers and the contents in a list
-
-        :return: list of dict('line_number':int, 'source':str])
-        """
-        result = []
-        if self.is_code():
-            if self.has_source():
-                for line_number, source_line in enumerate(self.cell['source'].splitlines()):
-                    if ('sy.symbols' in source_line) or ('sy.Symbol' in source_line):
-                        result.append({'line number': line_number, 'source': source_line})
-
-        return result
-
     def process_cell(self):
-        return self.has_symbol()
+        # virtual method
+        raise NotImplementedError()
