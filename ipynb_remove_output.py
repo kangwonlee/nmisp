@@ -76,36 +76,53 @@ class CellListProcessor(object):
         self.cell_list = cell_list
 
     def remove_outputs(self):
+        cp = CellProcessor()
         for cell in self.cell_list:
-            self.remove_cell_output(cell)
+            cp.set_cell(cell)
+            cp.remove_cell_output()
 
-    @staticmethod
-    def is_code(cell):
+
+class CellProcessor(object):
+    def __init__(self, cell=None):
+        """
+
+        :param dict cell:
+        """
+        self.cell = cell
+
+    def set_cell(self, cell):
         """
 
         :param dict cell:
         :return:
         """
-        return 'code' == cell['cell_type']
+        self.cell = cell
 
-    @staticmethod
-    def has_output(cell):
+    def is_code(self):
         """
 
         :param dict cell:
         :return:
         """
-        return 'outputs' in cell
+        return 'code' == self.cell['cell_type']
 
-    def remove_cell_output(self, cell):
+    def has_output(self):
         """
 
         :param dict cell:
         :return:
         """
-        if self.is_code(cell):
-            cell.setdefault('outputs', [])
-            cell.setdefault('execution_count', None)
+        return 'outputs' in self.cell
+
+    def remove_cell_output(self):
+        """
+
+        :param dict cell:
+        :return:
+        """
+        if self.is_code():
+            self.cell.setdefault('outputs', [])
+            self.cell.setdefault('execution_count', None)
 
 
 def has_symbol(cell):
