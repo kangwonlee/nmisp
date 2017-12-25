@@ -14,6 +14,11 @@ import nb_file_util as fu
 # Use this module to read or write notebook files as particular nbformat versions.
 
 
+class CellProcessorDeleteOutput(fu.CellProcessorBase):
+    def process_cell(self):
+        self.remove_cell_output()
+
+
 def symbol_lines_in_file(input_file_name):
     file_processor = fu.FileProcessor(input_file_name)
     result = file_processor.process_nb_file()
