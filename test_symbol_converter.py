@@ -92,3 +92,11 @@ class TestSymbolConverter(unittest.TestCase):
         expected = 'L_{AB}_{m}'
 
         self.assertEqual(expected, result)
+
+    def test_unit_underline_wrap_bracket(self):
+        self.maxDiff = None
+        result = self.cp.unit_underline_wrap_bracket()
+        expected = {'_{mm}': '[mm]', '_{MPa}': '[MPa]', '_{mm3}': '[mm^{3}]', '_{kg}': '[kg]', '_{m3}': '[m^{3}]',
+                    '_{rad}': '[rad]', '_{m_s2}': '[m/s^{2}]', '_{N}': '[N]', '_{deg}': '[deg]', '_{Pa}': '[Pa]',
+                    '_{m2}': '[m^{2}]', '_{m4}': '[m^{4}]', '_{Nm}': '[Nm]', '_{m}': '[m]', '_{N_m}': '[N/m]'}
+        self.assertDictEqual(expected, result)
