@@ -40,6 +40,7 @@ class TestSymbolLister(unittest.TestCase):
 
         for k, cell in enumerate(cells):
             self.cp.set_cell(cell)
+            # function under test
             cell_result = self.cp.has_symbol()
             if cell_result:
                 result.append((k, cell_result))
@@ -100,3 +101,49 @@ class TestSymbolConverter(unittest.TestCase):
                     '_{rad}': '[rad]', '_{m_s2}': '[m/s^{2}]', '_{N}': '[N]', '_{deg}': '[deg]', '_{Pa}': '[Pa]',
                     '_{m2}': '[m^{2}]', '_{m4}': '[m^{4}]', '_{Nm}': '[Nm]', '_{m}': '[m]', '_{N_m}': '[N/m]'}
         self.assertDictEqual(expected, result)
+
+    def test_find_symbol_name_location_00(self):
+        #              0         1         2
+        #              0123456789012345678901234567890123456789012345678901234567890123456789
+        #                                     0123456789012345678901234567890123456789012345678901234567890123456789
+        source_line = "L_AB_m = sy.symbols('L_AB_m', real=True, nonnegative=True)"
+        result = self.cp.find_symbol_name_location(source_line)
+        extracted = source_line[result[0]:result[1]]
+        expected_extracted = 'L_AB_m'
+
+        self.assertEqual(expected_extracted, extracted)
+
+    def test_find_symbol_name_location_01(self):
+        #              0         1         2
+        #              0123456789012345678901234567890123456789012345678901234567890123456789
+        #                                   0123456789012345678901234567890123456789012345678901234567890123456789
+        source_line = "L_AB = sy.symbols('L_AB_m', real=True, nonnegative=True)"
+        result = self.cp.find_symbol_name_location(source_line)
+        extracted = source_line[result[0]:result[1]]
+        expected_extracted = 'L_AB_m'
+
+        self.assertEqual(expected_extracted, extracted)
+
+
+        # def test_processor(self):
+        #     file = self.file_processor.read_file()
+        #
+        #     cells = file['cells']
+        #
+        #     for k, cell in enumerate(cells):
+        #         self.cp.set_cell(cell)
+        #         # function under test
+        #         self.cp.process_cell()
+        #
+        #     # begin read processed result
+        #     result = []
+        #
+        #     for k, cell in enumerate(cells):
+        #         self.cp.set_cell(cell)
+        #         # function under test
+        #         cell_result = self.cp.has_symbol()
+        #         if cell_result:
+        #             result.append((k, cell_result))
+        #
+        #     # end reading processed result
+        #     self.assertTrue(len(result))

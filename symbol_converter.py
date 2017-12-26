@@ -1,3 +1,5 @@
+import re
+
 import nb_file_util as fu
 
 
@@ -30,6 +32,10 @@ class SymbolConverter(SymbolLister):
 
     """
     units_set = {'m', 'mm', 'mm3', 'm2', 'm3', 'm4', 'deg', 'rad', 'N', 'Nm', 'N_m', 'Pa', 'MPa', 'm_s2', 'kg'}
+
+    def __init__(self):
+        super().__init__()
+        self.conversion_table_dict = self.unit_underline_wrap_bracket()
 
     @staticmethod
     def wrap_symbol_name(symbol_name):
@@ -69,6 +75,54 @@ class SymbolConverter(SymbolLister):
             conversion_table_dict[key] = value
 
         return conversion_table_dict
+
+    # def process_cell(self):
+    #     symbol_list = self.has_symbol()
+    #     # [{'line number': int, 'source': str}]
+    #
+    def find_symbol_name_location(self, source_line):
+        """
+
+        :param str source_line:
+        :return: (int, int)
+
+        >>> cp = SymbolConverter()
+        >>> source_line = "L_AB_m = sy.symbols('L_AB_m', real=True, nonnegative=True)"
+        >>> result = cp.find_symbol_name_location(source_line)
+        >>> source_line[result[0]:result[1]]
+        'L_AB_m'
+        >>> source_line = "L_AB_m = sy.Symbol('L_AB_m', real=True, nonnegative=True)"
+        >>> result = cp.find_symbol_name_location(source_line)
+        >>> source_line[result[0]:result[1]]
+        'L_AB_m'
+        "'"
+        """
+
+        first_attempt = re.search('.*\.symbols\s*\([\'\"]', source_line)
+        second_attempt = re.search('.*\.symbols\s*\([\'\"](.+?)[\'\"]', source_line)
+
+        if first_attempt:
+            start = first_attempt.regs[0][1]
+            end = second_attempt.regs[0][1] - 1
+            result = (start, end)
+        else:
+            result = None
+
+        return result
+
+    def apply_lookup_table(self, text_to_apply, original_symbol_name, lookup_table_dict=None):
+        if lookup_table_dict is None:
+            lookup_table_dict = self.conversion_table_dict
+
+        new_small_dict = {}
+        for to_be_replaced in self.conversion_table_dict:
+            if text_to_apply.endswith(to_be_replaced):
+                new_small_dict[original_symbol_name] = text_to_apply.replace(to_be_replaced,
+                                                                             lookup_table_dict[to_be_replaced])
+                # if lookup table original_symbol_name found, break lookup table loop
+                break
+
+        return new_small_dict
 
 
 def symbol_lines_in_file(input_file_name):
