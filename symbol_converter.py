@@ -176,6 +176,11 @@ class SymbolConverter(SymbolLister):
         return new_small_dict
 
 
+class IpynbUnitConverter(fu.FileProcessor):
+    def __init__(self, nb_filename):
+        super().__init__(nb_filename=nb_filename, cell_processor=SymbolConverter())
+
+
 def symbol_lines_in_file(input_file_name):
     sc = SymbolLister()
     file_processor = fu.FileProcessor(input_file_name, sc)
