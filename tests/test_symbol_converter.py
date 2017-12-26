@@ -79,7 +79,7 @@ class TestSymbolLister(unittest.TestCase):
         self.assertSequenceEqual(expected, result)
 
 
-class TestSymbolConverter(unittest.TestCase):
+class MyLineConverterTesterBase(unittest.TestCase):
     def setUp(self):
         self.input_file_name = 'sample.ipynb'
 
@@ -88,6 +88,12 @@ class TestSymbolConverter(unittest.TestCase):
 
         self.file_processor = fu.FileProcessor(self.input_file_name, self.cp)
 
+    def check_process_line(self, source_line, expected):
+        result = self.cp.process_line(source_line)
+        self.assertEqual(expected, result)
+
+
+class TestSymbolConverter(MyLineConverterTesterBase):
     def test_wrap_symbol_name(self):
         result = self.cp.wrap_symbol_name('L_AB_m')
         expected = 'L_{AB}_{m}'
@@ -189,10 +195,6 @@ class TestSymbolConverter(unittest.TestCase):
     def test_process_line_11(self):
         self.check_process_line("L_AB = sy.Symbol('L_AB_m', real=True, nonnegative=True)",
                                 "L_AB = sy.Symbol('L_{AB}[m]', real=True, nonnegative=True)")
-
-    def check_process_line(self, source_line, expected):
-        result = self.cp.process_line(source_line)
-        self.assertEqual(expected, result)
 
     def test_process_line_100(self):
         self.check_process_line("L_AB_m, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)",
