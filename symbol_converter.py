@@ -22,6 +22,13 @@ class SymbolLister(fu.CellProcessorBase):
 
 
 class SymbolConverter(SymbolLister):
+    """
+    sy.symbols('L_AB_m', real=True, nonnegative=True) -> sy.symbols('L_{AB}[m]', real=True, nonnegative=True)
+    sy.symbols('w0_N_m', real=True) -> sy.symbols('w0[N/m]', real=True)
+
+    'L_AB_m' -> [wrap_symbol_name] -> 'L_{AB}_{m}' -> 'L_{AB}[m]'
+
+    """
     units_set = {'m', 'mm', 'mm3', 'm2', 'm3', 'm4', 'deg', 'rad', 'N', 'Nm', 'N_m', 'Pa', 'MPa', 'm_s2', 'kg'}
 
     @staticmethod
