@@ -93,10 +93,20 @@ class SymbolConverter(SymbolLister):
 
         return conversion_table_dict
 
-    # def process_cell(self):
-    #     symbol_list = self.has_symbol()
-    #     # [{'line number': int, 'source': str}]
-    #
+    def process_cell(self):
+        symbol_list = self.has_symbol()
+        # [{'line number': int, 'source': str}]
+        source_lines = self.cell['source'].splitlines()
+
+        for symbol_line in symbol_list:
+            converted_line = self.process_line(symbol_line['source'])
+            # replace the source code with the new line
+            source_lines[symbol_line['line number']] = converted_line
+
+        converted_source_code = '\n'.join(source_lines)
+
+        # update cell
+        self.cell['source'] = converted_source_code
 
     def process_line(self, source_line):
         symbol_names_location = self.find_symbol_name_location(source_line)
