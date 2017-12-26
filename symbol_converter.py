@@ -29,7 +29,7 @@ class SymbolConverter(SymbolLister):
     sy.symbols('w0_N_m', real=True) -> sy.symbols('w0[N/m]', real=True)
 
     "L_AB_m, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)"
-    -> [find symbol location] -> 'L_AB_m, L_AC_m'
+    -> [find symbol location] -> 'L_AB_m, L_AC_m' ->
     'L_AB_m' -> [wrap_symbol_name] -> 'L_{AB}_{m}' -> 'L_{AB}[m]'
 
     """
@@ -87,6 +87,24 @@ class SymbolConverter(SymbolLister):
     #     symbol_list = self.has_symbol()
     #     # [{'line number': int, 'source': str}]
     #
+
+    def process_line(self, source_line):
+        symbol_names_location = self.find_symbol_name_location(source_line)
+        symbol_names_str = source_line[symbol_names_location[0]:symbol_names_location[1]]
+        symbol_names_list = filter(lambda x: bool(x),
+                                   [symbol_name.strip() for symbol_name in self.re_split.split(symbol_names_str)])
+        converted_symbol_names_list = [self.process_symbol_name(symbol_name) for symbol_name in symbol_names_list]
+        converted_symbol_names_str = ', '.join(converted_symbol_names_list)
+        converted_source_line = (source_line[:symbol_names_location[0]]
+                                 + converted_symbol_names_str
+                                 + source_line[symbol_names_location[1]:])
+        return converted_source_line
+
+    def process_symbol_name(self, symbol_name):
+        wrapped = self.wrap_symbol_name(symbol_name)
+        result = self.apply_lookup_table(wrapped, symbol_name)
+        return result[symbol_name]
+
     def find_symbol_name_location(self, source_line):
         """
 
@@ -124,6 +142,7 @@ class SymbolConverter(SymbolLister):
             lookup_table_dict = self.conversion_table_dict
 
         new_small_dict = {}
+        # lookup table loop
         for to_be_replaced in self.conversion_table_dict:
             if text_to_apply.endswith(to_be_replaced):
                 new_small_dict[original_symbol_name] = text_to_apply.replace(to_be_replaced,
