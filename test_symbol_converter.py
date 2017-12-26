@@ -69,6 +69,11 @@ class MyLineConverterTesterBase(unittest.TestCase):
         result = self.cp.process_line(source_line)
         self.assertEqual(expected, result)
 
+        # test run the converted statement
+        result_sy = exec('''import sympy as sy
+%s''' % result)
+        self.assertIsNone(result_sy)
+
 
 class TestSymbolConverter(MyLineConverterTesterBase):
     def test_wrap_symbol_name(self):
