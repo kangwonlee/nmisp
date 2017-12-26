@@ -38,7 +38,17 @@ class SymbolConverter(SymbolLister):
     def __init__(self):
         super().__init__()
         self.conversion_table_dict = self.unit_underline_wrap_bracket()
+        self.secondary_table_dict = self.make_secondary_table()
         self.re_split = self.prepare_split_rule()
+
+    @staticmethod
+    def make_secondary_table():
+        return {
+            '_{N}[m]': '[N/m]',
+            '_{N}[mm]': '[N/mm]',
+            '_{N}[m^{2}]': '[N/m^{2}]',
+            '_{N}[mm^{2}]': '[N/mm^{2}]',
+        }
 
     @staticmethod
     def prepare_split_rule():
