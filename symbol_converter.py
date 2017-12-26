@@ -153,7 +153,7 @@ class SymbolConverter(SymbolLister):
 
         new_small_dict = {}
         # lookup table loop
-        for to_be_replaced in self.conversion_table_dict:
+        for to_be_replaced in lookup_table_dict:
             if text_to_apply.endswith(to_be_replaced):
                 new_small_dict[original_symbol_name] = text_to_apply.replace(to_be_replaced,
                                                                              lookup_table_dict[to_be_replaced])
