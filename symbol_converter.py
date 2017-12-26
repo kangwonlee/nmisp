@@ -98,10 +98,10 @@ class SymbolConverter(SymbolLister):
         "'"
         """
 
-        first_attempt = re.search('.*\.symbols\s*\([\'\"]', source_line)
+        first_attempt = re.search('.*\.(Symbol|symbols)\s*\([\'\"]', source_line)
         quote = source_line[first_attempt.regs[0][1] - 1]
         quote_pattern = chr(92) + quote  # backslash + ['"]
-        second_attempt = re.search(r'.*\.symbols\s*\(' + quote_pattern + r'(.+?)' + quote_pattern, source_line)
+        second_attempt = re.search(r'.*\.(Symbol|symbols)\s*\(' + quote_pattern + r'(.+?)' + quote_pattern, source_line)
 
         if first_attempt:
             start = first_attempt.regs[0][1]
