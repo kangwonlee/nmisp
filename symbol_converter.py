@@ -28,6 +28,8 @@ class SymbolConverter(SymbolLister):
     sy.symbols('L_AB_m', real=True, nonnegative=True) -> sy.symbols('L_{AB}[m]', real=True, nonnegative=True)
     sy.symbols('w0_N_m', real=True) -> sy.symbols('w0[N/m]', real=True)
 
+    "L_AB_m, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)"
+    -> [find symbol location] -> 'L_AB_m, L_AC_m'
     'L_AB_m' -> [wrap_symbol_name] -> 'L_{AB}_{m}' -> 'L_{AB}[m]'
 
     """
@@ -36,6 +38,11 @@ class SymbolConverter(SymbolLister):
     def __init__(self):
         super().__init__()
         self.conversion_table_dict = self.unit_underline_wrap_bracket()
+        self.re_split = self.prepare_split_rule()
+
+    @staticmethod
+    def prepare_split_rule():
+        return re.compile(r'[, ]')
 
     @staticmethod
     def wrap_symbol_name(symbol_name):
