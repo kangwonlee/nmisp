@@ -194,29 +194,36 @@ class TestSymbolConverter(MyLineConverterTesterBase):
         self.check_process_line("L_AB, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)",
                                 "L_AB, L_AC_m = sy.symbols('L_{AB}[m], L_{AC}[m]', real=True, nonnegative=True)")
 
+    def test_cell_processor(self):
+        file = self.file_processor.read_file()
 
-        # def test_processor(self):
-        #     file = self.file_processor.read_file()
-        #
-        #     cells = file['cells']
-        #
-        #     for k, cell in enumerate(cells):
-        #         self.cp.set_cell(cell)
-        #         # function under test
-        #         self.cp.process_cell()
-        #
-        #     # begin read processed result
-        #     result = []
-        #
-        #     for k, cell in enumerate(cells):
-        #         self.cp.set_cell(cell)
-        #         # function under test
-        #         cell_result = self.cp.has_symbol()
-        #         if cell_result:
-        #             result.append((k, cell_result))
-        #
-        #     # end reading processed result
-        #     self.assertTrue(len(result))
+        cells = file['cells']
+
+        for k, cell in enumerate(cells):
+            self.cp.set_cell(cell)
+            # function under test
+            self.cp.process_cell()
+
+        # begin read processed result
+        result = []
+
+        for k, cell in enumerate(cells):
+            self.cp.set_cell(cell)
+            # function under test
+            cell_result = self.cp.has_symbol()
+            if cell_result:
+                result.append((k, cell_result))
+
+        expected = [
+            (8, [{'line number': 0, 'source': "L_AB_m = sy.symbols('L_{AB}[m]', real=True, nonnegative=True)"}]),
+            (10, [{'line number': 0, 'source': "w0_N_m = sy.symbols('w0[N/m]', real=True)"}]),
+            (12, [{'line number': 0, 'source': "E_Pa, I_m4 = sy.symbols('E[Pa], I[m^{4}]', positive=True)"}]),
+            (14, [{'line number': 0, 'source': "x_m = sy.symbols('x[m]', nonnegative=True)"}]), (16, [{'line number': 0,
+                                                                                                       'source': "R_A_N, M_A_Nm, R_B_N = sy.symbols('R_{A}[N], M_{A}[Nm], R_{B}[N]', real=True)"}])]
+
+        # end reading processed result
+        self.assertSequenceEqual(expected, result)
+
 
 class TestSymbolConverter00(MyLineConverterTesterBase):
     def test_process_line_00(self):
