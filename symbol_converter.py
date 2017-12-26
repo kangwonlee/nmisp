@@ -121,9 +121,10 @@ class SymbolConverter(SymbolLister):
         return converted_source_line
 
     def process_symbol_name(self, symbol_name):
+        result = {symbol_name:symbol_name}
         wrapped = self.wrap_symbol_name(symbol_name)
         # first conversion layer : for majority of cases
-        result = self.apply_lookup_table(wrapped, symbol_name)
+        result.update(self.apply_lookup_table(wrapped, symbol_name))
         # second conversion layer : for N/m, N/m^{2} cases
         result.update(self.apply_lookup_table(result[symbol_name], symbol_name, self.secondary_table_dict))
         return result[symbol_name]
