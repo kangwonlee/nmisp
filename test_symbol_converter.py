@@ -168,27 +168,47 @@ class TestSymbolConverter(unittest.TestCase):
 
         self.assertEqual(expected_extracted, extracted)
 
-    def test_find_symbol_name_location_110(self):
-        #              0         1         2
-        #              0123456789012345678901234567890123456789012345678901234567890123456789
-        #                                     0123456789012345678901234567890123456789012345678901234567890123456789
-        source_line = "L_AB_m, L_AC_m = sy.Symbol('L_AB_m, L_AC_m', real=True, nonnegative=True)"
-        result = self.cp.find_symbol_name_location(source_line)
-        extracted = source_line[result[0]:result[1]]
-        expected_extracted = 'L_AB_m, L_AC_m'
+    def test_process_line_00(self):
+        self.check_process_line("L_AB_m = sy.symbols('L_AB_m', real=True, nonnegative=True)",
+                                "L_AB_m = sy.symbols('L_{AB}[m]', real=True, nonnegative=True)")
 
-        self.assertEqual(expected_extracted, extracted)
-
-    def test_find_symbol_name_location_111(self):
+    def test_process_line_01(self):
         #              0         1         2
         #              0123456789012345678901234567890123456789012345678901234567890123456789
         #                                   0123456789012345678901234567890123456789012345678901234567890123456789
-        source_line = "L_AB, L_AC_m = sy.Symbol('L_AB_m, L_AC_m', real=True, nonnegative=True)"
-        result = self.cp.find_symbol_name_location(source_line)
-        extracted = source_line[result[0]:result[1]]
-        expected_extracted = 'L_AB_m, L_AC_m'
+        self.check_process_line("L_AB = sy.symbols('L_AB_m', real=True, nonnegative=True)",
+                                "L_AB = sy.symbols('L_{AB}[m]', real=True, nonnegative=True)")
 
-        self.assertEqual(expected_extracted, extracted)
+    def test_process_line_10(self):
+        #              0         1         2
+        #              0123456789012345678901234567890123456789012345678901234567890123456789
+        #                                     0123456789012345678901234567890123456789012345678901234567890123456789
+        self.check_process_line("L_AB_m = sy.Symbol('L_AB_m', real=True, nonnegative=True)",
+                                "L_AB_m = sy.Symbol('L_{AB}[m]', real=True, nonnegative=True)")
+
+    def test_process_line_11(self):
+        self.check_process_line("L_AB = sy.Symbol('L_AB_m', real=True, nonnegative=True)",
+                                "L_AB = sy.Symbol('L_{AB}[m]', real=True, nonnegative=True)")
+
+    def check_process_line(self, source_line, expected):
+        result = self.cp.process_line(source_line)
+        self.assertEqual(expected, result)
+
+    def test_process_line_100(self):
+        self.check_process_line("L_AB_m, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)",
+                                "L_AB_m, L_AC_m = sy.symbols('L_{AB}[m], L_{AC}[m]', real=True, nonnegative=True)")
+
+    def test_process_line_101(self):
+        self.check_process_line("L_AB, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)",
+                                "L_AB, L_AC_m = sy.symbols('L_{AB}[m], L_{AC}[m]', real=True, nonnegative=True)")
+
+    def test_process_line_110(self):
+        self.check_process_line("L_AB_m, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)",
+                                "L_AB_m, L_AC_m = sy.symbols('L_{AB}[m], L_{AC}[m]', real=True, nonnegative=True)")
+
+    def test_process_line_111(self):
+        self.check_process_line("L_AB, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)",
+                                "L_AB, L_AC_m = sy.symbols('L_{AB}[m], L_{AC}[m]', real=True, nonnegative=True)")
 
 
         # def test_processor(self):
