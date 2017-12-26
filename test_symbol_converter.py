@@ -235,3 +235,20 @@ class TestSymbolConverter(MyLineConverterTesterBase):
         #
         #     # end reading processed result
         #     self.assertTrue(len(result))
+
+class TestSymbolConverter00(MyLineConverterTesterBase):
+    def test_process_line_00(self):
+        self.check_process_line("w0_N_m = sy.symbols('w0_N_m', real=True)",
+                                "w0_N_m = sy.symbols('w0[N/m]', real=True)")
+
+    def test_process_line_01(self):
+        self.check_process_line("w0_N = sy.symbols('w0_N_m', real=True)",
+                                "w0_N = sy.symbols('w0[N/m]', real=True)")
+
+    def test_process_line_10(self):
+        self.check_process_line("w0_N_m = sy.Symbol('w0_N_m', real=True)",
+                                "w0_N_m = sy.Symbol('w0[N/m]', real=True)")
+
+    def test_process_line_11(self):
+        self.check_process_line("w0_N_m = sy.Symbol('w0_N_m', real=True)",
+                                "w0_N_m = sy.Symbol('w0[N/m]', real=True)")
