@@ -26,8 +26,9 @@ def _exec_notebook(path):
 
 
 folder_list = (
-'Ch02_Strain', 'Ch03_Torsion', 'Ch04_SFD.BMD', 'Ch05_Stress.in.Beams', 'Ch06_Deflection', 'Ch07_Stat.Indet',
-'Ch08_Stress_Due.To_Combined.Loads', 'Ch10_Column', 'Ch12_SpecialTopic',)
+    'Ch02_Strain', 'Ch03_Torsion', 'Ch04_SFD.BMD', 'Ch05_Stress.in.Beams', 'Ch06_Deflection', 'Ch07_Stat.Indet',
+    'Ch08_Stress_Due.To_Combined.Loads', 'Ch10_Column', 'Ch12_SpecialTopic',
+)
 
 
 def test02():
