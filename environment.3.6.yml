@@ -1,0 +1,14 @@
+# ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
+
+name: travis_anaconda_jupyter
+channels:
+- defaults
+
+dependencies:
+- python<3.7
+- numpy>=1.11.1
+- scipy>=0.18
+- sympy>=1.0
+- jupyter>=1.0.0
+- pytest>=2.9.2
+- matplotlib>=2.0.2
