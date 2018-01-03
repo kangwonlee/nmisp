@@ -6,9 +6,10 @@ channels:
 
 dependencies:
 - python<3.7
-- numpy>=1.11.1
-- scipy>=0.18
-- sympy>=1.0
-- jupyter>=1.0.0
-- pytest>=2.9.2
-- matplotlib>=2.0.2
+# Anaconda 5.0.1 python 3.6
+- numpy=1.13.3
+- scipy=0.19.1
+- sympy=1.1.1
+- jupyter=1.0.0
+- pytest=3.2.1
+- matplotlib=2.1.0
