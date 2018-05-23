@@ -1,3 +1,4 @@
+import os
 import unittest
 
 import nb_file_util as fu
@@ -6,8 +7,9 @@ import symbol_converter as sc
 
 class TestSymbolLister(unittest.TestCase):
     def setUp(self):
-        self.input_file_name = 'sample.ipynb'
+        self.input_file_name = os.path.join('tests', 'sample.ipynb')
         self.file_processor = fu.FileProcessor(self.input_file_name)
+
         # class under test
         self.cp = sc.SymbolLister()
 
