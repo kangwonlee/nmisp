@@ -1,4 +1,9 @@
+import os
 import re
+import sys
+
+
+sys.path.append(os.path.split(__file__)[0])
 
 import nb_file_util as fu
 
