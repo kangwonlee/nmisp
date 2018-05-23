@@ -35,5 +35,5 @@ class TestRemoveOutput(unittest.TestCase):
 
         cells = node_dict.get('cells', [])
 
-        for k, cell in enumerate(cells):
+        for cell in cells:
             self.assertFalse(cell.get('outputs'))
