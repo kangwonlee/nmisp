@@ -8,6 +8,9 @@ import sys
 
 import nbformat
 
+# To enable importing within and out of the package
+sys.path.append(os.path.split(__file__)[0])
+
 import nb_file_util as fu
 
 
