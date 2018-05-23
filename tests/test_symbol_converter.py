@@ -60,7 +60,7 @@ class TestSymbolLister(unittest.TestCase):
 
 class MyLineConverterTesterBase(unittest.TestCase):
     def setUp(self):
-        self.input_file_name = 'sample.ipynb'
+        self.input_file_name = os.path.join('tests', 'sample.ipynb')
 
         # class under test
         self.cp = sc.SymbolConverter()
