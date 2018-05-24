@@ -46,6 +46,8 @@ class FileProcessor(object):
         subprocess.check_call(args)
 
     def process_nb_file(self, nb_filename=None, b_write_file=False):
+        # TODO : see if use_default_filename_if_missing() is necessary here;
+        #        read_file() calls it too
         nb_filename = self.use_default_filename_if_missing(nb_filename)
         self.nb_node = self.read_file(nb_filename)
 
