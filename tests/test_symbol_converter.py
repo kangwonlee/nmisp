@@ -33,7 +33,7 @@ class TestSymbolLister(unittest.TestCase):
 
         self.assertDictEqual(expected, result)
 
-    def test_has_symbol(self):
+    def test_calls_sympy_symbol(self):
         self.maxDiff = None
 
         file = self.file_processor.read_file()
@@ -43,7 +43,7 @@ class TestSymbolLister(unittest.TestCase):
         for k, cell in enumerate(cells):
             self.cp.set_cell(cell)
             # function under test
-            cell_result = self.cp.has_symbol()
+            cell_result = self.cp.calls_sympy_symbol()
             if cell_result:
                 result.append((k, cell_result))
 
@@ -212,7 +212,7 @@ class TestSymbolConverter(MyLineConverterTesterBase):
         for k, cell in enumerate(cells):
             self.cp.set_cell(cell)
             # function under test
-            cell_result = self.cp.has_symbol()
+            cell_result = self.cp.calls_sympy_symbol()
             if cell_result:
                 result.append((k, cell_result))
 
