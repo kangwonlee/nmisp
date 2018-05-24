@@ -9,12 +9,16 @@ import nb_file_util as fu
 
 
 class SymbolLister(fu.CellProcessorBase):
-    def has_symbol(self):
+    def calls_sympy_symbol(self):
         """
          if symbol definition line included, return the line numbers and the contents in a list
 
         :return: list of dict('line_number':int, 'source':str])
         """
+
+        # TODO : What if import sympy
+        # TODO : Consider using ast module
+
         result = []
         if self.is_code():
             if self.has_source():
@@ -25,7 +29,7 @@ class SymbolLister(fu.CellProcessorBase):
         return result
 
     def process_cell(self):
-        return self.has_symbol()
+        return self.calls_sympy_symbol()
 
 
 class SymbolConverter(SymbolLister):
@@ -101,7 +105,7 @@ class SymbolConverter(SymbolLister):
     def process_cell(self):
         source_lines = self.cell['source'].splitlines()
 
-        symbol_list = self.has_symbol()
+        symbol_list = self.calls_sympy_symbol()
         # [{'line number': int, 'source': str}]
 
         for symbol_line in symbol_list:
@@ -118,6 +122,12 @@ class SymbolConverter(SymbolLister):
         self.cell['source'] = converted_source_code
 
     def process_line(self, source_line):
+        """
+        SymbolConverter.process_line()
+
+        Find SymPy 
+        """
+
         symbol_names_location = self.find_symbol_name_location(source_line)
         symbol_names_str = source_line[symbol_names_location[0]:symbol_names_location[1]]
         symbol_names_list = filter(lambda x: bool(x),

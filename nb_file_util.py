@@ -46,8 +46,17 @@ class FileProcessor(object):
         subprocess.check_call(args)
 
     def process_nb_file(self, nb_filename=None, b_write_file=False):
+        # TODO : see if use_default_filename_if_missing() is necessary here;
+        #        read_file() calls it too
         nb_filename = self.use_default_filename_if_missing(nb_filename)
+
+        # read the content of the file
         self.nb_node = self.read_file(nb_filename)
+
+        # keys : values
+        # 'cells' : contents of the notebook file
+        # 'metadata' : python version, ipython version
+        # 'nbformat', 'nbformat_minor' : ipython notebook version
 
         result = {'file name': nb_filename, 'result': self.process_nb_node()}
 
