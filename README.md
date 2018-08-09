@@ -1,8 +1,8 @@
 # 사이파이 수치 해석<br>Numerical Methods in SciPy
 
 ## 소개<br>Introduction
-이 소프트웨어는 다양한 수치 해법을 `Python` 언어와 그 확장 기능인`SciPy` 를 이용하여 설명하고자 함.<br>
-This software aims to describe various numerical methods in `Python` programming language and its extesion `SciPy'.
+이 소프트웨어는 다양한 수치 해법을 [`Python`](https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%B4%EC%8D%AC) 언어와 그 확장 기능인`SciPy` 를 이용하여 설명하고자 함.<br>
+This software aims to describe various numerical methods in [`Python`](https://en.wikipedia.org/wiki/Python_%28programming_language%29) programming language and its extesion `SciPy'.
 
 ## 설치 항목<br>Software to install
 
@@ -80,5 +80,5 @@ Through a web browser, `jupyter` notebook enables editing & running program code
 [![실행 동영상 Instruction video](https://i.ytimg.com/vi/W6ynqGKJFSs/hqdefault.jpg)](https://www.youtube.com/embed/videoseries?list=PLA6B0Lmr9oJO9HeSC74wqxECtwpUPJfdm)
 
 ## 알림 <br> Acknowledgement
-이 소프트웨어는 대한민국 국토교통부 건설교통과학기술진흥원 교통물류연구사업의 지원을 받았음 (18TLRP-B117133-03)<br>
-This software was supported by the Korea Ministry of Land, Infrastructure, and Transportation. It was also supported by the Korean Agency for Infrastructure Technology Advancement. (18TLRP-B117133-03)
+이 소프트웨어는 대한민국 국토교통부 건설교통과학기술진흥원 교통물류연구사업의 지원을 받아 시작되었음 (18TLRP-B117133-03)<br>
+This software was initially supported by the Korea Ministry of Land, Infrastructure, and Transportation. It was also supported by the Korean Agency for Infrastructure Technology Advancement. (18TLRP-B117133-03)
