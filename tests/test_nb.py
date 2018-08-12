@@ -2,6 +2,7 @@
 
 
 import os
+import pytest
 import subprocess
 import tempfile
 
@@ -9,6 +10,7 @@ import tempfile
 def check_kernel_spec():
     # https://jupyter-client.readthedocs.io/en/latest/api/kernelspec.html
     import jupyter_client.kernelspec as jk
+
     kernel_spec_manager = jk.KernelSpecManager()
 
     print(kernel_spec_manager.get_all_specs())
@@ -35,78 +37,10 @@ folder_list = (
 )
 
 
-def test02():
-    path = os.path.join(os.pardir, folder_list[0])
-    ext = 'ipynb'
-
-    # recursive loop
-    for root, dirnames, filenames in os.walk(path):
-        if 'ipynb_checkpoints' not in root:
-            # files loop
-            for filename in filenames:
-                if os.path.splitext(filename)[-1].endswith(ext):
-                    print('test() : %s %s' % (root, filename))
-                    _exec_notebook(os.path.join(root, filename))
-
-
-def test03():
-    path = os.path.join(os.pardir, folder_list[1])
-    ext = 'ipynb'
-
-    # recursive loop
-    for root, dirnames, filenames in os.walk(path):
-        if 'ipynb_checkpoints' not in root:
-            # files loop
-            for filename in filenames:
-                if os.path.splitext(filename)[-1].endswith(ext):
-                    print('test() : %s %s' % (root, filename))
-                    _exec_notebook(os.path.join(root, filename))
-
-
-def test04():
-    path = os.path.join(os.pardir, folder_list[2])
-    ext = 'ipynb'
-
-    # recursive loop
-    for root, dirnames, filenames in os.walk(path):
-        if 'ipynb_checkpoints' not in root:
-            # files loop
-            for filename in filenames:
-                if os.path.splitext(filename)[-1].endswith(ext):
-                    print('test() : %s %s' % (root, filename))
-                    _exec_notebook(os.path.join(root, filename))
-
-
-def test05():
-    path = os.path.join(os.pardir, folder_list[3])
-    ext = 'ipynb'
-
-    # recursive loop
-    for root, dirnames, filenames in os.walk(path):
-        if 'ipynb_checkpoints' not in root:
-            # files loop
-            for filename in filenames:
-                if os.path.splitext(filename)[-1].endswith(ext):
-                    print('test() : %s %s' % (root, filename))
-                    _exec_notebook(os.path.join(root, filename))
-
-
-def test06():
-    path = os.path.join(os.pardir, folder_list[4])
-    ext = 'ipynb'
-
-    # recursive loop
-    for root, dirnames, filenames in os.walk(path):
-        if 'ipynb_checkpoints' not in root:
-            # files loop
-            for filename in filenames:
-                if os.path.splitext(filename)[-1].endswith(ext):
-                    print('test() : %s %s' % (root, filename))
-                    _exec_notebook(os.path.join(root, filename))
-
-
-def test07():
-    path = os.path.join(os.pardir, folder_list[5])
+# https://docs.pytest.org/en/latest/example/parametrize.html
+@pytest.mark.parametrize("folder", folder_list)
+def test_ipynb_in_folder(folder):
+    path = os.path.join(os.pardir, folder)
     ext = 'ipynb'
 
     # recursive loop
