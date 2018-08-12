@@ -1,0 +1,43 @@
+# ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
+#       Anaconda Inc., Using conda with Travis CI, Conda documentation, https://conda.io/docs/user-guide/tasks/use-conda-with-travis-ci.html
+
+language: python
+
+python:
+  - "3.5"
+  - "3.6"
+  - "nightly"
+
+install:
+  - sudo apt-get update
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
+        conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.5.yml;
+    else
+        if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+            conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.6.yml;
+        else
+            conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.nightly.yml;
+        fi
+    fi
+  - source activate test-environment
+  - conda list
+
+# https://lord.io/blog/2014/travis-multiple-subdirs/
+script: cd tests && py.test
+notifications:
+    email:
+        - kangwon.lee.edu@gmail.com
