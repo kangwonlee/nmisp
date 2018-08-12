@@ -4,7 +4,6 @@
 language: python
 
 python:
-  - "3.5"
   - "3.6"
   - "nightly"
 
@@ -24,14 +23,10 @@ install:
   - conda update -q conda
   # Useful for debugging any issues with conda
   - conda info -a
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
-        conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.5.yml;
-    else
-        if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
             conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.6.yml;
-        else
-            conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.nightly.yml;
-        fi
+    else
+        conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.nightly.yml;
     fi
   - source activate test-environment
   - conda list
