@@ -76,8 +76,8 @@ Through a web browser, `jupyter` notebook enables editing & running program code
 * `cmd` 또는 `git bash` 에서 각각 `cd` 또는 `pwd` 로 `clone` 된 folder 인지 확인 <br>Check location using `cd` or `pwd` in `cmd` or `git bash`
 * `jupyter notebook` 실행 <br>Run `jupyter notebook`
 
-### 실행 동영상<br>Instruction video
-[![실행 동영상 Instruction video](https://i.ytimg.com/vi/W6ynqGKJFSs/hqdefault.jpg)](https://www.youtube.com/embed/videoseries?list=PLA6B0Lmr9oJO9HeSC74wqxECtwpUPJfdm)
+### 실행 동영상 (SourceTree)<br>Instruction video (SoureTree)
+[![실행 동영상 (SourceTree) Instruction video (SourceTree)](https://i.ytimg.com/vi/W6ynqGKJFSs/hqdefault.jpg)](https://www.youtube.com/embed/videoseries?list=PLA6B0Lmr9oJO9HeSC74wqxECtwpUPJfdm)
 
 ## 알림 <br> Acknowledgement
 이 소프트웨어는 대한민국 국토교통부 건설교통과학기술진흥원 교통물류연구사업의 지원을 받아 시작되었음 (18TLRP-B117133-03)<br>
