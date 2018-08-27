@@ -70,7 +70,7 @@ This repository is mostly written in [`jupyter` notebook](http://arogozhnikov.gi
 `jupyter` 노트북은 웹브라우저를 통해 프로그램 코드를 수정 실행하고 LaTex 수식을 포함한 문서 작성이 가능함.<br>
 Through a web browser, `jupyter` notebook enables editing & running program codes and writing documents including LaTex equations.<br>
 
-* 적당한 folder 를 만듦 (예를 들어 User/Documents/SolMech/) <br> Make an appropriate folder (e.g., User/Documents/SolMech/)
+* 적당한 folder 를 만듦 (예를 들어 User/Documents/Python_Scripts/) <br> Make an appropriate folder (e.g., User/Documents/Python_Scripts/)
 * Git 또는 SourceTree 를 이용하여 위 folder 아래 이 원격 저장소를 `git clone` <br> Using the Git or SourceTree, `git clone` this repository under the folder
 * `cmd` 또는 `git bash` 실행한 후 `clone` 된 지역 저장소 folder로 이동 (예를 들어 `cd User/Documents/Solmech/`) <br> Start `cmd` or `git bash` and change working folder to the cloned folder (e.g. `cd User/Documents/Solmech/`)
 * `cmd` 또는 `git bash` 에서 각각 `cd` 또는 `pwd` 로 `clone` 된 folder 인지 확인 <br>Check location using `cd` or `pwd` in `cmd` or `git bash`
