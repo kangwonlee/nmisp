@@ -76,7 +76,7 @@ Through a web browser, `jupyter` notebook enables editing & running program code
 * `cmd` 또는 `git bash` 에서 각각 `cd` 또는 `pwd` 로 `clone` 된 folder 인지 확인 <br>Check location using `cd` or `pwd` in `cmd` or `git bash`
 * `jupyter notebook` 실행 <br>Run `jupyter notebook`
 
-### 실행 동영상 (SourceTree)<br>Instruction video (SoureTree)
+### 실행 동영상 (SourceTree) (한글자막있음)<br>Instruction video (SoureTree)(English caption available)
 [![실행 동영상 (SourceTree) Instruction video (SourceTree)](https://i.ytimg.com/vi/W6ynqGKJFSs/hqdefault.jpg)](https://www.youtube.com/embed/videoseries?list=PLA6B0Lmr9oJO9HeSC74wqxECtwpUPJfdm)
 
 ## 알림 <br> Acknowledgement
