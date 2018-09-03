@@ -13,3 +13,4 @@ dependencies:
 - jupyter=1.0.0
 - pytest=3.2.1
 - matplotlib=2.1.0
+- pandas=0.23.4
