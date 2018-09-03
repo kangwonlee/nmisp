@@ -29,11 +29,12 @@ def _exec_notebook(path):
 
 folder_list = (
     '00_introduction', 
-    '01_root_finding', 
-    '02_num_int', 
-    '03_linear_algebra_1', 
-    '04_ode', 
-    '05_linear_algebra_2',
+    '10_root_finding', 
+    '20_interpolation',
+    '30_num_int', 
+    '40_linear_algebra_1', 
+    '50_ode', 
+    '60_linear_algebra_2',
 )
 
 
