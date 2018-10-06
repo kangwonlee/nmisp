@@ -1,14 +1,36 @@
 # ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
 #       Anaconda Inc., Using conda with Travis CI, Conda documentation, https://conda.io/docs/user-guide/tasks/use-conda-with-travis-ci.html
+#       .travis.yml for gcc-5 compiler support on Travis CI , https://gist.github.com/cotsog/3ce84675af0d74438d91
+#       CodeChat, .travis.yml - Travis CI configuration, https://pythonhosted.org/CodeChat/.travis.yml.html
+#       Travis CI, Python example (unsupported languages), https://docs.travis-ci.com/user/multi-os/#python-example-unsupported-languages
 
-language: python
+matrix:
+  include:
+    - os : linux
+      dist: trusty
+      sudo: required
+      language: python
+      python: "3.6"
+    - os : linux
+      dist: trusty
+      sudo: required
+      language: python
+      python: "nightly"
+    - os : osx
+      sudo: required
+      language: generic
+      env: TRAVIS_PYTHON_VERSION=3.6
 
-python:
-  - "3.6"
-  - "nightly"
+
+before_install:
+  # C++14
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
 
 install:
   - sudo apt-get update
+  - sudo apt-get install -qq g++-6
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   # We do this conditionally because it saves us some downloading if the
   # version is the same.
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
@@ -24,9 +46,11 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
-            conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.6.yml;
+      conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.6.yml;
+    elif [[ "$TRAVIS_PYTHON_VERSION" == "3.7" ]]; then
+      conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.7.yml;
     else
-        conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.nightly.yml;
+      conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.nightly.yml;
     fi
   - source activate test-environment
   - conda list
