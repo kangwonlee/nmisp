@@ -20,7 +20,9 @@ matrix:
     - os : osx
       sudo: required
       language: generic
-      env: TRAVIS_PYTHON_VERSION=3.6
+    - os : osx
+      sudo: required
+      python: "nightly"
 
 
 before_install:
