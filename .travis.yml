@@ -8,15 +8,11 @@ matrix:
   include:
     - os : linux
       sudo: required
-      language: python
       python: "3.6"
     - os : linux
       sudo: required
-      # no python 3.7 support for linux yet
-      language: generic
-      env: TRAVIS_PYTHON_VERSION=3.7
+      python: "3.7"
     - os : linux
-      language: python
       python: "nightly"
     - os : osx
       sudo: required
