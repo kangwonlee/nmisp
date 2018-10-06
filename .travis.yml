@@ -19,7 +19,7 @@ matrix:
       python: "nightly"
     - os : osx
       sudo: required
-      language: generic
+      python: "3.6"
     - os : osx
       sudo: required
       python: "nightly"
