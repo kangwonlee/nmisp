@@ -49,13 +49,21 @@ install:
     elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
     fi
+  # Install miniconda
   - bash miniconda.sh -b -p $HOME/miniconda
+  # Add miniconda path
   - export PATH="$HOME/miniconda/bin:$PATH"
+  # Forget all rememberd locations
   - hash -r
+  # Conda setup options
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
+  # To help debugging
+  - echo $TRAVIS_OS_NAME
+  - echo $TRAVIS_PYTHON_VERSION
   # Useful for debugging any issues with conda
   - conda info -a
+  # Apply python module recipies
   - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
       conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f ./tests/environment.3.6.yml;
     elif [[ "$TRAVIS_PYTHON_VERSION" == "3.7" ]]; then
