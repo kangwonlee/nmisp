@@ -27,6 +27,8 @@ def _exec_notebook(path):
         subprocess.check_call(args)
 
 
+base_path = os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir))
+
 folder_list = (
     '.',
 )
@@ -35,7 +37,7 @@ folder_list = (
 # https://docs.pytest.org/en/latest/example/parametrize.html
 @pytest.mark.parametrize("folder", folder_list)
 def test_ipynb_in_folder(folder):
-    path = os.path.join(os.pardir, folder)
+    path = os.path.join(base_path, folder)
     ext = 'ipynb'
 
     # recursive loop
@@ -52,7 +54,7 @@ def test_ipynb_in_folder(folder):
 # https://docs.pytest.org/en/latest/example/parametrize.html
 @pytest.mark.parametrize("folder", folder_list)
 def test_cpp_in_ipynb_in_folder(folder):
-    path = os.path.join(os.pardir, folder)
+    path = os.path.join(base_path, folder)
     ext = 'ipynb'
 
     if gcpp.has_gpp():
