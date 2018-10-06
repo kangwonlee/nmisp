@@ -42,6 +42,9 @@ install:
       sudo apt-get update;
       sudo apt-get install -qq g++-6;
       sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90;
+    fi
+  # Obtain miniconda installer for the OS
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
     elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
