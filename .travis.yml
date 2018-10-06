@@ -12,6 +12,7 @@ matrix:
       python: "3.6"
     - os : linux
       sudo: required
+      # no python 3.7 support for linux yet
       language: generic
       env: TRAVIS_PYTHON_VERSION=3.7
     - os : linux
@@ -20,6 +21,9 @@ matrix:
     - os : osx
       sudo: required
       python: "3.6"
+    - os : osx
+      sudo: required
+      python: "3.7"
     - os : osx
       sudo: required
       python: "nightly"
