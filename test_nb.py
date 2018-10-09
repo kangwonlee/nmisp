@@ -1,10 +1,12 @@
 # ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
 
 import os
-import pytest
 import subprocess
 import tempfile
-import utils.get_cpp_from_ipynb as gcpp
+
+import pytest
+
+from . import get_cpp_from_ipynb as gcpp
 
 
 def check_kernel_spec():
@@ -41,8 +43,7 @@ def test_ipynb_in_folder(folder):
     ext = 'ipynb'
 
     # recursive loop
-    # TODO : Consider changing dirnames to '_'
-    for root, dirnames, filenames in os.walk(path):
+    for root, _, filenames in os.walk(path):
         if 'ipynb_checkpoints' not in root:
             # files loop
             for filename in filenames:
