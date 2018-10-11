@@ -15,3 +15,4 @@ dependencies:
 - matplotlib=2.1.0
 - pandas=0.23.4
 - statsmodels=0.8.0
+- cython
