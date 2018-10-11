@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from . import get_cpp_from_ipynb as gcpp
@@ -22,10 +24,22 @@ cpp_test_cases = [
 ]
 
 
-# https://docs.pytest.org/en/latest/example/parametrize.html
-@pytest.mark.parametrize("cpp_ipynb_md_cell, expected", cpp_test_cases)
-def test_get_build_command_in_last_line(cpp_ipynb_md_cell, expected):
-    result = gcpp.build_markdown_cpp_cell(cpp_ipynb_md_cell)
-    message = f"\nexpected : {expected}\nresult : {result}"
+def test_get_build_command_in_last_line():
+    created_files = []
+    for cpp_ipynb_md_cell, expected in cpp_test_cases:
+        result = gcpp.build_markdown_cpp_cell(cpp_ipynb_md_cell)
 
-    assert result == expected, message
+        if os.path.exists(result["cpp_filename"]):
+            created_files.append(result["cpp_filename"])
+
+        # to delete during teardown
+        if result['cpp_filename'] not in created_files:
+            created_files.append(result['cpp_filename'])
+
+        message = f"\nexpected : {expected}\nresult : {result}"
+
+        assert result == expected, message
+
+    for delete_this in created_files:
+        if os.path.exists(delete_this):
+            os.remove(delete_this)
