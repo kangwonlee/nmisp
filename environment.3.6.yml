@@ -5,7 +5,7 @@ channels:
 - defaults
 
 dependencies:
-- python<3.7
+- python<=3.6.8
 # Anaconda 5.0.1 python 3.6
 - numpy=1.13.3
 - scipy=0.19.1
