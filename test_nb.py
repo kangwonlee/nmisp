@@ -28,13 +28,7 @@ def _exec_notebook(path):
 
 
 folder_list = (
-    '00_introduction', 
-    '10_root_finding', 
-    '20_interpolation',
-    '30_num_int', 
-    '40_linear_algebra_1', 
-    '50_ode', 
-    '60_linear_algebra_2',
+    os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)),
 )
 
 
