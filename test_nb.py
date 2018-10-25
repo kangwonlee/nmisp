@@ -47,8 +47,11 @@ def _exec_notebook(path):
         # and raise if error
         subprocess.check_call(args)
 
+# Find absolute path of the parent folder
+# This file assumes the parent folder contains a number of .ipynb files
 base_path = os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir))
 
+# Prepare a list of ipynb files of the base_path
 ipynb_file_list = [filename for filename in os.listdir(base_path) if filename.endswith('.ipynb')]
 
 
@@ -56,6 +59,7 @@ ipynb_file_list = [filename for filename in os.listdir(base_path) if filename.en
 @pytest.mark.parametrize("filename", ipynb_file_list)
 def test_execute_ipynb(filename):
     print('execute_ipynb() : %s %s' % (base_path, filename))
+    # run .ipynb file
     _exec_notebook(os.path.join(base_path, filename))
 
 
@@ -63,4 +67,7 @@ def test_execute_ipynb(filename):
 @pytest.mark.parametrize("filename", ipynb_file_list)
 def test_cpp_in_ipynb(filename):
     print('test_cpp_in_ipynb() : %s %s' % (base_path, filename))
+    # separate .cpp code blocks from the ipynb file,
+    # build, and run
     assert gcpp.get_cpp_src_from_ipynb(os.path.join(base_path, filename))
+
