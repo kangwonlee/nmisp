@@ -10,6 +10,10 @@ from . import get_cpp_from_ipynb as gcpp
 
 
 def check_kernel_spec():
+    """
+    Present Jupyter kernel spec
+    """
+
     # https://jupyter-client.readthedocs.io/en/latest/api/kernelspec.html
     import jupyter_client.kernelspec as jk
 
