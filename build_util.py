@@ -67,7 +67,7 @@ def build_cpp(filename):
 
 def run(cpp_filename):
     """
-    Build cpp file
+    Run the execution file from the cpp file
     cpp_filename : ex) test or test.cpp
     """
     basename, ext = os.path.splitext(cpp_filename)
@@ -82,7 +82,8 @@ def run(cpp_filename):
 
 def cleanup(cpp_filename):
     """
-    Build cpp file
+    Clean up cpp and execution files
+    Assume execution file name is basename of the cpp filename
     cpp_filename : ex) test or test.cpp
     """
     basename, ext = os.path.splitext(cpp_filename)
