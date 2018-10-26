@@ -3,6 +3,7 @@ import os
 import subprocess
 
 import IPython
+import IPython.display as disp
 
 
 # obtain ipython
@@ -99,4 +100,20 @@ def cleanup(cpp_filename):
 
     # to delete source file
     os.remove(cpp_filename)
+
+
+def run_markdown(cpp_filename):
+    """
+    Run execution file from the cpp file
+    and present the output as markdown
+    cpp_filename : ex) test or test.cpp
+    """
+    basename, ext = os.path.splitext(cpp_filename)
+    # https://stackoverflow.com/questions/4760215/running-shell-command-from-python-and-capturing-the-output
+    # https://stackoverflow.com/questions/35160256/how-do-i-output-lists-as-a-table-in-jupyter-notebook
+
+    # Run executable while capturing output
+    result = subprocess.run([os.path.join(os.curdir, basename)], stdout=subprocess.PIPE)
+    # present output as a markdown
+    disp.display(disp.Markdown(result.stdout.decode()))
 
