@@ -1,4 +1,6 @@
 # https://stackoverflow.com/questions/10361206/how-to-run-an-ipython-magic-from-a-script-or-timing-a-python-script
+import os
+
 import IPython
 
 
@@ -15,4 +17,38 @@ except AttributeError:
 
 def write_file(filename, code):
     ipython.run_cell_magic("writefile", filename, code)
+
+
+def build_cpp(filename):
+    # Detect OS type because OSX may need different options
+    # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux/18790824
+    
+    basename, ext = os.path.splitext(filename)
+    if not ext:
+        filename += '.cpp'
+
+    ipython.run_cell_magic(
+            "bash", "", ""
+            'unameOut="$(uname -s)"\n'
+            'case "${unameOut}" in\n'
+            '   Linux*)     machine=Linux;;\n'
+            '   Darwin*)    machine=Mac;;\n'
+            '   CYGWIN*)    machine=Cygwin;;\n'
+            '   MINGW*)     machine=MinGw;;\n'
+            '   *)          machine="UNKNOWN:${unameOut}"\n'
+            'esac\n'
+            'if [ $machine == "Linux" ]; then\n'
+            '    # build command for Linux\n'
+            f'    g++ -Wall -g -std=c++14 {filename} -o ./{basename} -Wa,-adhln={basename}.s\n'
+            'elif [ "Mac" == $machine ]; then\n'
+            '    # build command for OSX\n'
+            '    # https://stackoverflow.com/questions/10990018/\n'
+            f'    clang++ -S -mllvm --x86-asm-syntax=intel {filename}\n'
+            f'    clang++ -Wall -g -std=c++14 {filename} -o ./{basename}\n'
+            'else\n'
+            '    # Otherwise\n'
+            f'    g++ -Wall -g -std=c++14 {filename} -o ./{basename}.s -S\n'
+            f'    g++ -Wall -g -std=c++14 {filename} -o ./{basename}\n'
+            'fi\n'
+    )
 
