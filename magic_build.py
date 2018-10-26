@@ -1,5 +1,6 @@
 # https://stackoverflow.com/questions/10361206/how-to-run-an-ipython-magic-from-a-script-or-timing-a-python-script
 import os
+import subprocess
 
 import IPython
 
@@ -51,4 +52,15 @@ def build_cpp(filename):
             f'    g++ -Wall -g -std=c++14 {filename} -o ./{basename}\n'
             'fi\n'
     )
+
+
+def run(cpp_filename):
+    basename, ext = os.path.splitext(cpp_filename)
+    # https://stackoverflow.com/questions/4760215/running-shell-command-from-python-and-capturing-the-output
+    # https://stackoverflow.com/questions/35160256/how-do-i-output-lists-as-a-table-in-jupyter-notebook
+
+    # Run executable while capturing output
+    result = subprocess.run([os.path.join(os.curdir, basename)], stdout=subprocess.PIPE)
+    # present output
+    print(result.stdout.decode())
 
