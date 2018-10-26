@@ -64,3 +64,13 @@ def run(cpp_filename):
     # present output
     print(result.stdout.decode())
 
+
+def cleanup(cpp_filename):
+    basename, ext = os.path.splitext(cpp_filename)
+    if os.path.exists(basename):
+        os.remove(basename)
+    else:
+        print(f"Unable to find {basename}")
+        print(os.listdir())
+    os.remove(cpp_filename)
+
