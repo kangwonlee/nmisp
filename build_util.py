@@ -67,6 +67,9 @@ def run(cpp_filename):
 
 def cleanup(cpp_filename):
     basename, ext = os.path.splitext(cpp_filename)
+    if not ext:
+        cpp_filename += '.cpp'
+
     if os.path.exists(basename):
         os.remove(basename)
     else:
