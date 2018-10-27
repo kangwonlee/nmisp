@@ -50,16 +50,6 @@ def build_cpp(filename):
             '-o', os.path.join(os.curdir, basename), # output file name
             f'-Wa,-adhln={basename}.s'
         ])
-    elif sys.platform.lower().startswith('darwin'):
-        # build command for OSX
-        # https://stackoverflow.com/questions/10990018/
-        subprocess.run([
-            'clang++', '-S', '-mllvm', '-std=c++14', '--x86-asm-syntax=intel', filename
-        ])
-        subprocess.run([
-            'clang++', '-Wall', '-g', '-std=c++14', filename,
-            '-o', os.path.join(os.curdir, basename), # output file name
-        ])
     else:
         # Otherwise
         subprocess.run([
