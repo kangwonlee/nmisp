@@ -54,7 +54,7 @@ def build_cpp(filename):
         # build command for OSX
         # https://stackoverflow.com/questions/10990018/
         subprocess.run([
-            'clang++', '-S', '-mllvm', '--x86-asm-syntax=intel', filename
+            'clang++', '-S', '-mllvm', '-std=c++14', '--x86-asm-syntax=intel', filename
         ])
         subprocess.run([
             'clang++', '-Wall', '-g', '-std=c++14', filename,
