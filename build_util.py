@@ -62,7 +62,7 @@ def build_cpp(filename):
         )
         subprocess.run([
             'g++', '-Wall', '-g', '-std=c++14', filename,
-            '-o',  os.path.join(os.curdir, f'{basename}.s'),
+            '-o',  os.path.join(os.curdir, f'{basename}'),
             ],
             check=True,
         )
