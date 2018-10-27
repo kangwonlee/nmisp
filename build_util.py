@@ -48,18 +48,24 @@ def build_cpp(filename):
         subprocess.run([
             'g++', '-Wall', '-g', '-std=c++14', filename,
             '-o', os.path.join(os.curdir, basename), # output file name
-            f'-Wa,-adhln={basename}.s'
-        ])
+            f'-Wa,-adhln={basename}.s',
+            ],
+            check=True,
+        )
     else:
         # Otherwise
         subprocess.run([
             'g++', '-Wall', '-g', '-std=c++14', filename,
             '-S', '-o',  os.path.join(os.curdir, f'{basename}.s'),
-        ])
+            ],
+            check=True,
+        )
         subprocess.run([
             'g++', '-Wall', '-g', '-std=c++14', filename,
             '-o',  os.path.join(os.curdir, f'{basename}.s'),
-        ])
+            ],
+            check=True,
+        )
 
 
 def run(cpp_filename):
@@ -72,7 +78,11 @@ def run(cpp_filename):
     # https://stackoverflow.com/questions/35160256/how-do-i-output-lists-as-a-table-in-jupyter-notebook
 
     # Run executable while capturing output
-    result = subprocess.run([os.path.join(os.curdir, basename)], stdout=subprocess.PIPE)
+    result = subprocess.run(
+            [os.path.join(os.curdir, basename)],
+            stdout=subprocess.PIPE,
+            check=True,
+    )
     # present output
     print(result.stdout.decode())
 
@@ -109,7 +119,11 @@ def run_markdown(cpp_filename):
     # https://stackoverflow.com/questions/35160256/how-do-i-output-lists-as-a-table-in-jupyter-notebook
 
     # Run executable while capturing output
-    result = subprocess.run([os.path.join(os.curdir, basename)], stdout=subprocess.PIPE)
+    result = subprocess.run(
+            [os.path.join(os.curdir, basename)],
+            stdout=subprocess.PIPE,
+            check=True,
+    )
     # present output as a markdown
     disp.display(disp.Markdown(result.stdout.decode()))
 
