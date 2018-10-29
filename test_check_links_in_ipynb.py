@@ -14,9 +14,9 @@ base_path = os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir))
 ipynb_file_list = [filename for filename in os.listdir(base_path) if filename.endswith('.ipynb')]
 
 
-def test_check_links_in_ipynb():
+def test_check_links_in_ipynb_cells_list():
     # still working on
-    cli.check_links_in_ipynb(os.path.join(base_path, '10.ipynb'))
+    cli.check_links_in_ipynb_cells_list(sample_ipynb['cells'])
 
 
 # patterns to test simple urls
