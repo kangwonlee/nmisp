@@ -16,4 +16,5 @@ dependencies:
 - scipy=1.1.0
 - statsmodels=0.9.0
 - sympy=1.1.1
-- cython=0.28.2
+- cython=0.28.5
+- requests=2.19.1
