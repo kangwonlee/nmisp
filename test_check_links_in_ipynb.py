@@ -1,4 +1,5 @@
 import os
+import urllib
 
 import pytest
 
@@ -349,8 +350,25 @@ google_cell =  {
    ])
   }
 
+fail_cell =  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": ''.join([
+    "[ref0](http://dfjlafj)\n",
+    "\n"
+   ])
+  }
+
 
 def test_check_link_in_cell():
     r = cli.get_re_markdown_simple_link()
     
     cli.check_link_in_cell(google_cell, r)
+
+    try:
+        cli.check_link_in_cell(fail_cell, r)
+    except urllib.error.URLError as e:
+        print(e)
+        pass
+    else:
+        raise NotImplementedError
