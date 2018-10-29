@@ -118,10 +118,14 @@ patterns_image = [
 
 
 def test_get_re_markdown_image_link():
+    # get regular expression under test
     r = cli.get_re_markdown_image_link()
 
+    # pattern loop
     for d in patterns_image:
+        # see if found pattens are all correct
         assert d['urls'] == set(r.findall(d['text'])), (
+            # assert message
             f"\nexpected: {d['urls']}\n"
             f"found: {set(r.findall(d['text']))}"
         )
