@@ -106,6 +106,21 @@ def test_get_re_markdown_simple_link():
         )
 
 
-if "__main__" == __name__:
-    test_check_links_in_ipynb()
-    test_get_re_markdown_simple_link()
+patterns_image = [
+    {
+        'text': '[![CppCon 2015: Greg Law " Give me 15 minutes & I\'ll change your view of GDB"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n\n',
+        'urls': {
+            'https://www.youtube.com/watch?v=PorfLSr3DDI',
+        } 
+    },
+]
+
+
+def test_get_re_markdown_image_link():
+    r = cli.get_re_markdown_image_link()
+
+    for d in patterns_image:
+        assert d['urls'] == set(r.findall(d['text'])), (
+            f"\nexpected: {d['urls']}\n"
+            f"found: {set(r.findall(d['text']))}"
+        )
