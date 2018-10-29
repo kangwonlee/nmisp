@@ -1,8 +1,9 @@
 import re
+import urllib.parse as up
 import urllib.request as ur
-import requests
 
 import nbformat
+import requests
 
 
 def is_cell_markdown(cell):
