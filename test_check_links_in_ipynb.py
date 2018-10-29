@@ -2,6 +2,7 @@ import os
 import urllib
 
 import pytest
+import requests
 
 from . import check_links_in_ipynb as cli
 
@@ -390,6 +391,10 @@ def test_check_link_in_cell():
         # failure case
         cli.check_link_in_cell(fail_cell, r)
     except urllib.error.URLError as e:
+        # present expected error
+        print(e)
+        pass
+    except requests.exceptions.ConnectionError as e:
         # present expected error
         print(e)
         pass
