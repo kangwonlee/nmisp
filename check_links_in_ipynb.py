@@ -45,7 +45,7 @@ def check_link_in_cell(cell, r):
         if 200 == req.status_code:
             result = True
         else:
-            raise requests.RequestException(f'unable to get {m.group(1)}')
+            raise requests.RequestException(f'unable to get {up.unquote(m.group(1))}')
 
 
 def check_links_in_ipynb(filename):
