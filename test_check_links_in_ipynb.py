@@ -339,3 +339,18 @@ sample_ipynb = {
 for i in range(len(sample_ipynb['cells'])):
     sample_ipynb['cells'][i]['source'] = ''.join(sample_ipynb['cells'][i]['source'])
 
+
+google_cell =  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": ''.join([
+    "[ref0](http://www.google.com)\n",
+    "\n"
+   ])
+  }
+
+
+def test_check_link_in_cell():
+    r = cli.get_re_markdown_simple_link()
+    
+    cli.check_link_in_cell(google_cell, r)
