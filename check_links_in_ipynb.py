@@ -1,5 +1,6 @@
 import re
 import urllib.request as ur
+import requests
 
 import nbformat
 
@@ -39,8 +40,11 @@ def check_link_in_cell(cell, r):
     # url match loop
     for m in r.finditer(cell['source']):
         # try to open url part of the match
-        with ur.urlopen(m.group(1)) as _:
-            pass
+        req = requests.get(m.group(1))
+        if 200 == req.status_code:
+            result = True
+        else:
+            raise requests.RequestException(f'unable to get {m.group(1)}')
 
 
 def check_links_in_ipynb(filename):
