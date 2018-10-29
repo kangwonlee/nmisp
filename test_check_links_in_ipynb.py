@@ -375,7 +375,7 @@ def test_check_link_in_cell():
     "cell_type": "markdown",
     "metadata": {},
     "source": ''.join([
-        "[ref0](http://dfjlafj)\n",
+        "[ref0](https://en.wikipedia.org/wiki/New_and_delete_&#40;C%2B%2B&#41;)\n",
         "\n"
     ])
     }    
@@ -398,6 +398,9 @@ def test_check_link_in_cell():
         # present expected error
         print(e)
         pass
+    except BaseException as e:
+        # just in case
+        print(e)
     else:
         # expected exception not raised
         raise NotImplementedError
