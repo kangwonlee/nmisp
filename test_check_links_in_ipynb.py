@@ -127,6 +127,8 @@ def test_get_re_markdown_image_link():
         )
 
 
+# raw ipynb file
+# need to join source into a single string
 sample_ipynb = {
  "cells": [
   {
@@ -337,38 +339,46 @@ sample_ipynb = {
  "nbformat_minor": 2
 }
 
+# joining the source code parts of the raw ipynb
 for i in range(len(sample_ipynb['cells'])):
     sample_ipynb['cells'][i]['source'] = ''.join(sample_ipynb['cells'][i]['source'])
 
 
-google_cell =  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": ''.join([
-    "[ref0](http://www.google.com)\n",
-    "\n"
-   ])
-  }
-
-fail_cell =  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": ''.join([
-    "[ref0](http://dfjlafj)\n",
-    "\n"
-   ])
-  }
-
-
 def test_check_link_in_cell():
+    # This case is supposed to success
+    google_cell =  {
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": ''.join([
+        "[ref0](http://www.google.com)\n",
+        "\n"
+    ])
+    }
+
+    # This case is supposed to fail
+    fail_cell =  {
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": ''.join([
+        "[ref0](http://dfjlafj)\n",
+        "\n"
+    ])
+    }    
+
     r = cli.get_re_markdown_simple_link()
     
+    # function under test
+    # success case
     cli.check_link_in_cell(google_cell, r)
 
     try:
+        # function under test
+        # failure case
         cli.check_link_in_cell(fail_cell, r)
     except urllib.error.URLError as e:
+        # present expected error
         print(e)
         pass
     else:
+        # expected exception not raised
         raise NotImplementedError
