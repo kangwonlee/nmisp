@@ -398,6 +398,9 @@ def test_check_link_in_cell():
         # present expected error
         print(e)
         pass
+    except BaseException as e:
+        # just in case
+        print(e)
     else:
         # expected exception not raised
         raise NotImplementedError
