@@ -124,3 +124,218 @@ def test_get_re_markdown_image_link():
             f"\nexpected: {d['urls']}\n"
             f"found: {set(r.findall(d['text']))}"
         )
+
+
+sample_ipynb = {
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Introducing `gdb`"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* `gdb` is the **GNU debugger** that you can use if you compiled with `gcc` or `g++`.\n",
+    "[\n",
+    "[ref0](http://www.yolinux.com/TUTORIALS/GDB-Commands.html)\n",
+    ", [ref1](https://www.quora.com/What-is-a-good-debugger-for-C++-programming)\n",
+    ", [ref2](https://en.wikipedia.org/wiki/GNU_Debugger)\n",
+    "]\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* In case of `clang`, `lldb` would be your choice. \n",
+    "[\n",
+    "[ref](https://lldb.llvm.org/lldb-gdb.html)\n",
+    "]\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Basic use"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* To use `gdb`, please add `-g` option to comile.  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* For example, to build the executable file for `test.c` source file including debug information, following command can be one possible option.\n",
+    "\n",
+    "``` sh\n",
+    "g++ -Wall -g test.c -o a.out\n",
+    "gdb a.out\n",
+    "```\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Please see following table for several gdb commands:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "| command | expected behavior | example |\n",
+    "|:-------:|:-------:|:-------:|\n",
+    "| `help` | Show help | `help`<br>`help running` |\n",
+    "| `quit` | Exit `gdb` | `quit`<br>`q` |\n",
+    "| `apropos <word>` | Search for word in help | `apropos python` |\n",
+    "| `info args` | List program commandline arguments | `info args`<br>`i args` |\n",
+    "| `info breakpoints` | List breakpoints | `info breakpoints`<br>`i breakpoints` |\n",
+    "| `start` | Start the executable and stop at the first line | `start` |\n",
+    "| `break <location>` | Set a breakpoint at the location | `break main`<br>`b main`<br>`break 17`<br>`break Matrix::add` |\n",
+    "| `run` | Start program execution | `run`<br>`r`<br>`run a.out a b c`<br>`run output.txt`<br>`run input.txt output.txt` |\n",
+    "| `break +<n>`<br>`break -<n>` | Set a breakpoint at n lines after or before | `break +1`<br>`break -1` |\n",
+    "| `break *<address>` | Set a breakpoint at an instruction address | `break *0x555555554f77` |\n",
+    "| `step` | Step *into* next line(s) of code | `step`<br>`s`<br>`s 3` |\n",
+    "| `next` | Step *over* next line(s) of code | `next`<br>`n`<br>`n 3` |\n",
+    "| `stepi`<br>`si`<br>`nexti`<br>`ni` | `step` and `next` for assembly instruction level | `stepi`<br>`si`<br>`nexti`<br>`ni`<br>... |\n",
+    "| `continue` | Continue running the program until the next breakpoint | `continue`<br>`c` |\n",
+    "| `continue <n>` | Continue running the program ignoring current breakpoint *n* times | `continue 19`<br>`c 200` |\n",
+    "| `finish` | Continue to the end of function | `finish` |\n",
+    "| `until <location>` | Continue to the *location* | `until 17`<br>`until add`<br>`until 0x555555554f77` |\n",
+    "| `where` | Line number and function name | `where` |\n",
+    "| `print <memory>` | Print content of the *memory* | `print argn`<br>`p argn`<br>`p/x argv`<br>`p/d argv` |\n",
+    "| `x <address>` | Check the content of the memory at a location | `x/4dw 0x555555554f77` |\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## More idea"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Following video presents some more idea on using `gdb`.\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "[![CppCon 2015: Greg Law \" Give me 15 minutes & I'll change your view of GDB\"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "| command | expected behavior | example |\n",
+    "|:-------:|:-------:|:-------:|\n",
+    "| `gdb --tui` | Start `gdb` in *Text User Interface* mode | `gdb a.out --tui` |\n",
+    "| <kbd>X</kbd>+<kbd>A</kbd> | Start *Text User Interface* mode | <kbd>X</kbd>+<kbd>A</kbd> |\n",
+    "| <kbd>L</kbd> | Refresh screen | <kbd>L</kbd> |\n",
+    "| <kbd>X</kbd>+<kbd>2</kbd> | Add another window<br>or toggle through display options | <kbd>X</kbd>+<kbd>2</kbd> |\n",
+    "| `tui reg general` | Show general purpose registers | `tui reg general` |\n",
+    "| <kbd>Ctrl</kbd>+<kbd>P</kbd>/<kbd>N</kbd> | Scroll command window upward/downward | <kbd>Ctrl</kbd>+<kbd>P</kbd>/<kbd>N</kbd> |\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "| command | expected behavior | example |\n",
+    "|:-------:|:-------:|:-------:|\n",
+    "| `python` | Start built-in python interpreter | `python`<br>`python print('Hi')` |\n",
+    "| `python print(gdb.breakpoints())` | Show breakpoints | `python print(gdb.breakpoints())` |\n",
+    "| `python gdb.Breakpoints(<location>)` | Create a breakpoint | `python gdb.Breakpoints('7')` |\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "| command | expected behavior | example |\n",
+    "|:-------:|:-------:|:-------:|\n",
+    "| `reverse-stepi` | Backstep assembly instruction | `reverse-stepi` |\n",
+    "| `reverse-continue` | Backward continue until a breakpoint | `reverse-continue` |\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## When *core* was dumped"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Sometimes your C/C++ program would crash and the *core* might have been *dump*ed."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* You could use following [command](https://stackoverflow.com/questions/8305866/how-to-analyze-a-programs-core-dump-file-with-gdb) to analyze.<br>\n",
+    "``` sh\n",
+    "gdb <executable> -c <core-file>\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
+
+for i in range(len(sample_ipynb['cells'])):
+    sample_ipynb['cells'][i]['source'] = ''.join(sample_ipynb['cells'][i]['source'])
+
