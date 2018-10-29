@@ -15,6 +15,10 @@ def get_re_markdown_image_link():
     return re.compile(r'\[\!\[.+?\]\(.+?\)\]\((.+?)\)')
 
 
+ri = get_re_markdown_image_link()
+rs = get_re_markdown_simple_link()
+
+
 def check_links_in_ipynb(filename):
     with open(filename, encoding='utf-8') as ipynb:
         nb = nbformat.read(ipynb, nbformat.NO_CONVERT)
