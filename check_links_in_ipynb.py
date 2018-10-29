@@ -51,8 +51,19 @@ def check_links_in_ipynb(filename):
     with open(filename, encoding='utf-8') as ipynb:
         nb = nbformat.read(ipynb, nbformat.NO_CONVERT)
 
+    check_links_in_ipynb_cells_list(nb['cells'])
+
+
+def check_links_in_ipynb_cells_list(cells_list):
+    """
+    cells_list : ipynb notebook's cells
+
+    >>> with open(filename, encoding='utf-8') as ipynb:
+        nb = nbformat.read(ipynb, nbformat.NO_CONVERT)
+    >>> check_links_in_ipynb_cells_list(nb['cells'])
+    """
     # cell loop
-    for cell in filter(is_cell_markdown, nb['cells']):
+    for cell in filter(is_cell_markdown, cells_list):
         # see if the cell has links
         # https://stackoverflow.com/questions/16778435/python-check-if-website-exists
 
