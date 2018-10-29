@@ -15,8 +15,12 @@ ipynb_file_list = [filename for filename in os.listdir(base_path) if filename.en
 
 
 def test_check_links_in_ipynb():
+    # still working on
     cli.check_links_in_ipynb(os.path.join(base_path, '10.ipynb'))
 
+
+# patterns to test simple urls
+# including urls of images
 patterns = [
     {
         'text': '* `gdb` is the **GNU debugger** that you can use if you compiled with `gcc` or `g++`.\n[\n[ref0](http://www.yolinux.com/TUTORIALS/GDB-Commands.html)\n, [ref1](https://www.quora.com/What-is-a-good-debugger-for-C++-programming)\n, [ref2](https://en.wikipedia.org/wiki/GNU_Debugger)\n]\n\n',
@@ -112,6 +116,7 @@ def test_get_re_markdown_simple_link():
 
 
 # patterns to test urls linked to images
+# not including urls of images
 patterns_image = [
     {
         'text': '[![CppCon 2015: Greg Law " Give me 15 minutes & I\'ll change your view of GDB"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n\n',
