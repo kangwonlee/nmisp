@@ -98,15 +98,20 @@ patterns = [
 
 
 def test_get_re_markdown_simple_link():
+    # get regular expression under test
     r = cli.get_re_markdown_simple_link()
 
+    # pattern loop
     for d in patterns:
+        # see if found pattens are all correct
         assert d['urls'] == set(r.findall(d['text'])), (
+            # assert message
             f"\nexpected: {d['urls']}\n"
             f"found: {set(r.findall(d['text']))}"
         )
 
 
+# patterns to test urls linked to images
 patterns_image = [
     {
         'text': '[![CppCon 2015: Greg Law " Give me 15 minutes & I\'ll change your view of GDB"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n\n',
