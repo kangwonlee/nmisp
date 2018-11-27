@@ -97,19 +97,28 @@ _exec_notebook = run_this_dict.get(os.name, _exec_notebook_nix)
 folder_list = (
     os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)),
 )
+def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
 
-
-# https://docs.pytest.org/en/latest/example/parametrize.html
-@pytest.mark.parametrize("folder", folder_list)
-def test_ipynb_in_folder(folder):
-    path = os.path.join(os.pardir, folder)
-    ext = 'ipynb'
+    file_list = []
 
     # recursive loop
     for root, _, filenames in os.walk(path):
-        if 'ipynb_checkpoints' not in root:
+        if not (
+                ('.ipynb_checkpoints' in root)
+                or ('.git' in root)
+                or ('__pycache__'in root)
+                or ('.pytest_cache' in root)
+            ):
             # files loop
             for filename in filenames:
                 if os.path.splitext(filename)[-1].endswith(ext):
-                    print('test() : %s %s' % (root, filename))
-                    _exec_notebook(os.path.join(root, filename))
+                    file_list.append(os.path.join(root, filename))
+
+    return file_list
+
+
+# https://docs.pytest.org/en/latest/example/parametrize.html
+@pytest.mark.parametrize("filename", make_file_list())
+def test_ipynb_file(filename):
+    print(f'test() : {filename}')
+    _exec_notebook(filename)
