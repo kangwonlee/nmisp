@@ -4,7 +4,7 @@
 #       CodeChat, .travis.yml - Travis CI configuration, https://pythonhosted.org/CodeChat/.travis.yml.html
 #       Travis CI, Python example (unsupported languages), https://docs.travis-ci.com/user/multi-os/#python-example-unsupported-languages
 
-# {linux, osx} x {3.6, 3.7, nightly}
+# {linux, osx, windows} x {3.6, 3.7, nightly}
 # When python 3.7 support becomes more clear, consider revision
 matrix:
   include:
@@ -26,23 +26,43 @@ matrix:
     - os : osx
       sudo: required
       python: "nightly"
+    - os : windows
+      sudo: required
+      # https://blog.travis-ci.com/2018-10-11-windows-early-release
+      language : shell
+      python: "3.6"
+    - os : windows
+      sudo: required
+      language : shell
+      python: "3.7"
+    - os : windows
+      sudo: required
+      language : shell
+      python: "nightly"
 
-install:
-  # Obtain miniconda installer for the OS
+before_install:
+  # Obtain miniconda installer
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
     elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
     fi
+
+install:
   # Install miniconda
-  - bash miniconda.sh -b -p $HOME/miniconda
-  # Add miniconda path
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  # Forget all rememberd locations
-  - hash -r
-  # Conda setup options
+  # https://docs.travis-ci.com/user/reference/windows/#support
+  # https://chocolatey.org/packages/miniconda3/4.5.11
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
+      bash miniconda.sh -b -p $HOME/miniconda;
+      export PATH="$HOME/miniconda:$HOME/miniconda/bin:$PATH";
+      hash -r;
+    elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      choco install miniconda3 --params="'/AddToPath:1'";
+      export PATH="/c/tools/miniconda3/scripts:/c/tools/miniconda3/:$PATH";
+    fi
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
+  # Conda setup options
   # To help debugging
   - echo $TRAVIS_OS_NAME
   - echo $TRAVIS_PYTHON_VERSION
