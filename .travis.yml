@@ -9,25 +9,20 @@
 matrix:
   include:
     - os : linux
-      sudo: required
       language: python
       python: "3.6"
     - os : windows
-      sudo: required
       # https://blog.travis-ci.com/2018-10-11-windows-early-release
       language : shell
       python: "3.6"
     - os : windows
-      sudo: required
       language : shell
       python: "3.7"
     - os : windows
-      sudo: required
       language : shell
       python: "nightly"
     - os : linux
       # When python 3.7 support becomes more clear, consider revision
-      sudo: required
       python: "3.7"
     - os : linux
       python: "nightly"
