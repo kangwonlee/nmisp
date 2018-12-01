@@ -98,11 +98,6 @@ def get_exec_notebook():
     return _exec_notebook
 
 
-folder_list = (
-    os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)),
-)
-
-
 def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
 
     file_list = []
