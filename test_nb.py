@@ -53,7 +53,7 @@ def _exec_notebook_win(path):
     # obtain a temporary filename
     # https://docs.python.org/3/library/tempfile.html
     ftemp = tempfile.NamedTemporaryFile(suffix=".ipynb")
-    filename = os.path.split(ftemp.name)[-1]
+    filename = os.path.join(os.getcwd(), os.path.split(ftemp.name)[-1])
     ftemp.close()
 
     # prepare a command running .ipynb file while converting
@@ -73,10 +73,14 @@ def _exec_notebook_win(path):
         # and raise an exception if error
         subprocess.check_call(args)
     except BaseException as e:
-        os.remove(filename)
+        print(e)
+        if os.path.exists(filename):
+            os.remove(filename)
         raise e
 
-    os.remove(filename)
+    print('success')
+    if os.path.exists(filename):
+        os.remove(filename)
 
 
 # https://docs.python.org/3/library/platform.html#cross-platform
@@ -93,19 +97,28 @@ _exec_notebook = run_this_dict.get(os.name, _exec_notebook_nix)
 folder_list = (
     os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)),
 )
+def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
 
-
-# https://docs.pytest.org/en/latest/example/parametrize.html
-@pytest.mark.parametrize("folder", folder_list)
-def test_ipynb_in_folder(folder):
-    path = os.path.join(os.pardir, folder)
-    ext = 'ipynb'
+    file_list = []
 
     # recursive loop
     for root, _, filenames in os.walk(path):
-        if 'ipynb_checkpoints' not in root:
+        if not (
+                ('.ipynb_checkpoints' in root)
+                or ('.git' in root)
+                or ('__pycache__'in root)
+                or ('.pytest_cache' in root)
+            ):
             # files loop
             for filename in filenames:
                 if os.path.splitext(filename)[-1].endswith(ext):
-                    print('test() : %s %s' % (root, filename))
-                    _exec_notebook(os.path.join(root, filename))
+                    file_list.append(os.path.join(root, filename))
+
+    return file_list
+
+
+# https://docs.pytest.org/en/latest/example/parametrize.html
+@pytest.mark.parametrize("filename", make_file_list())
+def test_ipynb_file(filename):
+    print(f'test() : {filename}')
+    _exec_notebook(filename)
