@@ -49,7 +49,6 @@ install:
       export PATH="$HOME/miniconda:$HOME/miniconda/bin:$PATH";
       hash -r;
     elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      travis_wait mvn install;
       choco install miniconda3 --params="'/AddToPath:1'";
       export PATH="/c/tools/miniconda3/scripts:/c/tools/miniconda3/:$PATH";
     fi
@@ -72,7 +71,7 @@ install:
   - source activate test-environment
   - conda list
 
-script: cd tests && py.test -s
+script: cd tests && travis_wait py.test -s
 notifications:
     email:
         - kangwon.lee.edu@gmail.com
