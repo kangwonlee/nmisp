@@ -7,41 +7,19 @@
 #       The Windows Build Environment, https://docs.travis-ci.com/user/reference/windows/
 #       Build times out because no output was received, https://docs.travis-ci.com/user/common-build-problems/#build-times-out-because-no-output-was-received
 
+os : 
+- linux
+- osx
+- windows
+
+language : bash
+
+env:
+  - TOXENV=3.6
+  - TOXENV=3.7
+  - TOXENV=nightly
+
 matrix:
-  include:
-    - os : linux
-      language: python
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : linux
-      # When python 3.7 support becomes more clear, consider revision
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : linux
-      python: "nightly"
-      env: TOXENV=nightly
-    - os : osx
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : osx
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : osx
-      python: "nightly"
-      env: TOXENV=nightly
-    - os : windows
-      # https://blog.travis-ci.com/2018-10-11-windows-early-release
-      language : shell
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : windows
-      language : shell
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : windows
-      language : shell
-      python: "nightly"
-      env: TOXENV=nightly
   allow_failures:
     - os : windows
       language : shell
