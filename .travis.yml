@@ -33,10 +33,8 @@ matrix:
       python: "nightly"
     - os : osx
       sudo: required
-      language: python
       python: "3.6"
     - os : osx
-      sudo: required
       python: "3.7"
     - os : osx
       sudo: required
