@@ -81,7 +81,7 @@ install:
   - source activate test-environment
   - conda list
 
-script: cd tests && py.test
+script: cd tests && py.test -s
 notifications:
     email:
         - kangwon.lee.edu@gmail.com
