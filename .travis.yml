@@ -12,19 +12,6 @@ matrix:
       language: python
       python: "3.6"
       env: TOXENV=3.6
-    - os : windows
-      # https://blog.travis-ci.com/2018-10-11-windows-early-release
-      language : shell
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : windows
-      language : shell
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : windows
-      language : shell
-      python: "nightly"
-      env: TOXENV=nightly
     - os : linux
       # When python 3.7 support becomes more clear, consider revision
       python: "3.7"
@@ -41,6 +28,33 @@ matrix:
     - os : osx
       python: "nightly"
       env: TOXENV=nightly
+    - os : windows
+      # https://blog.travis-ci.com/2018-10-11-windows-early-release
+      language : shell
+      python: "3.6"
+      env: TOXENV=3.6
+    - os : windows
+      language : shell
+      python: "3.7"
+      env: TOXENV=3.7
+    - os : windows
+      language : shell
+      python: "nightly"
+      env: TOXENV=nightly
+  allow_failures:
+    - os : windows
+      language : shell
+      python: "3.6"
+      env: TOXENV=3.6
+    - os : windows
+      language : shell
+      python: "3.7"
+      env: TOXENV=3.7
+    - os : windows
+      language : shell
+      python: "nightly"
+      env: TOXENV=nightly
+  fast_finish: true
 
 before_install:
   # Obtain miniconda installer
