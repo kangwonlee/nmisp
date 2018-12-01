@@ -1,6 +1,7 @@
 # ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
 
 
+import itertools
 import os
 import subprocess
 import tempfile
@@ -9,8 +10,8 @@ import pytest
 
 
 def check_kernel_spec():
-    import jupyter_client.kernelspec as jk
     # https://jupyter-client.readthedocs.io/en/latest/api/kernelspec.html
+    import jupyter_client.kernelspec as jk
 
     kernel_spec_manager = jk.KernelSpecManager()
 
@@ -83,20 +84,15 @@ def _exec_notebook_win(path):
         os.remove(filename)
 
 
-# https://docs.python.org/3/library/platform.html#cross-platform
-run_this_dict = {
-    'posix': _exec_notebook_nix,
-    'nt': _exec_notebook_win,
-}
+# https://docs.pytest.org/en/latest/fixture.html#scope-sharing-a-fixture-instance-across-tests-in-a-class-module-or-session
+def get_exec_notebook():
+    # https://docs.python.org/3/library/platform.html#cross-platform
+    os_to_function_table = {
+        'posix': _exec_notebook_nix,
+        'nt': _exec_notebook_win,
+    }
 
-
-print(f"os.name = {os.name}")
-_exec_notebook = run_this_dict.get(os.name, _exec_notebook_nix)
-
-
-folder_list = (
-    os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)),
-)
+    return os_to_function_table.get(os.name, _exec_notebook_nix)
 
 
 def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
@@ -120,7 +116,13 @@ def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0],
 
 
 # https://docs.pytest.org/en/latest/example/parametrize.html
-@pytest.mark.parametrize("filename", make_file_list())
-def test_ipynb_file(filename):
+@pytest.mark.parametrize(
+    "filename, _exec_notebook",
+    itertools.zip_longest(
+        make_file_list(),
+        [get_exec_notebook()], fillvalue=get_exec_notebook()
+    )
+)
+def test_ipynb_file(filename, _exec_notebook):
     print(f'test() : {filename}')
     _exec_notebook(filename)
