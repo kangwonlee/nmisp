@@ -10,6 +10,7 @@ matrix:
   include:
     - os : linux
       sudo: required
+      language: python
       python: "3.6"
     - os : windows
       sudo: required
@@ -32,6 +33,7 @@ matrix:
       python: "nightly"
     - os : osx
       sudo: required
+      language: python
       python: "3.6"
     - os : osx
       sudo: required
@@ -79,7 +81,6 @@ install:
   - source activate test-environment
   - conda list
 
-# https://lord.io/blog/2014/travis-multiple-subdirs/
 script: cd tests && py.test
 notifications:
     email:
