@@ -3,9 +3,8 @@
 #       .travis.yml for gcc-5 compiler support on Travis CI , https://gist.github.com/cotsog/3ce84675af0d74438d91
 #       CodeChat, .travis.yml - Travis CI configuration, https://pythonhosted.org/CodeChat/.travis.yml.html
 #       Travis CI, Python example (unsupported languages), https://docs.travis-ci.com/user/multi-os/#python-example-unsupported-languages
+#       Build times out because no output was received, https://docs.travis-ci.com/user/common-build-problems/#build-times-out-because-no-output-was-received
 
-# {linux, osx, windows} x {3.6, 3.7, nightly}
-# When python 3.7 support becomes more clear, consider revision
 matrix:
   include:
     - os : linux
@@ -73,6 +72,7 @@ install:
       export PATH="$HOME/miniconda:$HOME/miniconda/bin:$PATH";
       hash -r;
     elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      travis_wait mvn install;
       choco install miniconda3 --params="'/AddToPath:1'";
       export PATH="/c/tools/miniconda3/scripts:/c/tools/miniconda3/:$PATH";
     fi
