@@ -2,29 +2,92 @@
 
 
 import os
-import pytest
 import subprocess
 import tempfile
 
+import pytest
+
 
 def check_kernel_spec():
-    # https://jupyter-client.readthedocs.io/en/latest/api/kernelspec.html
     import jupyter_client.kernelspec as jk
+    # https://jupyter-client.readthedocs.io/en/latest/api/kernelspec.html
 
     kernel_spec_manager = jk.KernelSpecManager()
 
     print(kernel_spec_manager.get_all_specs())
 
 
-def _exec_notebook(path):
+def _exec_notebook_nix(path):
+    """
+    Run the ipynb file of path
+    Raise exception if any error
+    """
     # http://nbconvert.readthedocs.io/en/latest/execute_api.html
     # ijstokes et al, Command line execution of a jupyter notebook fails in default Anaconda 4.1, https://github.com/Anaconda-Platform/nb_conda_kernels/issues/34
+    # obtain a temporary filename
+    # https://docs.python.org/3/library/tempfile.html
     with tempfile.NamedTemporaryFile(suffix=".ipynb") as fout:
-        args = ["jupyter", "nbconvert", "--to", "notebook", "--execute",
-                "--ExecutePreprocessor.timeout=1000",
-                "--ExecutePreprocessor.kernel_name=python",
-                "--output", fout.name, path]
+        # prepare a command running .ipynb file while converting
+        args = [
+            "jupyter", # name of program
+           "nbconvert", # option
+           "--to", "notebook", # conver to another ipynb file
+           "--execute", # run while convering
+           "--ExecutePreprocessor.timeout=1000",
+           "--ExecutePreprocessor.kernel_name=python",
+           "--output", fout.name, # output file name
+           path    # input file name
+        ]
+        # run the command above
+        # and raise an exception if error
         subprocess.check_call(args)
+
+
+def _exec_notebook_win(path):
+    """
+    Run the ipynb file of path
+    Raise exception if any error
+    """
+    # http://nbconvert.readthedocs.io/en/latest/execute_api.html
+    # ijstokes et al, Command line execution of a jupyter notebook fails in default Anaconda 4.1, https://github.com/Anaconda-Platform/nb_conda_kernels/issues/34
+    # obtain a temporary filename
+    # https://docs.python.org/3/library/tempfile.html
+    ftemp = tempfile.NamedTemporaryFile(suffix=".ipynb")
+    filename = os.path.split(ftemp.name)[-1]
+    ftemp.close()
+
+    # prepare a command running .ipynb file while converting
+    args = [
+        "jupyter", # name of program
+        "nbconvert", # option
+        "--to", "notebook", # conver to another ipynb file
+        "--execute", # run while convering
+        "--ExecutePreprocessor.timeout=1000",
+        "--ExecutePreprocessor.kernel_name=python",
+        "--output", filename, # output file name
+        path    # input file name
+    ]
+
+    try:
+        # run the command above
+        # and raise an exception if error
+        subprocess.check_call(args)
+    except BaseException as e:
+        os.remove(filename)
+        raise e
+
+    os.remove(filename)
+
+
+# https://docs.python.org/3/library/platform.html#cross-platform
+run_this_dict = {
+    'posix': _exec_notebook_nix,
+    'nt': _exec_notebook_win,
+}
+
+
+print(f"os.name = {os.name}")
+_exec_notebook = run_this_dict.get(os.name, _exec_notebook_nix)
 
 
 folder_list = (
@@ -39,7 +102,7 @@ def test_ipynb_in_folder(folder):
     ext = 'ipynb'
 
     # recursive loop
-    for root, dirnames, filenames in os.walk(path):
+    for root, _, filenames in os.walk(path):
         if 'ipynb_checkpoints' not in root:
             # files loop
             for filename in filenames:
