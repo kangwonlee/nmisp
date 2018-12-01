@@ -53,7 +53,7 @@ def _exec_notebook_win(path):
     # obtain a temporary filename
     # https://docs.python.org/3/library/tempfile.html
     ftemp = tempfile.NamedTemporaryFile(suffix=".ipynb")
-    filename = os.path.split(ftemp.name)[-1]
+    filename = os.path.join(os.getcwd(), os.path.split(ftemp.name)[-1])
     ftemp.close()
 
     # prepare a command running .ipynb file while converting
@@ -73,10 +73,12 @@ def _exec_notebook_win(path):
         # and raise an exception if error
         subprocess.check_call(args)
     except BaseException as e:
-        os.remove(filename)
+        if os.path.exists(filename):
+            os.remove(filename)
         raise e
 
-    os.remove(filename)
+    if os.path.exists(filename):
+        os.remove(filename)
 
 
 # https://docs.python.org/3/library/platform.html#cross-platform
