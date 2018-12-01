@@ -32,12 +32,10 @@ matrix:
     - os : linux
       python: "nightly"
     - os : osx
-      sudo: required
       python: "3.6"
     - os : osx
       python: "3.7"
     - os : osx
-      sudo: required
       python: "nightly"
 
 before_install:
