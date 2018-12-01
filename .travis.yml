@@ -11,6 +11,19 @@ matrix:
     - os : linux
       sudo: required
       python: "3.6"
+    - os : windows
+      sudo: required
+      # https://blog.travis-ci.com/2018-10-11-windows-early-release
+      language : shell
+      python: "3.6"
+    - os : windows
+      sudo: required
+      language : shell
+      python: "3.7"
+    - os : windows
+      sudo: required
+      language : shell
+      python: "nightly"
     - os : linux
       # When python 3.7 support becomes more clear, consider revision
       sudo: required
@@ -25,19 +38,6 @@ matrix:
       python: "3.7"
     - os : osx
       sudo: required
-      python: "nightly"
-    - os : windows
-      sudo: required
-      # https://blog.travis-ci.com/2018-10-11-windows-early-release
-      language : shell
-      python: "3.6"
-    - os : windows
-      sudo: required
-      language : shell
-      python: "3.7"
-    - os : windows
-      sudo: required
-      language : shell
       python: "nightly"
 
 before_install:
