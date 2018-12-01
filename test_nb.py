@@ -63,7 +63,7 @@ def _exec_notebook_win(path):
         "nbconvert", # option
         "--to", "notebook", # conver to another ipynb file
         "--execute", # run while convering
-        "--ExecutePreprocessor.timeout=1000",
+        "--ExecutePreprocessor.timeout=3600",
         "--ExecutePreprocessor.kernel_name=python",
         "--output", filename, # output file name
         path    # input file name
