@@ -73,10 +73,12 @@ def _exec_notebook_win(path):
         # and raise an exception if error
         subprocess.check_call(args)
     except BaseException as e:
+        print(e)
         if os.path.exists(filename):
             os.remove(filename)
         raise e
 
+    print('success')
     if os.path.exists(filename):
         os.remove(filename)
 
