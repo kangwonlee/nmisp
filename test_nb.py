@@ -120,9 +120,9 @@ def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0],
 
 # https://docs.pytest.org/en/latest/example/parametrize.html
 @pytest.mark.parametrize(
-    "filename, _exec_notebook", 
+    "filename, _exec_notebook",
     itertools.zip_longest(
-        make_file_list(), 
+        make_file_list(),
         [get_exec_notebook()], fillvalue=get_exec_notebook()
     )
 )
