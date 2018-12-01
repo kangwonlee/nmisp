@@ -86,16 +86,13 @@ def _exec_notebook_win(path):
 
 # https://docs.pytest.org/en/latest/fixture.html#scope-sharing-a-fixture-instance-across-tests-in-a-class-module-or-session
 def get_exec_notebook():
-    print('get_exec_notebook()')
     # https://docs.python.org/3/library/platform.html#cross-platform
-    run_this_dict = {
+    os_to_function_table = {
         'posix': _exec_notebook_nix,
         'nt': _exec_notebook_win,
     }
 
-    print(f"os.name = {os.name}")
-    _exec_notebook = run_this_dict.get(os.name, _exec_notebook_nix)
-    return _exec_notebook
+    return os_to_function_table.get(os.name, _exec_notebook_nix)
 
 
 def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
@@ -120,9 +117,9 @@ def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0],
 
 # https://docs.pytest.org/en/latest/example/parametrize.html
 @pytest.mark.parametrize(
-    "filename, _exec_notebook", 
+    "filename, _exec_notebook",
     itertools.zip_longest(
-        make_file_list(), 
+        make_file_list(),
         [get_exec_notebook()], fillvalue=get_exec_notebook()
     )
 )
