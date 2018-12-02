@@ -97,7 +97,7 @@ install:
   - source activate test-environment
   - conda list
 
-script: cd tests && travis_wait py.test -s
+script: cd tests && travis_wait py.test
 notifications:
     email:
         - kangwon.lee.edu@gmail.com
