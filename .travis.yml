@@ -83,16 +83,22 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
   # Apply python module recipies
-  - if [[ ! -d $HOME/miniconda/envs/test-environment || $TOXENV == "nightly" ]]; then
-      conda config --set always_yes yes --set changeps1 no;
-      conda update -q conda;
+  - conda config --set always_yes yes --set changeps1 no;
+  - conda update -q conda;
+  - if [[ ! -d $HOME/miniconda/envs/test-environment ]]; then
       if [[ "$TOXENV" == "3.6" ]]; then
         conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
       elif [[ "$TOXENV" == "3.7" ]]; then
         conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
-      elif [[ ! -d $HOME/miniconda/envs/test-environment ]]; then
+      else
         conda env create -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
-      elif [[ -d $HOME/miniconda/envs/test-environment ]]; then
+      fi;
+    elif [[ -d $HOME/miniconda/envs/test-environment ]]; then
+      if [[ "$TOXENV" == "3.6" ]]; then
+        conda env update -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
+      elif [[ "$TOXENV" == "3.7" ]]; then
+        conda env update -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
+      else
         conda env update -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
       fi;
     fi
