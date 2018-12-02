@@ -7,12 +7,14 @@
 #       The Windows Build Environment, https://docs.travis-ci.com/user/reference/windows/
 #       Build times out because no output was received, https://docs.travis-ci.com/user/common-build-problems/#build-times-out-because-no-output-was-received
 
+
+# https://github.com/theochem/qcgrids/blob/master/.travis.yml
+language : generic
+
 os :
 - linux
 - osx
 - windows
-
-language : bash
 
 env:
   - TOXENV=3.6
@@ -22,14 +24,6 @@ env:
 matrix:
   allow_failures:
     - os : windows
-      language : bash
-      env: TOXENV=3.6
-    - os : windows
-      language : bash
-      env: TOXENV=3.7
-    - os : windows
-      language : bash
-      env: TOXENV=nightly
   fast_finish: true
 
 before_install:
@@ -49,8 +43,8 @@ install:
       export PATH="$HOME/miniconda:$HOME/miniconda/bin:$PATH";
       hash -r;
     elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      choco install miniconda3 --params="'/AddToPath:1'";
-      export PATH="/c/tools/miniconda3/scripts:/c/tools/miniconda3/:$PATH";
+      choco install miniconda3 --params="'/D:$HOME/miniconda'";
+      export PATH="$HOME/miniconda:$HOME/miniconda/scripts:$PATH";
     fi
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
