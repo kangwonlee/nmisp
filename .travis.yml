@@ -31,7 +31,7 @@ matrix:
 # https://github.com/theochem/qcgrids/blob/master/.travis.yml
 # https://stackoverflow.com/questions/38421395/to-which-folder-does-chocolatey-download-the-packages-before-installing-them
 before_cache:
-- rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history
+- rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history
 
 cache :
   directories:
