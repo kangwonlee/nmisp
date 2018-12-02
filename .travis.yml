@@ -90,8 +90,10 @@ install:
         conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
       elif [[ "$TOXENV" == "3.7" ]]; then
         conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
-      else
+      elif [[ ! -d $HOME/miniconda/envs/test-environment ]]; then
         conda env create -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
+      elif [[ -d $HOME/miniconda/envs/test-environment ]]; then
+        conda env update -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
       fi;
     fi
   - source activate test-environment
