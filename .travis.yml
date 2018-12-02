@@ -6,9 +6,12 @@
 #       Miniconda (Python 3) 4.5.11, Chocolatey Gallery, https://chocolatey.org/packages/miniconda3
 #       The Windows Build Environment, https://docs.travis-ci.com/user/reference/windows/
 #       Build times out because no output was received, https://docs.travis-ci.com/user/common-build-problems/#build-times-out-because-no-output-was-received
+#       QCGrids : a numerical integration library for quantum chemistry, https://github.com/theochem/qcgrids/
+#       Caching Dependencies and Directories, https://docs.travis-ci.com/user/caching/
+#       Caching is now enabled in Windows with rewritten caching utility, https://changelog.travis-ci.com/caching-is-now-enabled-in-windows-with-rewritten-caching-utility-76161
+#       To which folder does Chocolatey download the packages before installing them?, https://stackoverflow.com/questions/38421395/to-which-folder-does-chocolatey-download-the-packages-before-installing-them
 
 
-# https://github.com/theochem/qcgrids/blob/master/.travis.yml
 language : generic
 
 os :
@@ -26,10 +29,6 @@ matrix:
     - os : windows
   fast_finish: true
 
-# https://docs.travis-ci.com/user/caching/
-# https://changelog.travis-ci.com/caching-is-now-enabled-in-windows-with-rewritten-caching-utility-76161
-# https://github.com/theochem/qcgrids/blob/master/.travis.yml
-# https://stackoverflow.com/questions/38421395/to-which-folder-does-chocolatey-download-the-packages-before-installing-them
 before_cache:
 - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history
 
@@ -58,8 +57,6 @@ before_install:
 
 install:
   # Install miniconda
-  # https://docs.travis-ci.com/user/reference/windows/#support
-  # https://chocolatey.org/packages/miniconda3/4.5.11
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
       if [[ -d $HOME/miniconda/bin && $TOXENV != "nightly" ]]; then
         echo "miniconda for posix already available";
