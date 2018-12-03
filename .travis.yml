@@ -6,9 +6,12 @@
 #       Miniconda (Python 3) 4.5.11, Chocolatey Gallery, https://chocolatey.org/packages/miniconda3
 #       The Windows Build Environment, https://docs.travis-ci.com/user/reference/windows/
 #       Build times out because no output was received, https://docs.travis-ci.com/user/common-build-problems/#build-times-out-because-no-output-was-received
+#       QCGrids : a numerical integration library for quantum chemistry, https://github.com/theochem/qcgrids/
+#       Caching Dependencies and Directories, https://docs.travis-ci.com/user/caching/
+#       Caching is now enabled in Windows with rewritten caching utility, https://changelog.travis-ci.com/caching-is-now-enabled-in-windows-with-rewritten-caching-utility-76161
+#       To which folder does Chocolatey download the packages before installing them?, https://stackoverflow.com/questions/38421395/to-which-folder-does-chocolatey-download-the-packages-before-installing-them
 
 
-# https://github.com/theochem/qcgrids/blob/master/.travis.yml
 language : generic
 
 os :
@@ -26,46 +29,80 @@ matrix:
     - os : windows
   fast_finish: true
 
+before_cache:
+- rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__
+
+cache :
+  directories:
+    - $HOME/download
+    - $HOME/miniconda
+    - $HOME/AppData/Local/Temp/chocolatey
+
 before_install:
   # Obtain miniconda installer
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
+      if [[ -f $HOME/download/miniconda.sh && $TOXENV != "nightly" ]]; then
+        echo "miniconda.sh for posix already available";
+      else
+        mkdir -p $HOME/download;
+        if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+          echo "downloading miniconda.sh for linux";
+          wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/download/miniconda.sh;
+        elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+          echo "downloading miniconda.sh for osx";
+          wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O $HOME/download/miniconda.sh;
+        fi;
+      fi;
     fi
 
 install:
   # Install miniconda
-  # https://docs.travis-ci.com/user/reference/windows/#support
-  # https://chocolatey.org/packages/miniconda3/4.5.11
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      bash miniconda.sh -b -p $HOME/miniconda;
+      if [[ -d $HOME/miniconda/bin && $TOXENV != "nightly" ]]; then
+        echo "miniconda for posix already available";
+      else
+        echo "installing miniconda for posix";
+        bash $HOME/download/miniconda.sh -b -u -p $HOME/miniconda;
+      fi;
       export PATH="$HOME/miniconda:$HOME/miniconda/bin:$PATH";
       hash -r;
-    elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      choco install miniconda3 --params="'/D:$HOME/miniconda'";
+    elif  [[ "$TRAVIS_OS_NAME" == "windows" && $TOXENV != "nightly" ]]; then
+      if [[ -d $HOME/miniconda/scripts ]]; then
+        echo "miniconda for Windows already installed";
+      else
+        echo "installing miniconda for windows";
+        choco install miniconda3 --params="'/D:$HOME/miniconda'";
+      fi;
       export PATH="$HOME/miniconda:$HOME/miniconda/scripts:$PATH";
     fi
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
-  # Conda setup options
-  # To help debugging
   - echo $TRAVIS_OS_NAME
   - echo $TRAVIS_PYTHON_VERSION
   # Useful for debugging any issues with conda
   - conda info -a
   # Apply python module recipies
-  - if [[ "$TOXENV" == "3.6" ]]; then
-      conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
-    elif [[ "$TOXENV" == "3.7" ]]; then
-      conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
-    else
-      conda env create -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
+  - conda config --set always_yes yes --set changeps1 no;
+  - conda update -q conda;
+  - if [[ ! -d $HOME/miniconda/envs/test-environment ]]; then
+      if [[ "$TOXENV" == "3.6" ]]; then
+        conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
+      elif [[ "$TOXENV" == "3.7" ]]; then
+        conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
+      else
+        conda env create -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
+      fi;
+    elif [[ -d $HOME/miniconda/envs/test-environment ]]; then
+      if [[ "$TOXENV" == "3.6" ]]; then
+        conda env update -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
+      elif [[ "$TOXENV" == "3.7" ]]; then
+        conda env update -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
+      else
+        conda env update -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
+      fi;
     fi
   - source activate test-environment
   - conda list
 
-script: cd tests && travis_wait py.test -s
+script: cd tests && travis_wait py.test
 notifications:
     email:
         - kangwon.lee.edu@gmail.com
