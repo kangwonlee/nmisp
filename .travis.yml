@@ -20,9 +20,9 @@ os :
 - windows
 
 env:
-  - TOXENV=3.6
-  - TOXENV=3.7
-  - TOXENV=nightly
+  - CONDA_PYTHON=3.6
+  - CONDA_PYTHON=3.7
+  - CONDA_PYTHON=nightly
 
 matrix:
   allow_failures:
@@ -41,7 +41,7 @@ cache :
 before_install:
   # Obtain miniconda installer
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -f $HOME/download/miniconda.sh && $TOXENV != "nightly" ]]; then
+      if [[ -f $HOME/download/miniconda.sh && $CONDA_PYTHON != "nightly" ]]; then
         echo "miniconda.sh for posix already available";
       else
         mkdir -p $HOME/download;
@@ -58,7 +58,7 @@ before_install:
 install:
   # Install miniconda
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -d $HOME/miniconda/bin && $TOXENV != "nightly" ]]; then
+      if [[ -d $HOME/miniconda/bin && $CONDA_PYTHON != "nightly" ]]; then
         echo "miniconda for posix already available";
       else
         echo "installing miniconda for posix";
@@ -66,7 +66,7 @@ install:
       fi;
       export PATH="$HOME/miniconda:$HOME/miniconda/bin:$PATH";
       hash -r;
-    elif  [[ "$TRAVIS_OS_NAME" == "windows" && $TOXENV != "nightly" ]]; then
+    elif  [[ "$TRAVIS_OS_NAME" == "windows" && $CONDA_PYTHON != "nightly" ]]; then
       if [[ -d $HOME/miniconda/scripts ]]; then
         echo "miniconda for Windows already installed";
       else
@@ -83,20 +83,20 @@ install:
   - conda config --set always_yes yes --set changeps1 no;
   - conda update -q conda;
   - if [[ ! -d $HOME/miniconda/envs/test-environment ]]; then
-      if [[ "$TOXENV" == "3.6" ]]; then
-        conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
-      elif [[ "$TOXENV" == "3.7" ]]; then
-        conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
+      if [[ "$CONDA_PYTHON" == "3.6" ]]; then
+        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.6.yml;
+      elif [[ "$CONDA_PYTHON" == "3.7" ]]; then
+        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.7.yml;
       else
-        conda env create -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
+        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.nightly.yml;
       fi;
     elif [[ -d $HOME/miniconda/envs/test-environment ]]; then
-      if [[ "$TOXENV" == "3.6" ]]; then
-        conda env update -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
-      elif [[ "$TOXENV" == "3.7" ]]; then
-        conda env update -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
+      if [[ "$CONDA_PYTHON" == "3.6" ]]; then
+        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.6.yml;
+      elif [[ "$CONDA_PYTHON" == "3.7" ]]; then
+        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.7.yml;
       else
-        conda env update -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
+        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.nightly.yml;
       fi;
     fi
   - source activate test-environment
