@@ -14,15 +14,15 @@
 
 language : shell
 
-os :
-- linux
-- osx
-- windows
-
 env:
   - CONDA_PYTHON=3.6
   - CONDA_PYTHON=3.7
   - CONDA_PYTHON=nightly
+
+os :
+- linux
+- osx
+- windows
 
 matrix:
   allow_failures:
