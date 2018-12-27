@@ -37,10 +37,10 @@ before_install:
   # Set conda path info
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
       MINICONDA_PATH=$HOME/miniconda;
-      CONDA_SUB_PATH=$MINICONDA_PATH/bin;
+      MINICONDA_SUB_PATH=$MINICONDA_PATH/bin;
     elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
       MINICONDA_PATH=/c/tools/miniconda3;
-      CONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
+      MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
     fi
   # Obtain miniconda installer
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
@@ -61,21 +61,21 @@ before_install:
 install:
   # Install miniconda
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -d $CONDA_SUB_PATH && $CONDA_PYTHON != "nightly" ]]; then
+      if [[ -d $MINICONDA_SUB_PATH && $CONDA_PYTHON != "nightly" ]]; then
         echo "miniconda for posix already available";
       else
         echo "installing miniconda for posix";
         bash $HOME/download/miniconda.sh -b -u -p $MINICONDA_PATH;
       fi;
     elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      if [[ $CONDA_PYTHON != "nightly" && -d $CONDA_SUB_PATH ]]; then
+      if [[ $CONDA_PYTHON != "nightly" && -d $MINICONDA_SUB_PATH ]]; then
         echo "miniconda for Windows already installed";
       else
         echo "installing miniconda for windows";
         choco install miniconda3;
       fi;
     fi;
-  - export PATH="$MINICONDA_PATH:$CONDA_SUB_PATH:$PATH";
+  - export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH";
   - hash -r;
   - echo $TRAVIS_OS_NAME
   - echo $TRAVIS_PYTHON_VERSION
