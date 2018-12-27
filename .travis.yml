@@ -82,23 +82,15 @@ install:
   # Apply python module recipies
   - conda config --set always_yes yes --set changeps1 no;
   - conda update -q conda;
-  - if [[ ! -d $HOME/miniconda/envs/test-environment ]]; then
-      if [[ "$CONDA_PYTHON" == "3.6" ]]; then
-        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.6.yml;
-      elif [[ "$CONDA_PYTHON" == "3.7" ]]; then
-        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.7.yml;
-      else
-        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.nightly.yml;
-      fi;
-    elif [[ -d $HOME/miniconda/envs/test-environment ]]; then
-      if [[ "$CONDA_PYTHON" == "3.6" ]]; then
-        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.6.yml;
-      elif [[ "$CONDA_PYTHON" == "3.7" ]]; then
-        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.7.yml;
-      else
-        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.nightly.yml;
-      fi;
-    fi
+  # See if test-environment already available
+  # As necessary, apply python module recipies
+  - if [[ ! -d $MINICONDA_PATH/envs/test-environment ]]; then
+      echo "create test-environment";
+      conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
+    else
+      echo "update test-environment";
+      conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
+    fi;
   - source activate test-environment
   - conda list
 
