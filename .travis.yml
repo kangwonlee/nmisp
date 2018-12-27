@@ -12,7 +12,7 @@
 #       To which folder does Chocolatey download the packages before installing them?, https://stackoverflow.com/questions/38421395/to-which-folder-does-chocolatey-download-the-packages-before-installing-them
 
 
-language : generic
+language : shell
 
 os :
 - linux
