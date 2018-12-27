@@ -14,15 +14,15 @@
 
 language : shell
 
-env:
-  - CONDA_PYTHON=3.6
-  - CONDA_PYTHON=3.7
-  - CONDA_PYTHON=nightly
-
 os :
 - linux
 - osx
 - windows
+
+env:
+  - CONDA_PYTHON=3.6
+  - CONDA_PYTHON=3.7
+  - CONDA_PYTHON=nightly
 
 before_cache:
   - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__
