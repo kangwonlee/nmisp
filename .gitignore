@@ -107,3 +107,9 @@ ENV/
 
 # MS VS Code
 .vscode/
+
+# png image files
+*.png
+
+# .svg vector drawing files
+*.svg
