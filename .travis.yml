@@ -73,16 +73,16 @@ install:
         bash $HOME/download/miniconda.sh -b -u -p $MINICONDA_PATH;
       fi;
       export PATH="$MINICONDA_PATH:$CONDA_SUB_PATH:$PATH";
-      hash -r;
-    elif  [[ "$TRAVIS_OS_NAME" == "windows" && $CONDA_PYTHON != "nightly" ]]; then
-      if [[ -d $CONDA_SUB_PATH ]]; then
+    elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      if [[ $CONDA_PYTHON != "nightly" && -d $CONDA_SUB_PATH ]]; then
         echo "miniconda for Windows already installed";
       else
         echo "installing miniconda for windows";
         choco install miniconda3;
       fi;
       export PATH="$MINICONDA_PATH:$CONDA_SUB_PATH:$PATH";
-    fi
+    fi;
+  - hash -r;
   - echo $TRAVIS_OS_NAME
   - echo $TRAVIS_PYTHON_VERSION
   # Useful for debugging any issues with conda
