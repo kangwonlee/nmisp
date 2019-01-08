@@ -39,6 +39,7 @@ With a few additional configurations in MS vscode, one could use `git-bash` as t
 * [Github Desktop](https://desktop.github.com/)
 
 ### 통합 개발 환경<br>Integrated Development Environment
+iPython 노트북 (`.ipynb`) 파일 사용시는 반드시 필요하지 않을 수 있음<br>May not need one for iPython notebook (`.ipynb`) files
 아래 가운데 택일 Choose one from below 
 #### Spyder
 * Anaconda 5.x 와 함께 설치됨.<br>Anaconda 5.x includes spyder.
