@@ -12,7 +12,7 @@
 #       To which folder does Chocolatey download the packages before installing them?, https://stackoverflow.com/questions/38421395/to-which-folder-does-chocolatey-download-the-packages-before-installing-them
 
 
-language : generic
+language : shell
 
 os :
 - linux
@@ -24,13 +24,8 @@ env:
   - CONDA_PYTHON=3.7
   - CONDA_PYTHON=nightly
 
-matrix:
-  allow_failures:
-    - os : windows
-  fast_finish: true
-
 before_cache:
-- rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__
+  - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__
 
 cache :
   directories:
@@ -39,6 +34,14 @@ cache :
     - $HOME/AppData/Local/Temp/chocolatey
 
 before_install:
+  # Set conda path info
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
+      MINICONDA_PATH=$HOME/miniconda;
+      MINICONDA_SUB_PATH=$MINICONDA_PATH/bin;
+    elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      MINICONDA_PATH=/c/tools/miniconda3;
+      MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
+    fi
   # Obtain miniconda installer
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
       if [[ -f $HOME/download/miniconda.sh && $CONDA_PYTHON != "nightly" ]]; then
@@ -58,47 +61,37 @@ before_install:
 install:
   # Install miniconda
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -d $HOME/miniconda/bin && $CONDA_PYTHON != "nightly" ]]; then
+      if [[ -d $MINICONDA_SUB_PATH && $CONDA_PYTHON != "nightly" ]]; then
         echo "miniconda for posix already available";
       else
         echo "installing miniconda for posix";
-        bash $HOME/download/miniconda.sh -b -u -p $HOME/miniconda;
+        bash $HOME/download/miniconda.sh -b -u -p $MINICONDA_PATH;
       fi;
-      export PATH="$HOME/miniconda:$HOME/miniconda/bin:$PATH";
-      hash -r;
-    elif  [[ "$TRAVIS_OS_NAME" == "windows" && $CONDA_PYTHON != "nightly" ]]; then
-      if [[ -d $HOME/miniconda/scripts ]]; then
+    elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      if [[ $CONDA_PYTHON != "nightly" && -d $MINICONDA_SUB_PATH ]]; then
         echo "miniconda for Windows already installed";
       else
         echo "installing miniconda for windows";
-        choco install miniconda3 --params="'/D:$HOME/miniconda'";
+        choco install miniconda3;
       fi;
-      export PATH="$HOME/miniconda:$HOME/miniconda/scripts:$PATH";
-    fi
+    fi;
+  - export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH";
+  - hash -r;
   - echo $TRAVIS_OS_NAME
   - echo $TRAVIS_PYTHON_VERSION
-  # Useful for debugging any issues with conda
-  - conda info -a
-  # Apply python module recipies
   - conda config --set always_yes yes --set changeps1 no;
   - conda update -q conda;
-  - if [[ ! -d $HOME/miniconda/envs/test-environment ]]; then
-      if [[ "$CONDA_PYTHON" == "3.6" ]]; then
-        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.6.yml;
-      elif [[ "$CONDA_PYTHON" == "3.7" ]]; then
-        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.7.yml;
-      else
-        conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.nightly.yml;
-      fi;
-    elif [[ -d $HOME/miniconda/envs/test-environment ]]; then
-      if [[ "$CONDA_PYTHON" == "3.6" ]]; then
-        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.6.yml;
-      elif [[ "$CONDA_PYTHON" == "3.7" ]]; then
-        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.3.7.yml;
-      else
-        conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.nightly.yml;
-      fi;
-    fi
+  # Useful for debugging any issues with conda
+  - conda info -a
+  # See if test-environment already available
+  # As necessary, apply python module recipies
+  - if [[ ! -d $MINICONDA_PATH/envs/test-environment ]]; then
+      echo "create test-environment";
+      conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
+    else
+      echo "update test-environment";
+      conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
+    fi;
   - source activate test-environment
   - conda list
 

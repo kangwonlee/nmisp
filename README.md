@@ -39,6 +39,7 @@ With a few additional configurations in MS vscode, one could use `git-bash` as t
 * [Github Desktop](https://desktop.github.com/)
 
 ### 통합 개발 환경<br>Integrated Development Environment
+iPython 노트북 (`.ipynb`) 파일 사용시는 반드시 필요하지 않을 수 있음<br>May not need one for iPython notebook (`.ipynb`) files
 아래 가운데 택일 Choose one from below 
 #### Spyder
 * Anaconda 5.x 와 함께 설치됨.<br>Anaconda 5.x includes spyder.
@@ -75,6 +76,13 @@ Through a web browser, `jupyter` notebook enables editing & running program code
 * `cmd` 또는 `git bash` 실행한 후 `clone` 된 지역 저장소 folder로 이동 (예를 들어 `cd User/Documents/Solmech/`) <br> Start `cmd` or `git bash` and change working folder to the cloned folder (e.g. `cd User/Documents/Solmech/`)
 * `cmd` 또는 `git bash` 에서 각각 `cd` 또는 `pwd` 로 `clone` 된 folder 인지 확인 <br>Check location using `cd` or `pwd` in `cmd` or `git bash`
 * `jupyter notebook` 실행 <br>Run `jupyter notebook`
+* 필요에 따라 `~/.bashrc` 파일에 다음 내용을 추가<br>As necessary, add following lines to `~/.bashrc` file 
+
+
+``` sh
+alias log='git log --oneline --graph --all --decorate'
+alias nb='jupyter notebook --no-browser &'
+```
 
 ### 실행 동영상 (`git bash`) <br>Instruction video (`git bash`)
 [![실행 동영상 (SourceTree) Instruction video (SourceTree)](https://i.ytimg.com/vi/El77Whu9UsE/hqdefault.jpg)](https://www.youtube.com/embed/videoseries?list=PLA6B0Lmr9oJO4x4NWWedfHnCOfelU3L39)
