@@ -42,7 +42,8 @@ before_install:
     elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
       MINICONDA_PATH=/c/tools/miniconda3;
       MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
-    fi
+    fi;
+  - MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin;
   # Obtain miniconda installer
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
       if [[ -f $HOME/download/miniconda.sh && $CONDA_PYTHON != "nightly" ]]; then
@@ -76,7 +77,7 @@ install:
         choco install miniconda3;
       fi;
     fi;
-  - export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH";
+  - export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH";
   - hash -r;
   - echo $TRAVIS_OS_NAME
   - echo $TRAVIS_PYTHON_VERSION
