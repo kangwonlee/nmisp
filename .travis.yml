@@ -37,11 +37,10 @@ cache :
 
 before_install:
   # Set conda path info
+  - MINICONDA_PATH=$HOME/miniconda;
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      MINICONDA_PATH=$HOME/miniconda;
       MINICONDA_SUB_PATH=$MINICONDA_PATH/bin;
     elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      MINICONDA_PATH=$HOME/miniconda;
       MINICONDA_PATH_WIN=`cygpath --windows $MINICONDA_PATH`;
       MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
     fi;
