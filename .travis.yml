@@ -42,6 +42,7 @@ before_install:
       MINICONDA_SUB_PATH=$MINICONDA_PATH/bin;
     elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
       MINICONDA_PATH=/c/tools/miniconda3;
+      MINICONDA_PATH_WIN="C:\\tools\\miniconda3\\";
       MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
     fi;
   - MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin;
