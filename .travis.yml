@@ -100,7 +100,7 @@ install:
       echo "update test-environment";
       conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
     fi;
-  - source activate test-environment
+  - conda activate test-environment
   - conda list
 
 script: cd tests && travis_wait py.test
