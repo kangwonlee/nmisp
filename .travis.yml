@@ -80,7 +80,7 @@ install:
         echo "miniconda for Windows already installed";
       else
         echo "installing miniconda for windows";
-        choco install miniconda3 --params="'/JustMe /AddToPath /D:$MINICONDA_PATH_WIN'";
+        choco install miniconda3 --params="'/JustMe /AddToPath:1 /D:$MINICONDA_PATH_WIN'";
       fi;
     fi;
   - export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH";
