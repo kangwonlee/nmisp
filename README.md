@@ -94,5 +94,5 @@ This software was initially supported by the Korea Ministry of Land, Infrastruct
 ## Build Status
 | branch | status |
 |:------:|:------:|
-| master | ![master](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=master) |
-| develop | ![develop](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=develop) |
+| master | [![master](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=master)](https://travis-ci.org/kangwonlee/nmisp/branches) |
+| develop | [![develop](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=develop)](https://travis-ci.org/kangwonlee/nmisp/branches) |
