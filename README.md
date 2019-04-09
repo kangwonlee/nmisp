@@ -14,8 +14,14 @@ This software aims to describe various numerical methods in [`Python`](https://e
 
 ### 깃 버전 관리 소프트웨어<br>Git Version Control Software
 #### CUI
-Windows 의 경우 아래 링크에서 다운로드 가능 Download for Windows available at the following link
-* [Git for Windows](https://git-scm.com/download/win)
+* 우분투 리눅스의 경우 다음과 같이 설치 For Ubuntu Linux, install as follows
+
+``` sh
+apt-get install git git-flow
+```
+
+
+* Windows 의 경우 아래 링크에서 다운로드 가능 Download for Windows available at the following link :  [Git for Windows](https://git-scm.com/download/win)
 
 간단한 추천 사항 A few simple recommendations
 * 명령행에서 사용 Command line interface<br>
