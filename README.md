@@ -94,9 +94,9 @@ Through a web browser, `jupyter` notebook enables editing & running program code
 
 ## `jupyter` 노트북 실행시키는 법<br>How to start the `jupyter` notebook
 
-* 적당한 folder 를 만듦 (예를 들어 User/Documents/Python_Scripts/) <br> Make an appropriate folder (e.g., User/Documents/Python_Scripts/)
+* 적당한 folder 를 만듦 <br> Make an appropriate folder
 * Git 또는 SourceTree 를 이용하여 위 folder 아래 이 원격 저장소를 `git clone` <br> Using the Git or SourceTree, `git clone` this repository under the folder
-* `cmd` 또는 `git bash` 실행한 후 `clone` 된 지역 저장소 folder로 이동 (예를 들어 `cd User/Documents/Python_Scripts/nmisp/`) <br> Start `cmd` or `git bash` and change working folder to the cloned folder (e.g. `cd User/Documents/Python_Scripts/nmisp/`)
+* `cmd` 또는 `git bash` 실행한 후 `cd` 명령으로 `clone` 된 지역 저장소 folder로 이동 <br> Start `cmd` or `git bash` and using the `cd` command change working folder to the cloned folder
 * `cmd` 또는 `git bash` 에서 각각 `cd` 또는 `pwd` 로 `clone` 된 folder 인지 확인 <br>Check location using `cd` or `pwd` in `cmd` or `git bash`
 * `jupyter notebook` 실행 <br>Run `jupyter notebook`
 * 필요에 따라 `~/.bashrc` 파일에 다음 내용을 추가<br>As necessary, add following lines to `~/.bashrc` file 
