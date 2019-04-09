@@ -14,7 +14,7 @@ This software aims to describe various numerical methods in [`Python`](https://e
 
 ### 깃 버전 관리 소프트웨어<br>Git Version Control Software
 #### CUI
-아래 소프트웨어를 설치 Please install following software
+Windows 의 경우 아래 링크에서 다운로드 가능 Download for Windows available at the following link
 * [Git for Windows](https://git-scm.com/download/win)
 
 간단한 추천 사항 A few simple recommendations
