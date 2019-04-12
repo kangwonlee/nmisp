@@ -1,10 +1,12 @@
 # ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
 
 name: travis_anaconda_jupyter
+
 channels:
 - defaults
 
 dependencies:
+# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/4.2.0/py35/
 - python=3.5
 - jupyter=1.0.0
 - matplotlib=2.0.2
