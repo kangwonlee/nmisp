@@ -16,3 +16,4 @@ dependencies:
 - scipy=0.18.1
 - statsmodels=0.6.1
 - sympy=1.0=py35_0
+- pytest-xdist
