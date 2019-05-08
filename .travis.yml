@@ -104,4 +104,5 @@ install:
   - conda activate test-environment
   - conda list
 
-script: cd tests && travis_wait py.test
+script: cd tests && travis_wait py.test -n auto
+
