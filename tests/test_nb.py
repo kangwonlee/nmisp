@@ -124,5 +124,5 @@ def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0],
     )
 )
 def test_ipynb_file(filename, _exec_notebook):
-    print(f'test() : {filename}')
+    print('test() : %s' % filename)
     _exec_notebook(filename)
