@@ -31,13 +31,13 @@ def _exec_notebook_nix(path):
         # prepare a command running .ipynb file while converting
         args = [
             "jupyter", # name of program
-           "nbconvert", # option
-           "--to", "notebook", # conver to another ipynb file
-           "--execute", # run while convering
-           "--ExecutePreprocessor.timeout=1000",
-           "--ExecutePreprocessor.kernel_name=python",
-           "--output", fout.name, # output file name
-           path    # input file name
+            "nbconvert", # option
+            "--to", "notebook", # conver to another ipynb file
+            "--execute", # run while convering
+            "--ExecutePreprocessor.timeout=1000",
+            "--ExecutePreprocessor.kernel_name=python",
+            "--output", fout.name, # output file name
+            path    # input file name
         ]
         # run the command above
         # and raise an exception if error
