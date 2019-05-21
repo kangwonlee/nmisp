@@ -95,7 +95,7 @@ def get_exec_notebook():
     return os_to_function_table.get(os.name, _exec_notebook_nix)
 
 
-def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
+def make_file_list(path=os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), ext='ipynb'):
 
     file_list = []
 
