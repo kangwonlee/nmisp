@@ -54,7 +54,7 @@ def _exec_notebook_win(path):
     # obtain a temporary filename
     # https://docs.python.org/3/library/tempfile.html
     ftemp = tempfile.NamedTemporaryFile(suffix=".ipynb")
-    filename = os.path.join(os.getcwd(), os.path.split(ftemp.name)[-1])
+    filename = os.path.join(os.getcwd(), os.path.basename(ftemp.name))
     ftemp.close()
 
     # prepare a command running .ipynb file while converting
