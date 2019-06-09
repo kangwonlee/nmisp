@@ -60,7 +60,7 @@ before_install:
   - MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin;
   # Obtain miniconda installer
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -f $HOME/download/miniconda.sh && $CONDA_PYTHON != "nightly" ]]; then
+      if [[ -f $HOME/download/miniconda.sh ]]; then
         echo "miniconda.sh for posix already available";
       else
         mkdir -p $HOME/download;
@@ -81,14 +81,14 @@ before_install:
 install:
   # Install miniconda
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -d $MINICONDA_SUB_PATH && $CONDA_PYTHON != "nightly" ]]; then
+      if [[ -d $MINICONDA_SUB_PATH ]]; then
         echo "miniconda for posix already available";
       else
         echo "installing miniconda for posix";
         bash $HOME/download/miniconda.sh -b -u -p $MINICONDA_PATH;
       fi;
     elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      if [[ $CONDA_PYTHON != "nightly" && -d $MINICONDA_SUB_PATH ]]; then
+      if [[ -d $MINICONDA_SUB_PATH ]]; then
         echo "miniconda for Windows already installed";
       else
         echo "installing miniconda for windows";
