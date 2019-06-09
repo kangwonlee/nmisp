@@ -1,3 +1,5 @@
+[![master](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=master)](https://travis-ci.org/kangwonlee/nmisp/branches)
+
 # 사이파이 수치 해석<br>Numerical Methods in SciPy
 
 ## 소개<br>Introduction
@@ -114,10 +116,3 @@ alias nb='jupyter notebook --no-browser &'
 
 이 소프트웨어는 대한민국 국토교통부 건설교통과학기술진흥원 교통물류연구사업의 지원을 받아 시작되었음 (18TLRP-B117133-03)<br>
 This software was initially supported by the Korea Ministry of Land, Infrastructure, and Transportation. It was also supported by the Korean Agency for Infrastructure Technology Advancement. (18TLRP-B117133-03)
-
-## Build Status
-
-| branch | status |
-|:------:|:------:|
-| master | [![master](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=master)](https://travis-ci.org/kangwonlee/nmisp/branches) |
-| develop | [![develop](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=develop)](https://travis-ci.org/kangwonlee/nmisp/branches) |

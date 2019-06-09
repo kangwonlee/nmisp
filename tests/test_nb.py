@@ -31,13 +31,13 @@ def _exec_notebook_nix(path):
         # prepare a command running .ipynb file while converting
         args = [
             "jupyter", # name of program
-           "nbconvert", # option
-           "--to", "notebook", # conver to another ipynb file
-           "--execute", # run while convering
-           "--ExecutePreprocessor.timeout=1000",
-           "--ExecutePreprocessor.kernel_name=python",
-           "--output", fout.name, # output file name
-           path    # input file name
+            "nbconvert", # option
+            "--to", "notebook", # conver to another ipynb file
+            "--execute", # run while convering
+            "--ExecutePreprocessor.timeout=1000",
+            "--ExecutePreprocessor.kernel_name=python",
+            "--output", fout.name, # output file name
+            path    # input file name
         ]
         # run the command above
         # and raise an exception if error
@@ -54,7 +54,7 @@ def _exec_notebook_win(path):
     # obtain a temporary filename
     # https://docs.python.org/3/library/tempfile.html
     ftemp = tempfile.NamedTemporaryFile(suffix=".ipynb")
-    filename = os.path.join(os.getcwd(), os.path.split(ftemp.name)[-1])
+    filename = os.path.join(os.getcwd(), os.path.basename(ftemp.name))
     ftemp.close()
 
     # prepare a command running .ipynb file while converting
@@ -95,7 +95,7 @@ def get_exec_notebook():
     return os_to_function_table.get(os.name, _exec_notebook_nix)
 
 
-def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
+def make_file_list(path=os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), ext='ipynb'):
 
     file_list = []
 
@@ -124,5 +124,5 @@ def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0],
     )
 )
 def test_ipynb_file(filename, _exec_notebook):
-    print(f'test() : {filename}')
+    print('test() : %s' % filename)
     _exec_notebook(filename)
