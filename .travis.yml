@@ -46,7 +46,6 @@ cache :
   directories:
     - $HOME/download
     - $HOME/miniconda
-    - $HOME/AppData/Local/Temp/chocolatey
 
 before_install:
   # Set conda path info
