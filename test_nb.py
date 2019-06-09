@@ -54,7 +54,7 @@ def _exec_notebook_win(path):
     # obtain a temporary filename
     # https://docs.python.org/3/library/tempfile.html
     ftemp = tempfile.NamedTemporaryFile(suffix=".ipynb")
-    filename = os.path.join(os.getcwd(), os.path.split(ftemp.name)[-1])
+    filename = os.path.join(os.getcwd(), os.path.basename(ftemp.name))
     ftemp.close()
 
     # prepare a command running .ipynb file while converting
@@ -95,7 +95,7 @@ def get_exec_notebook():
     return os_to_function_table.get(os.name, _exec_notebook_nix)
 
 
-def make_file_list(path=os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir)), ext='ipynb'):
+def make_file_list(path=os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), ext='ipynb'):
 
     file_list = []
 
