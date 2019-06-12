@@ -18,6 +18,7 @@ export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH";
 source $MINICONDA_PATH/etc/profile.d/conda.sh;
 hash -r;
 echo $TRAVIS_OS_NAME
+echo $CONDA_PYTHON
 python --version
 conda config --set always_yes yes --set changeps1 no;
 conda update -q conda;
