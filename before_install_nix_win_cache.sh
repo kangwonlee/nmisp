@@ -1,3 +1,5 @@
+#!/bin/sh -x
+
   # Set conda path info
 if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
     export MINICONDA_PATH=$HOME/miniconda;
