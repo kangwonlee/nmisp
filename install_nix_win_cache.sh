@@ -1,5 +1,3 @@
-#!/bin/sh -x
-
   # Install miniconda
 if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
     if [[ -d $MINICONDA_SUB_PATH ]]; then
