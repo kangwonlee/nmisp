@@ -25,6 +25,7 @@ cache :
   directories:
     - $HOME/download
     - $HOME/miniconda
+    - $HOME/AppData/Local/Temp/chocolatey
 
 before_install:
   # When C++14 support becomes more clear, consider revision
