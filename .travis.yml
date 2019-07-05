@@ -7,7 +7,7 @@
 language: shell
 
 env:
-  - CONDA_PYTHON=3.7
+  - CONDA_PYTHON=3.6
   - CONDA_PYTHON=3.7.3
   - CONDA_PYTHON=nightly
 
@@ -19,11 +19,11 @@ os:
 matrix:
   exclude:
     - os: osx
-      env: CONDA_PYTHON=3.7
+      env: CONDA_PYTHON=3.6
     - os: osx
       env: CONDA_PYTHON=nightly
     - os: windows
-      env: CONDA_PYTHON=3.7
+      env: CONDA_PYTHON=3.6
     - os: windows
       env: CONDA_PYTHON=nightly
 
