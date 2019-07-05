@@ -22,6 +22,11 @@ before_cache:
   - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__;
   - touch $HOME/miniconda/conda-meta/history;
 
+cache :
+  directories:
+    - $HOME/download
+    - $HOME/miniconda
+
 before_install:
   # When C++14 support becomes more clear, consider revision
   # https://docs.travis-ci.com/user/multi-os/
