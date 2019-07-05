@@ -4,35 +4,19 @@
 #       CodeChat, .travis.yml - Travis CI configuration, https://pythonhosted.org/CodeChat/.travis.yml.html
 #       Travis CI, Python example (unsupported languages), https://docs.travis-ci.com/user/multi-os/#python-example-unsupported-languages
 
-# {linux, osx} x {3.6, 3.7, nightly}
-# When python 3.7 support becomes more clear, consider revision
-matrix:
-  include:
-    - os : linux
-      sudo: required
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : linux
-      # When python 3.7 support becomes more clear, consider revision
-      sudo: required
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : linux
-      sudo: required
-      python: "nightly"
-      env: TOXENV=nightly
-    - os : osx
-      sudo: required
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : osx
-      sudo: required
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : osx
-      sudo: required
-      python: "nightly"
-      env: TOXENV=nightly
+
+language: shell
+
+env:
+  - CONDA_PYTHON=3.6
+  - CONDA_PYTHON=3.7
+  - CONDA_PYTHON=3.7.1
+  - CONDA_PYTHON=3.7.3
+  - CONDA_PYTHON=nightly
+
+os:
+  - linux
+  - osx
 
 before_install:
   # When C++14 support becomes more clear, consider revision
