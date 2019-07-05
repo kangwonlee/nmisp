@@ -6,7 +6,7 @@ channels:
 
 dependencies:
 - python=3.6
-# Anaconda 5.0.1 python 3.6
+# Anaconda 5.0.1 python 3.6 https://docs.anaconda.com/anaconda/packages/old-pkg-lists/5.0.1/py3.6_win-64/
 - jupyter=1.0.0
 - matplotlib=2.1.0
 - numpy=1.13.3
