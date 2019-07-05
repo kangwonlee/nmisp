@@ -12,6 +12,8 @@ env:
   - CONDA_PYTHON=3.7.3
   - CONDA_PYTHON=nightly
 
+dist: xenial
+
 os:
   - linux
   - osx
