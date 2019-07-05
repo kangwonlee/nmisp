@@ -7,9 +7,12 @@ if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
         bash $HOME/download/miniconda.sh -b -u -p $MINICONDA_PATH;
     fi;
 elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+    echo "checking if folder $MINICONDA_SUB_PATH exists"
     if [[ -d $MINICONDA_SUB_PATH ]]; then
+        echo "folder $MINICONDA_SUB_PATH exists"
         echo "miniconda for Windows already installed";
     else
+        echo "folder $MINICONDA_SUB_PATH does not exist"
         echo "installing miniconda for windows";
         choco install miniconda3 --params="'/JustMe /AddToPath:1 /D:$MINICONDA_PATH_WIN'";
     fi;
