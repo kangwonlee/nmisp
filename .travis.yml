@@ -4,10 +4,13 @@
 #       CodeChat, .travis.yml - Travis CI configuration, https://pythonhosted.org/CodeChat/.travis.yml.html
 #       Travis CI, Python example (unsupported languages), https://docs.travis-ci.com/user/multi-os/#python-example-unsupported-languages
 
+
 language: shell
 
 env:
   - CONDA_PYTHON=3.7
+  - CONDA_PYTHON=3.7.3
+  - CONDA_PYTHON=nightly
 
 dist: xenial
 
