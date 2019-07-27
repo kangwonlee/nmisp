@@ -4,35 +4,38 @@
 #       CodeChat, .travis.yml - Travis CI configuration, https://pythonhosted.org/CodeChat/.travis.yml.html
 #       Travis CI, Python example (unsupported languages), https://docs.travis-ci.com/user/multi-os/#python-example-unsupported-languages
 
-# {linux, osx} x {3.6, 3.7, nightly}
-# When python 3.7 support becomes more clear, consider revision
+language: shell
+
+env:
+  - CONDA_PYTHON=3.6
+  - CONDA_PYTHON=3.7.3
+  - CONDA_PYTHON=nightly
+
+os:
+  - linux
+  - osx
+  - windows
+
 matrix:
-  include:
-    - os : linux
-      sudo: required
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : linux
-      # When python 3.7 support becomes more clear, consider revision
-      sudo: required
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : linux
-      sudo: required
-      python: "nightly"
-      env: TOXENV=nightly
-    - os : osx
-      sudo: required
-      python: "3.6"
-      env: TOXENV=3.6
-    - os : osx
-      sudo: required
-      python: "3.7"
-      env: TOXENV=3.7
-    - os : osx
-      sudo: required
-      python: "nightly"
-      env: TOXENV=nightly
+  exclude:
+    - os: osx
+      env: CONDA_PYTHON=3.6
+    - os: osx
+      env: CONDA_PYTHON=nightly
+    - os: windows
+      env: CONDA_PYTHON=3.6
+    - os: windows
+      env: CONDA_PYTHON=nightly
+
+before_cache:
+  - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__;
+  - touch $HOME/miniconda/conda-meta/history;
+
+cache :
+  directories:
+    - $HOME/download
+    - $HOME/miniconda
+    - $HOME/AppData/Local/Temp/chocolatey
 
 before_install:
   # When C++14 support becomes more clear, consider revision
@@ -41,6 +44,7 @@ before_install:
       sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
       sudo apt-get update -qq;
     fi
+  - . tests/before_install_nix_win_cache.sh
 
 install:
   # When C++14 support becomes more clear, consider revision
@@ -50,39 +54,7 @@ install:
       sudo apt-get install -qq g++-6;
       sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90;
     fi
-  # Obtain miniconda installer for the OS
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
-    fi
-  # Install miniconda
-  - bash miniconda.sh -b -p $HOME/miniconda
-  # Add miniconda path
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  # Forget all rememberd locations
-  - hash -r
-  # Conda setup options
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
-  # To help debugging
-  - echo $TRAVIS_OS_NAME
-  - echo $TRAVIS_PYTHON_VERSION
-  # Useful for debugging any issues with conda
-  - conda info -a
-  # Apply python module recipies
-  - if [[ "$TOXENV" == "3.6" ]]; then
-      conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.6.yml;
-    elif [[ "$TOXENV" == "3.7" ]]; then
-      conda env create -n test-environment python=$TOXENV -f ./tests/environment.3.7.yml;
-    else
-      conda env create -n test-environment python=$TOXENV -f ./tests/environment.nightly.yml;
-    fi
-  - source activate test-environment
-  - conda list
+  - . tests/install_nix_win_cache.sh
 
 # https://lord.io/blog/2014/travis-multiple-subdirs/
-script: py.test 
-notifications:
-    email:
-        - kangwon.lee.edu@gmail.com
+script: cd tests && travis_wait py.test -n auto
