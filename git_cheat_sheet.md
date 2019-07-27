@@ -1,6 +1,8 @@
 # `git` 명령 일람
 
-참고문헌 : https://education.github.com/git-cheat-sheet-education.pdf
+이 문서는 아래 링크의 문헌을 번안한 것임.
+This document is a translation of the following link.
+https://education.github.com/git-cheat-sheet-education.pdf
 
 ## 윈도우용 설치 파일 링크
 
