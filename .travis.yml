@@ -57,4 +57,4 @@ install:
   - . tests/install_nix_win_cache.sh
 
 # https://lord.io/blog/2014/travis-multiple-subdirs/
-script: cd tests && travis_wait py.test -n auto
+script: cd tests && travis_wait 30 py.test -n auto
