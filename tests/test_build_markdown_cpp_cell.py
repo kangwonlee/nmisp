@@ -1,4 +1,5 @@
 import os
+import sys
 
 import pytest
 
@@ -24,6 +25,7 @@ cpp_test_cases = [
 ]
 
 
+@pytest.mark.skipif(sys.platform.startswith("win"), reason="POSIX only for now")
 def test_get_build_command_in_last_line():
     created_files = []
     for cpp_ipynb_md_cell, expected in cpp_test_cases:
