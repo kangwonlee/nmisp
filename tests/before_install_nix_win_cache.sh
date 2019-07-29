@@ -3,7 +3,7 @@ if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
     export MINICONDA_PATH=$HOME/miniconda;
     export MINICONDA_SUB_PATH=$MINICONDA_PATH/bin;
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-    export MINICONDA_PATH=/c/tools/miniconda3;
+    export MINICONDA_PATH=$HOME/miniconda;
     export MINICONDA_PATH_WIN=`cygpath --windows $MINICONDA_PATH`;
     export MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
 fi;
