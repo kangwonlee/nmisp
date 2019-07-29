@@ -7,7 +7,7 @@ channels:
 dependencies:
 - python=3.7.3
 # Anaconda 2019.03 python 3.7
-# https://docs/anaconda.com/anaconda/packages/py3.7_win-64/
+# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/2019.03/py3.7_win-64/
 - jupyter=1.0.0
 - matplotlib=3.0.3
 - numpy=1.16.2
