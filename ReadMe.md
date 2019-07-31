@@ -7,7 +7,7 @@
 
 ## How to Start<br>시작하는 법
 
-* The documents are mostly in `.ipynb` iPython (or Jupyter) Notebook format<br>문서는 대부분 `.ipynb` iPython (또는 Jupyter) 노트북 형식으로 되어 있음.
+* The documents are mostly in [`.ipynb`](https://jupyter.readthedocs.io/en/latest/content-quickstart.html) iPython (or Jupyter) Notebook format<br>문서는 대부분 [`.ipynb`](https://jupyter.readthedocs.io/en/latest/content-quickstart.html) iPython (또는 Jupyter) 노트북 형식으로 되어 있음.
 * To read, installing [Anaconda](https://www.anaconda.com/distribution) is highly recommended.<br>읽기 위해서는 [Anaconda](https://www.anaconda.com/distribution) 설치를 권함.
 * After installation, please start by following command.<br>설치 후 다음 명령을 실행
 
