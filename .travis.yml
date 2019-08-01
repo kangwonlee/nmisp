@@ -15,10 +15,7 @@
 language : shell
 
 env:
-  - CONDA_PYTHON=3.6
   - CONDA_PYTHON=3.7
-  - CONDA_PYTHON=3.7.1
-  - CONDA_PYTHON=nightly
 
 os :
   - linux
