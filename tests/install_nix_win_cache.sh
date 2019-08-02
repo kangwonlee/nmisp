@@ -70,3 +70,6 @@ osx_sed() {
 }
 
 osx_sed
+
+FILE=$NUMPY_FOLDER/add_newdocs.py
+osx_sed
