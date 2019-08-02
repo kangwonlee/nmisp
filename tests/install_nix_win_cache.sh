@@ -86,4 +86,8 @@ else
     echo "Could not find the file $FILE";
 fi
 
-sed -i 's/\x0//g' $FILE
+if [ $TRAVIS_OS_NAME == "osx" ]; then
+    sed -i '.bak' 's/\x0//g' $FILE
+else
+    sed -i 's/\x0//g' $FILE
+fi
