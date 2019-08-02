@@ -45,6 +45,9 @@ else
     conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
 fi;
 
+conda activate test-environment
+conda list
+
 echo $MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/__init__.py
 if  [ -f $MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/__init__.py ]; then
     echo "Could find the file";
@@ -53,6 +56,3 @@ else
 fi
 
 sed -i 's/\x0//g' $MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/__init__.py
-
-conda activate test-environment
-conda list
