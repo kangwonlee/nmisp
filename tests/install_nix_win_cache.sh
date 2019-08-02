@@ -61,6 +61,15 @@ FILE=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packag
 echo $FILE
 if  [ -f $FILE ]; then
     echo "Could find the file $FILE";
+
+    if [ $TRAVIS_OS_NAME == "osx" ]; then
+        echo "sed -i '.bak' 's/\x0//g' $FILE"
+        sed -i '.bak' 's/\x0//g' $FILE
+    else
+        echo "sed -i 's/\x0//g' $FILE"
+        sed -i 's/\x0//g' $FILE
+    fi
+
 else
     echo "Could not find the file $FILE";
 fi
