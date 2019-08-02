@@ -33,73 +33,10 @@ cache :
     - $HOME/AppData/Local/Temp/chocolatey
 
 before_install:
-  # Set conda path info
-  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      MINICONDA_PATH=$HOME/miniconda;
-      MINICONDA_SUB_PATH=$MINICONDA_PATH/bin;
-    elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      MINICONDA_PATH=/c/tools/miniconda3;
-      MINICONDA_PATH_WIN=`cygpath --windows $MINICONDA_PATH`;
-      MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts;
-    fi;
-  - MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin;
-  # Obtain miniconda installer
-  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -f $HOME/download/miniconda.sh && $CONDA_PYTHON != "nightly" ]]; then
-        echo "miniconda.sh for posix already available";
-      else
-        mkdir -p $HOME/download;
-        if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-          echo "downloading miniconda.sh for linux";
-          wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/download/miniconda.sh;
-        elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-          echo "downloading miniconda.sh for osx";
-          wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O $HOME/download/miniconda.sh;
-        fi;
-      fi;
-    fi
-  # Install openssl for Windows
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      choco install openssl.light;
-    fi;
+  . ./tests/before_install_nix_win_cache.sh
 
 install:
-  # Install miniconda
-  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
-      if [[ -d $MINICONDA_SUB_PATH && $CONDA_PYTHON != "nightly" ]]; then
-        echo "miniconda for posix already available";
-      else
-        echo "installing miniconda for posix";
-        bash $HOME/download/miniconda.sh -b -u -p $MINICONDA_PATH;
-      fi;
-    elif  [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-      if [[ $CONDA_PYTHON != "nightly" && -d $MINICONDA_SUB_PATH ]]; then
-        echo "miniconda for Windows already installed";
-      else
-        echo "installing miniconda for windows";
-        choco install miniconda3 --params="'/JustMe /AddToPath:1 /D:$MINICONDA_PATH_WIN'";
-      fi;
-    fi;
-  - export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH";
-  - source $MINICONDA_PATH/etc/profile.d/conda.sh;
-  - hash -r;
-  - echo $TRAVIS_OS_NAME
-  - echo $TRAVIS_PYTHON_VERSION
-  - conda config --set always_yes yes --set changeps1 no;
-  - conda update -q conda;
-  # Useful for debugging any issues with conda
-  - conda info -a
-  # See if test-environment already available
-  # As necessary, apply python module recipies
-  - if [[ ! -d $MINICONDA_PATH/envs/test-environment ]]; then
-      echo "create test-environment";
-      conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
-    else
-      echo "update test-environment";
-      conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
-    fi;
-  - conda activate test-environment
-  - conda list
+  . ./tests/install_nix_win_cache.sh
 
 script: cd tests && travis_wait py.test -n auto
 
