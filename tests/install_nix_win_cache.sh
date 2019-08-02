@@ -57,28 +57,28 @@ could_find_folder(){
     fi
 }
 
-FOLDER = $MINICONDA_PATH
+FOLDER=$MINICONDA_PATH
 could_find_folder()
 
-FOLDER = $MINICONDA_PATH/envs/
+FOLDER=$MINICONDA_PATH/envs/
 could_find_folder()
 
-FOLDER = $MINICONDA_PATH/envs/test-environment/
+FOLDER=$MINICONDA_PATH/envs/test-environment/
 could_find_folder()
 
-FOLDER = $MINICONDA_PATH/envs/test-environment/lib/
+FOLDER=$MINICONDA_PATH/envs/test-environment/lib/
 could_find_folder()
 
-FOLDER = $MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/
+FOLDER=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/
 could_find_folder()
 
-FOLDER = $MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/
+FOLDER=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/
 could_find_folder()
 
-FOLDER = $MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/
+FOLDER=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/
 could_find_folder()
 
-FILE = $MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/__init__.py
+FILE=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/__init__.py
 echo $FILE
 if  [ -f $FILE ]; then
     echo "Could find the file $FILE";
