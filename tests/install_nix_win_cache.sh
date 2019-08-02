@@ -48,15 +48,6 @@ fi;
 conda activate test-environment
 conda list
 
-could_find_folder () {
-    echo "Checking $FOLDER";
-    if [ -d $FOLDER ]; then
-        echo "Could find $FOLDER";
-    else
-        echo "Could not find $FOLDER"
-    fi
-}
-
 NUMPY_FOLDER=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy
 
 FILE=$NUMPY_FOLDER/__init__.py
