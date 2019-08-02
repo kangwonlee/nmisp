@@ -38,4 +38,4 @@ before_install:
 install:
   . ./tests/install_nix_win_cache.sh
 
-script: cd tests && travis_wait pytest -n auto
+script: cd tests && travis_wait python -m pytest -n auto
