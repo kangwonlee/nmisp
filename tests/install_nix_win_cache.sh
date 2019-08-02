@@ -57,7 +57,9 @@ could_find_folder () {
     fi
 }
 
-FILE=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy/__init__.py
+NUMPY_FOLDER=$MINICONDA_PATH/envs/test-environment/lib/python${CONDA_PYTHON}/site-packages/numpy
+
+FILE=$NUMPY_FOLDER/__init__.py
 echo $FILE
 if  [ -f $FILE ]; then
     echo "Could find the file $FILE";
