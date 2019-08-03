@@ -87,7 +87,19 @@ cpp_test_cases = [
     '\n'
     )},
 {'result': 0, 'cpp_filename': 'account_module_user.cpp'}],
-[{'cell_type': 'markdown', 'metadata': {}, 'source': '``` C++\n// Begin account_module.h\n#include <cstdint>\n\nnamespace account {\n    void deposit (int32_t amount);\n    void withdraw (int32_t amount);\n    int32_t check();\n}\n// End account_module.h\n```'},
+[{'cell_type': 'markdown', 'metadata': {}, 'source': (
+    '``` C++\n'
+    '// Begin account_module.h\n'
+    '#include <cstdint>\n'
+    '\n'
+    'namespace account {\n'
+    '    void deposit (int32_t amount);\n'
+    '    void withdraw (int32_t amount);\n'
+    '    int32_t check();\n'
+    '}\n'
+    '// End account_module.h\n'
+    '```'
+    )},
 {'result': 0, 'cpp_filename': 'account_module.h'}],
 [{'cell_type': 'markdown', 'metadata': {}, 'source': '``` C++\n// Begin account_module.cpp\n#include <iostream>\n#include <cstdint>\n\n#include "account_module.h"\n\nusing namespace std;\n\nnamespace account{\n    int32_t balance;\n\n    void deposit (int32_t amount){\n        cout << "Deposit " << amount << \'\\n\';\n        balance += amount;\n    }\n\n    void withdraw (int32_t amount){\n        cout << "Depowithdrawsit " << amount << \'\\n\';\n        balance += -amount;\n    }\n\n    int32_t check(){\n        return balance;\n    }\n}\n// End account_module.cpp\n```\n\n'},
 {'result': 0, 'cpp_filename': 'account_module.cpp'}],
