@@ -196,7 +196,47 @@ cpp_test_cases = [
     '\n'
     '```')},
 {'result': 0, 'cpp_filename': 'account_module.h'}],
-[{'cell_type': 'markdown', 'metadata': {}, 'source': '```C++\n// Begin account_module_user.cpp\n#include <iostream>\n#include <cstdint>\n\nnamespace account_a{\n    #include "account_module.h"\n}\n\nnamespace account_b{\n    #include "account_module.h"\n}\n\nusing namespace std;\n\nint32_t main(int32_t argn, char ** argv){\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    account_a::deposit(10000);\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    account_a::withdraw(3000);\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    account_b::deposit(5000);\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    return 0;\n}\n// End account_module_user.cpp\n```'},
+[{'cell_type': 'markdown', 'metadata': {}, 'source': (
+    '```C++\n'
+    '// Begin account_module_user.cpp\n'
+    '#include <iostream>\n'
+    '#include <cstdint>\n'
+    '\n'
+    'namespace account_a{\n'
+    '    #include "account_module.h"\n'
+    '}\n'
+    '\n'
+    'namespace account_b{\n'
+    '    #include "account_module.h"\n'
+    '}\n'
+    '\n'
+    'using namespace std;\n'
+    '\n'
+    'int32_t main(int32_t argn, char ** argv){\n'
+    '\n'
+    '    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n'
+    '    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n'
+    '\n'
+    '    account_a::deposit(10000);\n'
+    '\n'
+    '    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n'
+    '    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n'
+    '\n'
+    '    account_a::withdraw(3000);\n'
+    '\n'
+    '    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n'
+    '    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n'
+    '\n'
+    '    account_b::deposit(5000);\n'
+    '\n'
+    '    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n'
+    '    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n'
+    '\n'
+    '    return 0;\n'
+    '}\n'
+    '// End account_module_user.cpp\n'
+    '```'
+    )},
 {'result': 0, 'cpp_filename': 'account_module_user.cpp'}],
 ]
 
