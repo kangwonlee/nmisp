@@ -166,7 +166,35 @@ cpp_test_cases = [
     '```\n'
     '\n')},
 {'result': 0, 'cpp_filename': 'account_module_user.cpp'}],
-[{'cell_type': 'markdown', 'metadata': {}, 'source': '``` C++\n// Begin account_module.h\n#include <cstdint>\n#include <iostream>\n\nint32_t balance;\n\n\nvoid deposit (int32_t amount){\n    std::cout << "Deposit " << amount << \'\\n\';\n    std::cout << "to " << & balance << \'\\n\';\n    balance += amount;\n}\n\n\nvoid withdraw (int32_t amount){\n    std::cout << "Withdraws " << amount << \'\\n\';\n    std::cout << "from " << & balance << \'\\n\';\n    balance += -amount;\n}\n\n\nint32_t check(){\n    return balance;\n}\n// End account_module.h\n\n```'},
+[{'cell_type': 'markdown', 'metadata': {}, 'source': (
+    '``` C++\n'
+    '// Begin account_module.h\n'
+    '#include <cstdint>\n'
+    '#include <iostream>\n'
+    '\n'
+    'int32_t balance;\n'
+    '\n'
+    '\n'
+    'void deposit (int32_t amount){\n'
+    '    std::cout << "Deposit " << amount << \'\\n\';\n'
+    '    std::cout << "to " << & balance << \'\\n\';\n'
+    '    balance += amount;\n'
+    '}\n'
+    '\n'
+    '\n'
+    'void withdraw (int32_t amount){\n'
+    '    std::cout << "Withdraws " << amount << \'\\n\';\n'
+    '    std::cout << "from " << & balance << \'\\n\';\n'
+    '    balance += -amount;\n'
+    '}\n'
+    '\n'
+    '\n'
+    'int32_t check(){\n'
+    '    return balance;\n'
+    '}\n'
+    '// End account_module.h\n'
+    '\n'
+    '```')},
 {'result': 0, 'cpp_filename': 'account_module.h'}],
 [{'cell_type': 'markdown', 'metadata': {}, 'source': '```C++\n// Begin account_module_user.cpp\n#include <iostream>\n#include <cstdint>\n\nnamespace account_a{\n    #include "account_module.h"\n}\n\nnamespace account_b{\n    #include "account_module.h"\n}\n\nusing namespace std;\n\nint32_t main(int32_t argn, char ** argv){\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    account_a::deposit(10000);\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    account_a::withdraw(3000);\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    account_b::deposit(5000);\n\n    cout << "account_a::check() = "<< account_a::check() <<\'\\n\';\n    cout << "account_b::check() = "<< account_b::check() <<\'\\n\';\n\n    return 0;\n}\n// End account_module_user.cpp\n```'},
 {'result': 0, 'cpp_filename': 'account_module_user.cpp'}],
