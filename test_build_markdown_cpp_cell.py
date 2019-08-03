@@ -162,7 +162,7 @@ cpp_test_cases = [
     '    return 0;\n'
     '}\n'
     '// End account_module_user.cpp\n'
-    '// Build command : g++ -Wall -g account_module.cpp account_module_user.cpp -o account_module_user\n'
+    '// Build command : g++ -Wall -std=c++11 -g account_module.cpp account_module_user.cpp -o account_module_user\n'
     '```\n'
     '\n')},
 {'result': 0, 'cpp_filename': 'account_module_user.cpp'}],
