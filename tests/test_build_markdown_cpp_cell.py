@@ -18,7 +18,40 @@ cpp_test_cases = [
     '```'
     )},
 {'result': 0, 'cpp_filename': 'account_module.h'}],
-[{'cell_type': 'markdown', 'metadata': {}, 'source': '``` C++\n// Begin account_module.cpp\n#include <iostream>\n#include <cstdint>\n\n#include "account_module.h"\n\nusing namespace std;\n\nint32_t balance;\n\n\nvoid deposit (int32_t amount){\n    cout << "Deposit " << amount << \'\\n\';\n    balance += amount;\n}\n\n\nvoid withdraw (int32_t amount){\n    cout << "Depowithdrawsit " << amount << \'\\n\';\n    balance += -amount;\n}\n\n\nint32_t check(){\n    return balance;\n}\n// End account_module.cpp\n```\n\n'},
+[{'cell_type': 'markdown', 'metadata': {}, 'source': (
+    '``` C++\n'
+    '// Begin account_module.cpp\n'
+    '#include <iostream>\n'
+    '#include <cstdint>\n'
+    '\n'
+    '#include "account_module.h"\n'
+    '\n'
+    'using namespace std;\n'
+    '\n'
+    'int32_t balance;\n'
+    '\n'
+    '\n'
+    'void deposit (int32_t amount){\n'
+    '    cout << "Deposit " << amount << \'\\n'
+    '\';\n'
+    '    balance += amount;\n'
+    '}\n'
+    '\n'
+    '\n'
+    'void withdraw (int32_t amount){\n'
+    '    cout << "Depowithdrawsit " << amount << \'\\n'
+    '\';\n'
+    '    balance += -amount;\n'
+    '}\n'
+    '\n'
+    '\n'
+    'int32_t check(){\n'
+    '    return balance;\n'
+    '}\n'
+    '// End account_module.cpp\n'
+    '```\n'
+    '\n'
+    )},
 {'result': 0, 'cpp_filename': 'account_module.cpp'}],
 [{'cell_type': 'markdown', 'metadata': {}, 'source': '\n``` C++\n// Begin account_module_user.cpp\n#include <iostream>\n#include <cstdint>\n\n#include "account_module.h"\n\nusing namespace std;\n\nint32_t main(int32_t argn, char * argv[]){\n\n    cout << "account_module.check() = "<< check() <<\'\\n\';\n\n    deposit(10000);\n\n    cout << "account_module.check() = "<< check() <<\'\\n\';\n\n    withdraw(3000);\n\n    cout << "account_module.check() = "<< check() <<\'\\n\';\n\n    deposit(5000);\n\n    cout << "account_module.check() = "<< check() <<\'\\n\';\n\n    return 0;\n}\n// End account_module_user.cpp\n// Build command : g++ -Wall -g account_module.cpp account_module_user.cpp -o account_module_user\n```\n\n'},
 {'result': 0, 'cpp_filename': 'account_module_user.cpp'}],
