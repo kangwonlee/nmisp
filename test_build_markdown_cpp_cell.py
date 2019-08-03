@@ -6,7 +6,17 @@ import pytest
 from . import get_cpp_from_ipynb as gcpp
 
 cpp_test_cases = [
-[{'cell_type': 'markdown', 'metadata': {}, 'source': '``` C++\n// Begin account_module.h\n#include <cstdint>\n\nvoid deposit (int32_t amount);\nvoid withdraw (int32_t amount);\nint32_t check();\n// End account_module.h\n```'},
+[{'cell_type': 'markdown', 'metadata': {}, 'source': (
+    '``` C++\n'
+    '// Begin account_module.h\n'
+    '#include <cstdint>\n'
+    '\n'
+    'void deposit (int32_t amount);\n'
+    'void withdraw (int32_t amount);\n'
+    'int32_t check();\n'
+    '// End account_module.h\n'
+    '```'
+    )},
 {'result': 0, 'cpp_filename': 'account_module.h'}],
 [{'cell_type': 'markdown', 'metadata': {}, 'source': '``` C++\n// Begin account_module.cpp\n#include <iostream>\n#include <cstdint>\n\n#include "account_module.h"\n\nusing namespace std;\n\nint32_t balance;\n\n\nvoid deposit (int32_t amount){\n    cout << "Deposit " << amount << \'\\n\';\n    balance += amount;\n}\n\n\nvoid withdraw (int32_t amount){\n    cout << "Depowithdrawsit " << amount << \'\\n\';\n    balance += -amount;\n}\n\n\nint32_t check(){\n    return balance;\n}\n// End account_module.cpp\n```\n\n'},
 {'result': 0, 'cpp_filename': 'account_module.cpp'}],
