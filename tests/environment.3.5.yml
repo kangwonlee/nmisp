@@ -6,8 +6,9 @@ channels:
 - defaults
 
 dependencies:
-# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/4.2.0/py35/
 - python=3.5
+# Anaconda 4.2 (2016.09) python 3.5 
+# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/4.2.0/py35/
 - cython=0.24.1
 - jupyter=1.0.0
 - matplotlib=2.0.2
