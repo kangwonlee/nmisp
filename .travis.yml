@@ -37,6 +37,10 @@ matrix:
       env: CONDA_PYTHON=nightly
     - os: windows
       env: CONDA_PYTHON=nightly
+  allow_failures:
+    - os: osx
+      env: CONDA_PYTHON=3.7
+  fast_finish: true
 
 before_cache:
   - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__;
