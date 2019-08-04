@@ -30,6 +30,8 @@ matrix:
       os: osx
     - env: CONDA_PYTHON=nightly
       os: linux
+  allow_failures:
+    - os: windows
   fast_finish: true
 
 before_cache:
