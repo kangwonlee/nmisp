@@ -1,0 +1,104 @@
+# `git` 명령 일람
+
+이 문서는 아래 링크의 문헌을 번안한 것임.
+This document is a translation of the following link.
+https://education.github.com/git-cheat-sheet-education.pdf
+
+## 윈도우용 설치 파일 링크
+
+https://git-scm.com/download/win
+
+## 설정
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 사용자 이름 | `git config user.name "<사용자 이름>"`          |
+| 사용자 email | `git config user.email "<사용자 email>"`      |
+| 컬러 설정 | `git config color.ui auto`                       |
+
+## 초기화
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 현재 작업 폴더 확인 | `pwd` |
+| 현재 작업 폴더 내용 확인  (LS 의 소문자) | `ls` |
+| 현재 작업 폴더에 새 폴더 만들기 | `mkdir <새 폴더 이름>` |
+| 특정 폴더로 작업 폴더 변경 | `cd <특정 폴더 이름>` |
+| 현재의 작업 폴더에서 빈 저장소 시작 | `git init` |
+| 원격 저장소를 현재 작업 폴더 아래 복사 | `git clone <원격 저장소 url>`      |
+
+## 수정사항 등록
+
+![Git Data Transport Commands](https://images.osteele.com/2008/git-transport.png)
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 현재 지역 저장소 상태 확인 | `git status` |
+| 지역 저장소의 현재 작업 폴더에 있는 어떤 `file` 을 <br> 다음 `commit` (등록) 대상으로 `stage` (지정) | `git add <file>` |
+| 지정 상태 해제 (변경 사항은 유지) | `git reset <file>` |
+| 지정되지 않은 변경 사항 중 확인 | `git diff` |
+| 등록 대기중인 지정 사항 확인 | `git diff --staged` |
+| 지정된 변경사항 등록 | `git commit -m "<등록 사항 설명>"` |
+
+## 분기와 병합
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 분기 목록 표시. 현재 branch 옆에 `*` 표시 | `git branch` |
+| 현재의 등록사항에 새로운 branch 생성 | `git branch <새 branch 이름>` |
+| 다른 branch 를 현재 branch 로 변경 | `git checkout <branch 이름>` |
+| 해당 branch 의 개정 이력을 현재의 branch 와 병합 | `git merge <branch 이름>` |
+| 현 branch 의 개정 이력상 commit 을 모두 표시 | `git log` |
+
+## 조사와 비교
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 현재 활성 branch의 commit 이력을 표시 | `git log` |
+| `branchA`에는 있으나 `branchB`에는 없는 commit을 표시 | `git log branchB..branchA` |
+| 특정 file 에 관련된 commit 을 표시하되, 파일 이름 변경 이전도 추적 | `git log --follow <file>` |
+| `branchA`에는 있으나 `branchB`에는 없는 내용인 diff 표시 | `git diff branchB...branchA` |
+| git 의 특정 객체를 읽을 수 있는 형태로 표시 | `git show <SHA>` |
+
+## 파일 삭제와 경로 변경 추적
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 저장소로부터 특정 file을 삭제하고 해당 내용을 stage | `git rm <file>` |
+| 특정 file의 경로를 변경하고 해당 내용을 stage | `git mv <기존 경로> <새 경로>` |
+| 경로 변경에 해당하는 commit 표시 | `git log --stat -M` |
+
+## 관리 대상이 아닌 파일 무시
+
+의도하지 않게 관리 대상이 아닌 파일을 stage 또는 commit 하는 것을 방지하기 위함
+
+|  무시 대상 예  |  `glob` 패턴 예  |
+|:----------:|:----------------------------------------------:|
+| 폴더 | `logs/` |
+| 특정 확장자 | `*.notes*` |
+| 폴더에 패턴을 적용하는 | `pattern*/` |
+
+이러한 패턴을 `.gitignore` 라는 이름의 파일로 저장
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 해당 시스템 전체에 걸쳐 무시 설정 | `git config --global core.excludesfile <file>` |
+
+## 공유와 갱신
+
+다른 저장소로부터 새로운 내용을 받아 지역 저장소 내용을 갱신
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 새로운 원격지 저장소 추가 | `git remote add <저장소 이름> <저장소 url>` |
+| 원격 저장소의 모든 branch의 이력을 받아옴 | `git fetch <저장소 이름>` |
+| 원격 저장소 특정 branch 이력을 병합하여<br>현재 branch 내용을 갱신 | `git merge <저장소 이름>/<branch>` |
+| 현 branch 의 이력을 원격 저장소 branch 로 전송 | `git push <저장소 이름> <branch>` |
+| 추적하고 있는 원격 branch 내용을 받은 fetch 후 병합 merge | `git pull` |
+
+## 기준 변경과 작업 공간 재설정
+
+| 작업 | 명령 |
+|:----------:|:----------------------------------------------:|
+| 특정 branch 의 개정 이력 이후에<br>현재의 branch의 개정 이력을 추가 | `git rebase <branch>` |
+| 지정 영역 stage area 를 비우고<br>작업 영역 working tree 를<br>특정 commit 으로 덮어씀 | `git reset --hard <commit>` |
