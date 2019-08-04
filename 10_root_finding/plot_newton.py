@@ -1,4 +1,12 @@
+# 무작위 수 모듈
+# Random number module
+import numpy.random as nr
 import pylab as py
+
+
+# Initialize random number generator
+# 난수 발생기 초기화
+nr.seed()
 
 
 def plot(f, x_start, x_end, x_interval=None):
@@ -42,3 +50,22 @@ def plot_derivative(df_dx, x_array):
     # 범례 표시
     # Show legend
     py.legend()
+
+
+def plot_one_tangent(f, df_dx, x_i, x_interval):
+    y_i = f(x_i)
+    slope = df_dx(x_i)
+    
+    x_tangent_array = py.linspace(x_i - x_interval * 2, x_i + x_interval * 2, 4+1)
+    y_tangent_array = slope * (x_tangent_array - x_i) + y_i
+    
+    py.plot(x_tangent_array, y_tangent_array, color=nr.random(3), alpha=0.5)
+
+
+def plot_many_tangents(f, df_dx, x_array):
+
+    x_interval = x_array[1] - x_array[0]
+
+    for x_i in x_array:
+        
+        plot_one_tangent(f, df_dx, x_i, x_interval)
