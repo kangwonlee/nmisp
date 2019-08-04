@@ -26,6 +26,9 @@ matrix:
       env: CONDA_PYTHON=3.6
     - os: windows
       env: CONDA_PYTHON=nightly
+  allow_failures:
+    - os: windows
+  fast_finish: true
 
 before_cache:
   - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__;
@@ -57,4 +60,4 @@ install:
   - . tests/install_nix_win_cache.sh
 
 # https://lord.io/blog/2014/travis-multiple-subdirs/
-script: cd tests && travis_wait py.test -n auto
+script: cd tests && travis_wait 40 py.test --numprocesses=auto
