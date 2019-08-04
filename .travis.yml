@@ -14,32 +14,24 @@
 
 language : shell
 
-env:
-  - CONDA_PYTHON=3.7
-  - CONDA_PYTHON=3.7.1
-  - CONDA_PYTHON=3.7.3
-  - CONDA_PYTHON=nightly
-
-os :
-  - linux
-  - osx
-  - windows
-
 matrix:
-  exclude:
-    - os: linux
-      env: CONDA_PYTHON=3.7
-    - os: windows
-      env: CONDA_PYTHON=3.7
-    - os: linux
-      env: CONDA_PYTHON=3.7.3
-    - os: osx
-      env: CONDA_PYTHON=nightly
-    - os: windows
-      env: CONDA_PYTHON=nightly
+  include:
+    - env: CONDA_PYTHON=3.7.1
+      os: osx
+    - env: CONDA_PYTHON=3.7.3
+      os: windows
+    - env: CONDA_PYTHON=3.7.3
+      os: linux
+    - env: CONDA_PYTHON=3.7.3
+      os: osx
+    - env: CONDA_PYTHON=2019.07
+      os: windows
+    - env: CONDA_PYTHON=2019.07
+      os: osx
+    - env: CONDA_PYTHON=nightly
+      os: linux
   allow_failures:
-    - os: osx
-      env: CONDA_PYTHON=3.7
+    - os: windows
   fast_finish: true
 
 before_cache:
