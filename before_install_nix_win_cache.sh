@@ -11,16 +11,16 @@ export MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin;
   # Obtain miniconda installer
 if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
     if [[ -f $HOME/download/miniconda.sh ]]; then
-      echo "miniconda.sh for posix already available";
+        echo "miniconda.sh for posix already available";
     else
-      mkdir -p $HOME/download;
-      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-          echo "downloading miniconda.sh for linux";
-          wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/download/miniconda.sh;
-      elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-          echo "downloading miniconda.sh for osx";
-          wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O $HOME/download/miniconda.sh;
-      fi;
+        mkdir -p $HOME/download;
+        if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+            echo "downloading miniconda.sh for linux";
+            wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/download/miniconda.sh;
+        elif  [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+            echo "downloading miniconda.sh for osx";
+            wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O $HOME/download/miniconda.sh;
+        fi;
     fi;
 fi;
   # Install openssl for Windows
