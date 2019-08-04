@@ -25,6 +25,8 @@ matrix:
     - env: CONDA_PYTHON=2019.07
       os: windows
     - env: CONDA_PYTHON=2019.07
+      os: linux
+    - env: CONDA_PYTHON=2019.07
       os: osx
     - env: CONDA_PYTHON=nightly
       os: linux
