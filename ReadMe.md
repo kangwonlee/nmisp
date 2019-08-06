@@ -2,8 +2,8 @@
 
 ## Motivation<br>작성 동기
 
-* These documents are to introduce basic usage of `bash` and `git`.<br>이 문서는 `bash` 나 `git`의 기초 사용법에 관한 것임.
-* Each document has descriptions and executable examples.<br>각 문서는 설명과 실행 가능한 예제를 담고 있음.
+* These documents are to introduce basic usage of `bash`, `git`, and Jupyter notebooks (or iPython notebook).<br>이 문서는 `bash`, `git`, 주피터 노트북 (또는 아이파이썬 노트북)의 기초 사용법에 관한 것임.
+* Each ipynb document has descriptions and executable examples.<br>각 ipynb 문서는 설명과 실행 가능한 예제를 담고 있음.
 
 ## How to Start<br>시작하는 법
 
