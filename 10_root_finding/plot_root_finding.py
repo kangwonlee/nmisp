@@ -9,7 +9,7 @@ import pylab as py
 nr.seed()
 
 
-def plot(f, x_start, x_end, x_interval=None):
+def plot(f, x_start, x_end, x_interval=None, epsilon=0.15):
     if x_interval is None:
         x_interval = x_end - x_start
 
@@ -20,7 +20,6 @@ def plot(f, x_start, x_end, x_interval=None):
     py.plot(x, py.zeros_like(x), 'ro', label='y=0')
 
     # +/- epsilon
-    epsilon=0.15
     py.plot(x, epsilon * py.ones_like(x), 'r-.', label=r'$+\epsilon$')
     py.plot(x, -epsilon * py.ones_like(x), 'r--', label=r'$-\epsilon$')
 
