@@ -258,7 +258,7 @@ sample_ipynb = {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "[![CppCon 2015: Greg Law \" Give me 15 minutes & I'll change your view of GDB\"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n",
+    "[![CppCon moving pictures](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/user/CppCon/videos)\n",
     "\n"
    ]
   },
