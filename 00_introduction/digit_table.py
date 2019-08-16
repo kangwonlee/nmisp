@@ -48,9 +48,13 @@ def main():
         rows_list.append('|'.join(['', d_str, b_str, n_bits_str, n_bytes_str, h_str, '']))
 
 
+    present_table(rows_list)    # Indicate as a Markdown table
+
+
+def present_table(table):
     IPython.display.display(
         IPython.display.Markdown(
-            '\n'.join(rows_list) # Connect all elements of the list
+            '\n'.join(table) # Connect all elements of the list
         )    # Create a Markdown table (let's put it this way for now)
     )    # Indicate as a Markdown table
 
