@@ -82,6 +82,30 @@ def unsigned_sigined_int(n):
     return table
 
 
+def unsigned_sigined_int_16(n=16):
+
+    table = [ f''' {n} bit bit pattern | `unsigned int{n}_t` | `signed int{n}_t` 
+    :-----------------:|:--------:|:------:''']
+
+    for i in range(0, 3):
+        table.append(f'{i:0{n}b} | {i} | {i}')
+
+    table.append(f' ... | ... | ... ')
+
+    for i in range(2**(n-1)-2, 2**(n-1)-1+1):
+        table.append(f'{i:0{n}b} | {i} | {i}')
+
+    for i in range(2**(n-1), 2**(n-1)+2+1):
+        table.append(f'{i:0{n}b} | {i} | {i-(2**n)}')
+
+    table.append(f' ... | ... | ... ')
+
+    for i in range((2**n)-2, (2**n)-1+1):
+        table.append(f'{i:0{n}b} | {i} | {i-(2**n)}')
+
+    return table
+
+
 def present_table(table):
     IPython.display.display(
         IPython.display.Markdown(
