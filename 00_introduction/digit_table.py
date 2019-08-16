@@ -11,6 +11,12 @@ import IPython   # ipython notebook features
 
 def main():
 
+    binary_hex_decimal_table = get_binary_hex_decimal_table()
+
+    present_table(binary_hex_decimal_table)    # Indicate as a Markdown table
+
+
+def get_binary_hex_decimal_table():
     # Following lines designate the header of a markdown table
     rows_list = ['''| Decimal | Binary | no. bits | no. bytes | Hexadecimal |
     |:--------------:|:------------:|:------------:|:------------:|:-------------------:|''']
@@ -47,8 +53,7 @@ def main():
         # using variables above
         rows_list.append('|'.join(['', d_str, b_str, n_bits_str, n_bytes_str, h_str, '']))
 
-
-    present_table(rows_list)    # Indicate as a Markdown table
+    return rows_list
 
 
 def present_table(table):
