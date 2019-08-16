@@ -1,22 +1,16 @@
 # https://stackoverflow.com/questions/35160256/how-do-i-output-lists-as-a-table-in-jupyter-notebook
 # http://nbviewer.jupyter.org/github/ipython/ipython/blob/4.0.x/examples/IPython%20Kernel/Rich%20Output.ipynb
 
-# import lines 
-# to extend python's features
+# import modules to extend python's features
 import math      # math functions and constants
 import IPython   # ipython notebook features
 
 # MarkDown is like a simplified version of html
 # Using MarkDown, for example, we can present a table
 
-def main():
-
-    binary_hex_decimal_table = get_binary_hex_decimal_table()
-
-    present_table(binary_hex_decimal_table)    # Indicate as a Markdown table
-
 
 def get_binary_hex_decimal_table():
+
     # Following lines designate the header of a markdown table
     rows_list = ['''| Decimal | Binary | no. bits | no. bytes | Hexadecimal |
     |:--------------:|:------------:|:------------:|:------------:|:-------------------:|''']
