@@ -50,6 +50,38 @@ def get_binary_hex_decimal_table():
     return rows_list
 
 
+def unsigned_sigined_int(n):
+        
+    # start the list for rows of table with header rows
+    table = [ f''' {n} bit bit pattern | `unsigned int{n}_t` | `signed int{n}_t` 
+    :-----------------:|:--------:|:------:''']
+
+    # table body : 0 ~ 3
+    for i in range(0, 3):
+        table.append(f'{i:0{n}b} | {i} | {i}')
+
+    # to make the table shorter add ellipsis
+    table.append(f' ... | ... | ... ')
+
+    # rows around the change of the sign
+    # positive
+    for i in range(2**(n-1)-2, 2**(n-1)-1+1):
+        table.append(f'{i:0{n}b} | {i} | {i}')
+
+    # negative
+    for i in range(2**(n-1), 2**(n-1)+2+1):
+        table.append(f'{i:0{n}b} | {i} | {i-(2**n)}')
+
+    # to make the table shorter add ellipsis
+    table.append(f' ... | ... | ... ')
+
+    # rows close to the n bit limit
+    for i in range((2**n)-2, (2**n)-1+1):
+        table.append(f'{i:0{n}b} | {i} | {i-(2**n)}')
+
+    return table
+
+
 def present_table(table):
     IPython.display.display(
         IPython.display.Markdown(
