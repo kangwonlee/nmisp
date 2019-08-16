@@ -100,4 +100,3 @@ def present_table(table):
             '\n'.join(table) # Connect all elements of the list
         )    # Create a Markdown table (let's put it this way for now)
     )    # Indicate as a Markdown table
-
