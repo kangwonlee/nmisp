@@ -106,6 +106,18 @@ def unsigned_sigined_int_16(n=16):
     return table
 
 
+def get_float_bits(n, ne):
+    ns = n - 1 - ne # number of significand bits
+    return [
+        # header row : position of bits
+        ' | '.join(str(k) for k in range(n-1, 0 - 1, -1)), 
+        # separator row
+        '|'.join(':---:' for k in range(1, n+1)),
+        # body row
+        ' | '.join([r'$\pm$'] + ['`e`']*ne + ['`s`']*ns),
+    ]
+
+
 def present_table(table):
     IPython.display.display(
         IPython.display.Markdown(
