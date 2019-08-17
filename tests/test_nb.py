@@ -159,6 +159,12 @@ def make_file_list(path='', ext='ipynb'):
     return file_list
 
 
+def test_make_file_list(env_ignore_folder_2):
+    for filename in make_file_list():
+        assert isinstance(filename, str)
+        assert os.path.exists(filename), f"File Not Found {filename}"
+
+
 # https://docs.pytest.org/en/latest/example/parametrize.html
 @pytest.mark.parametrize(
     "filename, _exec_notebook",
