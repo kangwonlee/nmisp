@@ -97,6 +97,11 @@ def get_exec_notebook():
 
 def make_file_list(path=os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), ext='ipynb'):
 
+    path = os.path.abspath(path)
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Unable to find folder {path}")
+
     file_list = []
 
     # recursive loop
