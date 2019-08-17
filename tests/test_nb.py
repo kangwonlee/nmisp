@@ -108,6 +108,7 @@ def is_ignore(path):
     path_list = path.split(os.sep)
 
     ignore_list = ['.ipynb_checkpoints', '.git', '__pycache__', '.pytest_cache']
+    ignore_list += os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '').split(os.pathsep)
 
     return any(map(lambda path_part: path_part in ignore_list, path_list))
 
