@@ -115,7 +115,10 @@ def make_file_list(path='', ext='ipynb'):
             # files loop
             for filename in filenames:
                 if os.path.splitext(filename)[-1].endswith(ext):
+                    if os.path.exists(os.path.join(root, filename)):
                     file_list.append(os.path.join(root, filename))
+                    else:
+                        raise FileNotFoundError(os.path.join(root, filename))
 
     return file_list
 
