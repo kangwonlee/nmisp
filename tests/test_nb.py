@@ -149,6 +149,7 @@ def make_file_list(path='', ext='ipynb'):
 )
 def test_ipynb_file(filename, _exec_notebook):
     print('test() : %s' % filename)
+    assert os.path.exists(filename), f"File Not Found {filename}"
     _exec_notebook(filename)
 
 
