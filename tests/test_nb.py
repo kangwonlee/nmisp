@@ -166,6 +166,15 @@ def test_make_file_list(env_ignore_folder_2):
         assert not is_ignore(filename), f"Unexpected file {filename}"
 
 
+def test_make_file_list_env_input(env_ignore_folder_2):
+    for filename in make_file_list(os.path.abspath(
+                os.environ.get('TEST_IPYNB_FOLDER', '')
+            )):
+        assert isinstance(filename, str)
+        assert os.path.exists(filename), f"File Not Found {filename}"
+        assert not is_ignore(filename), f"Unexpected file {filename}"
+
+
 # https://docs.pytest.org/en/latest/example/parametrize.html
 @pytest.mark.parametrize(
     "filename, _exec_notebook",
