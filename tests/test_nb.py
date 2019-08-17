@@ -106,7 +106,6 @@ def test_is_ignore():
 
 @pytest.fixture(scope="function")
 def env_ignore_folder_2():
-
     backup_env = os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '')
 
     os.environ['TEST_IPYNB_IGNORE_FOLDER'] = os.pathsep.join(['subfolder', 'temp'])
@@ -117,12 +116,7 @@ def env_ignore_folder_2():
     os.environ['TEST_IPYNB_IGNORE_FOLDER'] = backup_env
 
 
-def test_is_ignore_env_ignore_folder():
-
-    backup_env = os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '')
-
-    os.environ['TEST_IPYNB_IGNORE_FOLDER'] = os.pathsep.join(['subfolder', 'temp'])
-
+def test_is_ignore_env_ignore_folder(env_ignore_folder_2):
     true_00 = os.sep.join('~/Documents/Python Scripts/proj/subfolder/.ipynb_checkpoints'.split('/'))
     assert is_ignore(true_00)
 
@@ -131,9 +125,6 @@ def test_is_ignore_env_ignore_folder():
 
     false_00 = os.sep.join('~/Documents/Python Scripts/proj/'.split('/'))
     assert not is_ignore(false_00)
-
-    # restore env var
-    os.environ['TEST_IPYNB_IGNORE_FOLDER'] = backup_env
 
 
 def is_ignore(path):
