@@ -98,8 +98,10 @@ def get_exec_notebook():
 def test_is_ignore():
 
     true_00 = os.sep.join('~/Documents/Python Scripts/proj/subfolder/.ipynb_checkpoints'.split('/'))
-
     assert is_ignore(true_00)
+
+    false_00 = os.sep.join('~/Documents/Python Scripts/proj/subfolder'.split('/'))
+    assert not is_ignore(false_00)
 
 
 def is_ignore(path):
