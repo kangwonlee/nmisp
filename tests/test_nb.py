@@ -105,12 +105,9 @@ def test_is_ignore():
 def is_ignore(path):
     path_list = path.split(os.sep)
 
-    return (
-                ('.ipynb_checkpoints' in path_list)
-                or ('.git' in path_list)
-                or ('__pycache__'in path_list)
-                or ('.pytest_cache' in path_list)
-            ) 
+    ignore_list = ['.ipynb_checkpoints', '.git', '__pycache__', '.pytest_cache']
+
+    return any(map(lambda path_part: path_part in ignore_list, path_list))
 
 
 def make_file_list(path='', ext='ipynb'):
