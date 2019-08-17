@@ -124,12 +124,7 @@ def make_file_list(path='', ext='ipynb'):
 
     # recursive loop
     for root, _, filenames in os.walk(path):
-        if not (
-                ('.ipynb_checkpoints' in root)
-                or ('.git' in root)
-                or ('__pycache__'in root)
-                or ('.pytest_cache' in root)
-            ):
+        if not (is_ignore(root)):
             # files loop
             for filename in filenames:
                 if os.path.splitext(filename)[-1].endswith(ext):
