@@ -6,13 +6,16 @@ channels:
 - defaults
 
 dependencies:
-# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/4.2.0/py35/
 - python=3.5
+# Anaconda 4.2 (2016.09) python 3.5 
+# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/4.2.0/py35/
+- cython=0.24.1
 - jupyter=1.0.0
 - matplotlib=2.0.2
 - numpy=1.11.1
 - pandas=0.18.1
 - pytest=2.9.2
+- requests=2.11.1
 - scipy=0.18.1
 - statsmodels=0.6.1
 - sympy=1.0=py35_0
