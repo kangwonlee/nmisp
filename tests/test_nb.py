@@ -104,10 +104,29 @@ def test_is_ignore():
     assert not is_ignore(false_00)
 
 
+def test_is_ignore_env_ignore_folder():
+
+    backup_env = os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '')
+
+    os.environ['TEST_IPYNB_IGNORE_FOLDER'] = os.pathsep.join(['subfolder', 'temp'])
+
+    true_00 = os.sep.join('~/Documents/Python Scripts/proj/subfolder/.ipynb_checkpoints'.split('/'))
+    assert is_ignore(true_00)
+
+    true_01 = os.sep.join('~/Documents/Python Scripts/proj/subfolder'.split('/'))
+    assert is_ignore(true_01)
+
+    false_00 = os.sep.join('~/Documents/Python Scripts/proj/'.split('/'))
+    assert not is_ignore(false_00)
+
+    # restore env var
+    os.environ['TEST_IPYNB_IGNORE_FOLDER'] = backup_env
+
+
 def is_ignore(path):
     path_list = path.split(os.sep)
 
-    ignore_list = ['.ipynb_checkpoints', '.git', '__pycache__', '.pytest_cache']
+    ignore_list = ['.ipynb_checkpoints', '.git', '__pycache__', '.pytest_cache'] 
     ignore_list += os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '').split(os.pathsep)
 
     return any(map(lambda path_part: path_part in ignore_list, path_list))
