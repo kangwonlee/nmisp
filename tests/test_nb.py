@@ -163,6 +163,7 @@ def test_make_file_list(env_ignore_folder_2):
     for filename in make_file_list():
         assert isinstance(filename, str)
         assert os.path.exists(filename), f"File Not Found {filename}"
+        assert not is_ignore(filename), f"Unexpected file {filename}"
 
 
 # https://docs.pytest.org/en/latest/example/parametrize.html
