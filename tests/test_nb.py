@@ -95,6 +95,24 @@ def get_exec_notebook():
     return os_to_function_table.get(os.name, _exec_notebook_nix)
 
 
+def test_is_ignore():
+
+    true_00 = os.sep.join('~/Documents/Python Scripts/proj/subfolder/.ipynb_checkpoints'.split('/'))
+
+    assert is_ignore(true_00)
+
+
+def is_ignore(path):
+    path_list = path.split(os.sep)
+
+    return (
+                ('.ipynb_checkpoints' in path_list)
+                or ('.git' in path_list)
+                or ('__pycache__'in path_list)
+                or ('.pytest_cache' in path_list)
+            ) 
+
+
 def make_file_list(path='', ext='ipynb'):
 
     path = os.path.abspath(path)
@@ -116,7 +134,7 @@ def make_file_list(path='', ext='ipynb'):
             for filename in filenames:
                 if os.path.splitext(filename)[-1].endswith(ext):
                     if os.path.exists(os.path.join(root, filename)):
-                    file_list.append(os.path.join(root, filename))
+                        file_list.append(os.path.join(root, filename))
                     else:
                         raise FileNotFoundError(os.path.join(root, filename))
 
@@ -138,3 +156,7 @@ def make_file_list(path='', ext='ipynb'):
 def test_ipynb_file(filename, _exec_notebook):
     print('test() : %s' % filename)
     _exec_notebook(filename)
+
+
+if "__main__" == __name__:
+    pytest.main()
