@@ -104,6 +104,19 @@ def test_is_ignore():
     assert not is_ignore(false_00)
 
 
+@pytest.fixture(scope="function")
+def env_ignore_folder_2():
+
+    backup_env = os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '')
+
+    os.environ['TEST_IPYNB_IGNORE_FOLDER'] = os.pathsep.join(['subfolder', 'temp'])
+
+    yield os.environ
+
+    # restore env var
+    os.environ['TEST_IPYNB_IGNORE_FOLDER'] = backup_env
+
+
 def test_is_ignore_env_ignore_folder():
 
     backup_env = os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '')
