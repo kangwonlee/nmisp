@@ -124,7 +124,11 @@ def make_file_list(path='', ext='ipynb'):
 @pytest.mark.parametrize(
     "filename, _exec_notebook",
     itertools.zip_longest(
-        make_file_list(),
+        make_file_list(
+            os.path.abspath(
+                os.environ.get('TEST_IPYNB_FOLDER', '')
+            )
+        ),
         [get_exec_notebook()], fillvalue=get_exec_notebook()
     )
 )
