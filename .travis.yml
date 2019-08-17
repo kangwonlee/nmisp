@@ -28,19 +28,7 @@ matrix:
       os: osx
     - env: CONDA_PYTHON=nightly
       os: linux
-    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_FOLDER=00_introduction
-      os: windows
-    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_FOLDER=10_root_finding
-      os: windows
-    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_FOLDER=20_interpolation
-      os: windows
-    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_FOLDER=30_num_int
-      os: windows
-    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_FOLDER=40_linear_algebra_1
-      os: windows
-    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_FOLDER=50_ode
-      os: windows
-    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_FOLDER=60_linear_algebra_2
+    - env: CONDA_PYTHON=2019.07 TEST_IPYNB_IGNORE_FOLDER=tutorial
       os: windows
   allow_failures:
     - os: windows
