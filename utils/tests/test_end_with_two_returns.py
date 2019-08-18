@@ -30,8 +30,11 @@ class TestFile(unittest.TestCase):
         self.nb = nbformat.read(self.fp, nbformat.NO_CONVERT)
 
         self.fp.seek(0)
+
+        self.cell = self.nb['cells'][0]
     
     def tearDown(self):
+        del self.cell
         del self.nb
         self.fp.close()
 
@@ -40,12 +43,12 @@ class TestFile(unittest.TestCase):
             self.assertIsInstance(cell, nbformat.notebooknode.NotebookNode)
 
     def test_get_source_from_cell(self):
-        cell = self.nb['cells'][0]
+        cell = self.cell
         source = tr.get_source_from_cell(cell)
         self.assertIsInstance(source, str)
 
     def test_process_cell_no_return(self):
-        cell = self.nb['cells'][0]
+        cell = self.cell
         cell.source = cell.source.strip()
         expected = cell.source.strip() + '\n\n'
 
@@ -54,7 +57,7 @@ class TestFile(unittest.TestCase):
         self.assertEqual(result.source, expected)
 
     def test_process_cell_one_return(self):
-        cell = self.nb['cells'][0]
+        cell = self.cell
         cell.source = cell.source.strip() + '\n'
         expected = cell.source.strip() + '\n\n'
 
@@ -63,7 +66,7 @@ class TestFile(unittest.TestCase):
         self.assertEqual(result.source, expected)
 
     def test_process_cell_two_returns(self):
-        cell = self.nb['cells'][0]
+        cell = self.cell
         cell.source = cell.source.strip() + '\n\n'
         expected = cell.source.strip() + '\n\n'
 
