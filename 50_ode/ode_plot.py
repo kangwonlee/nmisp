@@ -64,9 +64,11 @@ def ode_slope_1state(func, x_list, time_list):
     py.grid(True)
 
 
-def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, x_exact_array, filename):
+def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, filename):
     ode_slope_1state(dx_dt, x_array, t_array)
-    py.plot(t_array, x_exact_array, label='exact')
+
+    exact = ExactPlotterFirstOrderODE(t_min=t_array.min(), t_max=t_array.max())
+    exact.plot()
 
     py.legend(loc=0, fontsize='xx-large')
 
