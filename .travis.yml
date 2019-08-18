@@ -50,4 +50,4 @@ install:
   # Install miniconda
   - . tests/install_nix_win_cache.sh
 
-script: py.test -n auto tests/
+script: travis_wait 40 py.test -n auto tests/
