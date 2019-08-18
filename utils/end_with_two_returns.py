@@ -24,3 +24,9 @@ def gen_folders(path=get_par_dir()):
         if os.path.isdir(path_item):
             assert os.path.exists(path_item)
             yield path_item
+
+
+def gen_files(path, ext='ipynb'):
+    for item in gen_items(path):
+        if os.path.isdir(item):
+            yield item
