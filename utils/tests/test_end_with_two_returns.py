@@ -27,7 +27,12 @@ class TestFile(unittest.TestCase):
             encoding = 'utf-8'
         )
     
+        self.nb = nbformat.read(self.fp, nbformat.NO_CONVERT)
+
+        self.fp.seek(0)
+    
     def tearDown(self):
+        del self.nb
         self.fp.close()
 
     def test_gen_cells(self):
