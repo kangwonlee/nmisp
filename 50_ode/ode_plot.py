@@ -69,3 +69,20 @@ def format_incremental_plot(x_min=-4, x_max=4, y_min=0, y_max=6):
 
     py.legend(loc=0)
     py.grid(True)
+
+
+def get_line_eq(i):
+    return f'$x=s_{i}(t-t_{i})+x_{i}$'
+
+
+def get_point_xy_txt(i):
+    return f'$(t_{i + 1}, x_{i + 1})$'
+
+
+def plot_one_step(t_array, x_array, i):
+    py.plot(t_array, x_array, label=get_line_eq(i))
+
+    t_e, x_e = t_array[-1], x_array[-1]
+
+    py.plot(t_e, x_e, 'o')
+    py.text(t_e, x_e, get_point_xy_txt(i))
