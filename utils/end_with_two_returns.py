@@ -66,3 +66,16 @@ def process_cell(cell):
     )
 
     return cell
+
+
+def process_file(input_ipynb_filename, output_ipynb_filename=None):
+
+    if output_ipynb_filename is None:
+        output_ipynb_filename = input_ipynb_filename
+
+    nb = nbformat.read(input_ipynb_filename, nbformat.NO_CONVERT)
+
+    for cell in nb['cells']:
+        process_cell(cell)
+
+    nbformat.write(nb, output_ipynb_filename)
