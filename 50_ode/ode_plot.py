@@ -1,5 +1,35 @@
+import dataclasses
+
 import numpy as np
 import pylab as py
+
+
+@dataclasses.dataclass
+class ExactPlotterFirstOrderODE(object):
+    """
+    a_x x_dot + a_1 x = 0
+
+    see : https://realpython.com/python-data-classes/
+
+    """
+
+    a_0 : float = 2.0
+    a_1 : float = 1.0
+    t_min : float = 0
+    t_max : float = 4.5
+    x_0 : float = 4.5
+    label : str = 'exact'
+
+    def __post_init__(self):
+        self.t_array = py.linspace(self.t_min, self.t_max)
+        self.a_ratio = - (self.a_1 / self.a_0)
+        self.x_array = self.exact(self.t_array)
+
+    def exact(self, t):
+        return self.x_0 * py.exp(self.a_ratio * t)
+
+    def plot(self):
+        py.plot(self.t_array, self.x_array, label=self.label)
 
 
 def ode_slope_1state_interval(func, delta_t, delta_x, te, ti, x_max, x_min):
