@@ -1,5 +1,6 @@
 import os
 import sys
+import tempfile
 import unittest
 
 import nbformat
@@ -98,6 +99,56 @@ class TestCell(unittest.TestCase):
         result = tr.add_two_returns_if_missing(source_ending_without_return)
 
         self.assertEqual(source_ending_without_return + '\n\n', result,)
+
+
+class TestWritingFile(unittest.TestCase):
+    def setUp(self):
+        self.test_folder = os.path.dirname(__file__)
+        self.input_file = os.path.join(
+            os.path.dirname(__file__), 
+            'sample.ipynb'
+        )
+
+        if 'nt' == os.name:
+            tf = tempfile.NamedTemporaryFile(suffix='.ipynb')
+            output_basename = os.path.basename(tf.name)
+            tf.close()
+
+            self.output_file = os.path.abspath(
+                os.path.join(os.path.dirname(__file__), output_basename)
+            )
+
+        elif 'posix' == os.name:
+            self.output_file = tempfile.TemporaryFile(mode='wt', suffix='.ipynb', encodeing='utf-8')
+        else:
+            raise NotImplementedError
+
+    def tearDown(self):
+        if 'posix' == os.name:
+            self.output_file.close()
+        elif 'nt' == os.name:
+            if os.path.exists(self.output_file):
+                os.remove(self.output_file)
+
+    def test_process_file(self):
+        # function under test
+        tr.process_file(self.input_file, self.output_file)
+
+        nb_input = nbformat.read(self.input_file, nbformat.NO_CONVERT)
+        nb_output = nbformat.read(self.output_file, nbformat.NO_CONVERT)
+
+        self.assertGreater(len(nb_input['cells']), 0)
+
+        self.assertEqual(
+            len(nb_input['cells']),
+            len(nb_output['cells']),
+        )
+
+        for in_cell, out_cell in zip(nb_input['cells'], nb_output['cells']):
+            self.assertEqual(
+                in_cell.source.strip() + '\n\n',
+                out_cell.source
+            )
 
 
 if "__main__" == __name__:
