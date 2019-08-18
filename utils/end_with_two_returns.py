@@ -47,3 +47,14 @@ def gen_cells(ipynb_file):
 def get_source_from_cell(cell):
     assert isinstance(cell, nbformat.notebooknode.NotebookNode), repr(cell)
     return cell['source']
+
+
+def add_two_returns_if_missing(cell_source):
+    if cell_source.endswith('\n\n'):
+        pass
+    elif cell_source.endswith('\n'):
+        cell_source += '\n'
+    else:
+        cell_source += '\n\n'
+
+    return cell_source
