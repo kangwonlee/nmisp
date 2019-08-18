@@ -13,15 +13,13 @@ class ExactPlotterFirstOrderODE(object):
 
     """
 
+    t_array : py.ndarray
     a_0 : float = 2.0
     a_1 : float = 1.0
-    t_min : float = 0
-    t_max : float = 4.5
     x_0 : float = 4.5
     label : str = 'exact'
 
     def __post_init__(self):
-        self.t_array = py.linspace(self.t_min, self.t_max)
         self.a_ratio = - (self.a_1 / self.a_0)
         self.x_array = self.exact(self.t_array)
 
@@ -67,7 +65,7 @@ def ode_slope_1state(func, x_list, time_list):
 def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, filename):
     ode_slope_1state(dx_dt, x_array, t_array)
 
-    exact = ExactPlotterFirstOrderODE(t_min=t_array.min(), t_max=t_array.max())
+    exact = ExactPlotterFirstOrderODE(t_array)
     exact.plot()
 
     py.legend(loc=0, fontsize='xx-large')
