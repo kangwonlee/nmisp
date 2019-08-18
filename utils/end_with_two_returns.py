@@ -4,11 +4,11 @@ import nbformat
 
 
 def get_cur_dir():
-    return os.path.abspath(os.path.basename(__file__))
+    return os.path.abspath(os.path.dirname(__file__))
 
 
 def get_par_dir():
-    return os.path.abspath(os.path.join(os.path.basename(__file__), os.pardir))
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
 def gen_items(path):
