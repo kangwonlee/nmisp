@@ -56,3 +56,16 @@ def get_straight_line_to_next_time_step(t_initial, delta_t, x_initial, slope):
     t_2, x_2 = t_array[-1], x_array[-1]
 
     return{'t': t_array, 'x': x_array, 't_e': t_2, 'x_e': x_2}
+
+
+def format_incremental_plot(x_min=-4, x_max=4, y_min=0, y_max=0):
+    py.axis('equal')
+
+    py.xlim(left=x_min, right=x_max)
+    py.ylim(bottom=y_min, top=y_max)
+
+    py.xlabel('t(sec)')
+    py.ylabel('x(m)')
+
+    py.legend(loc=0)
+    py.grid(True)
