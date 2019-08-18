@@ -58,3 +58,11 @@ def add_two_returns_if_missing(cell_source):
         cell_source += '\n\n'
 
     return cell_source
+
+
+def process_cell(cell):
+    cell['source'] = add_two_returns_if_missing(
+        get_source_from_cell(cell)
+    )
+
+    return cell
