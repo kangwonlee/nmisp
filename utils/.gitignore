@@ -1,0 +1,8 @@
+.ipynb_checkpoints/
+
+__pycache__/
+.cache/
+.idea/
+
+# file generated from jupyter nbconvert
+*.nbconvert.ipynb
