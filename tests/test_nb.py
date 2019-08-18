@@ -181,13 +181,26 @@ def make_file_list(path='', ext='ipynb'):
 
 
 def test_make_file_list(env_ignore_folder_2):
-    for filename in make_file_list():
+
+    list_under_test = make_file_list()
+
+    assert list_under_test, "List empty"
+
+    for filename in list_under_test:
         assert isinstance(filename, str)
         assert os.path.exists(filename), f"File Not Found {filename}"
         assert not is_ignore(filename), f"Unexpected file {filename}"
 
 
 def test_make_file_list_env_input(env_ignore_folder_2):
+    list_under_test = make_file_list(
+        os.path.abspath(
+            os.environ.get('TEST_IPYNB_FOLDER', '')
+        )
+    )
+
+    assert list_under_test, "List empty"
+
     for filename in make_file_list(os.path.abspath(
                 os.environ.get('TEST_IPYNB_FOLDER', '')
             )):
