@@ -42,3 +42,8 @@ def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, x_exact_array,
 
     py.savefig(filename)
 
+
+def indicate_initial_point(t_0, x_0):
+    py.plot(t_0, x_0, 'o')
+    py.text(t_0, x_0, '$(t_0, x_0)$')
+
