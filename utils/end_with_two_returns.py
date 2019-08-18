@@ -19,11 +19,9 @@ def gen_items(path):
 
 
 def gen_folders(path=get_par_dir()):
-    for item in os.listdir(path):
-        path_item = os.path.abspath(os.path.join(path, item))
-        if os.path.isdir(path_item):
-            assert os.path.exists(path_item)
-            yield path_item
+    for item in gen_items(path):
+        if os.path.isdir(item):
+            yield item
 
 
 def gen_files(path, ext='ipynb'):
