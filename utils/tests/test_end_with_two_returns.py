@@ -32,8 +32,10 @@ class TestFile(unittest.TestCase):
         self.fp.seek(0)
 
         self.cell = self.nb['cells'][0]
+        self.cell_src_strip = self.cell.source.strip()
     
     def tearDown(self):
+        del self.cell_src_strip
         del self.cell
         del self.nb
         self.fp.close()
@@ -48,31 +50,31 @@ class TestFile(unittest.TestCase):
         self.assertIsInstance(source, str)
 
     def test_process_cell_no_return(self):
-        cell = self.cell
-        cell.source = cell.source.strip()
-        expected = cell.source.strip() + '\n\n'
+        cell = nbformat.notebooknode.NotebookNode(self.cell)
+        cell.source = self.cell_src_strip
+        expected = self.cell_src_strip + '\n\n'
 
         result = tr.process_cell(cell)
 
-        self.assertEqual(result.source, expected)
+        self.assertEqual(expected, result.source,)
 
     def test_process_cell_one_return(self):
-        cell = self.cell
-        cell.source = cell.source.strip() + '\n'
-        expected = cell.source.strip() + '\n\n'
+        cell = nbformat.notebooknode.NotebookNode(self.cell)
+        cell.source = self.cell_src_strip + '\n'
+        expected = self.cell_src_strip + '\n\n'
 
         result = tr.process_cell(cell)
 
-        self.assertEqual(result.source, expected)
+        self.assertEqual(expected, result.source,)
 
     def test_process_cell_two_returns(self):
-        cell = self.cell
-        cell.source = cell.source.strip() + '\n\n'
+        cell = nbformat.notebooknode.NotebookNode(self.cell)
+        cell.source = self.cell_src_strip + '\n\n'
         expected = cell.source.strip() + '\n\n'
 
         result = tr.process_cell(cell)
 
-        self.assertEqual(result.source, expected)
+        self.assertEqual(expected, result.source,)
 
 
 class TestCell(unittest.TestCase):
