@@ -135,6 +135,10 @@ def is_ignore(path):
     return any(map(lambda path_part: path_part in ignore_list, path_list))
 
 
+def test_get_ignore_list():
+    assert all(get_ignore_list())
+
+
 def get_ignore_list():
     ignore_list = ['.ipynb_checkpoints', '.git', '__pycache__', '.pytest_cache']
 
