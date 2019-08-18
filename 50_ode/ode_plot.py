@@ -76,7 +76,7 @@ def get_line_eq(i):
 
 
 def get_point_xy_txt(i):
-    return f'$(t_{i + 1}, x_{i + 1})$'
+    return f'$(t_{i}, x_{i})$'
 
 
 def plot_one_step(t_array, x_array, i):
@@ -85,4 +85,4 @@ def plot_one_step(t_array, x_array, i):
     t_e, x_e = t_array[-1], x_array[-1]
 
     py.plot(t_e, x_e, 'o')
-    py.text(t_e, x_e, get_point_xy_txt(i))
+    py.text(t_e, x_e, get_point_xy_txt(i + 1))
