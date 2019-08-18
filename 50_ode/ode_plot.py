@@ -85,4 +85,8 @@ def plot_one_step(t_array, x_array, i):
     t_e, x_e = t_array[-1], x_array[-1]
 
     py.plot(t_e, x_e, 'o')
-    py.text(t_e, x_e, get_point_xy_txt(i + 1))
+    text_xy_k(t_e, x_e, i + 1)
+
+
+def text_xy_k(x, y, k):
+    py.text(x, y, get_point_xy_txt(k))
