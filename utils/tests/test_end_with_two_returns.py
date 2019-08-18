@@ -83,21 +83,21 @@ class TestCell(unittest.TestCase):
 
         result = tr.add_two_returns_if_missing(source_ending_with_two_returns)
 
-        self.assertEqual(result, source_ending_with_two_returns)
+        self.assertEqual(source_ending_with_two_returns, result,)
 
     def test_add_two_returns_if_missing_one_return(self):
         source_ending_with_one_return = 'abc\n'
 
         result = tr.add_two_returns_if_missing(source_ending_with_one_return)
 
-        self.assertEqual(result, source_ending_with_one_return + '\n')
+        self.assertEqual(source_ending_with_one_return + '\n', result,)
 
     def test_add_two_returns_if_missing_no_return(self):
         source_ending_without_return = 'abc'
 
         result = tr.add_two_returns_if_missing(source_ending_without_return)
 
-        self.assertEqual(result, source_ending_without_return + '\n\n')
+        self.assertEqual(source_ending_without_return + '\n\n', result,)
 
 
 if "__main__" == __name__:
