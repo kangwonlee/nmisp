@@ -39,10 +39,16 @@ conda info -a
 # As necessary, apply python module recipies
 if [[ ! -d $MINICONDA_PATH/envs/test-environment ]]; then
     echo "create test-environment";
-    conda env create -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
+    conda env create -n test-environment -f ./tests/environment.${CONDA_PYTHON}.yml;
 else
     echo "update test-environment";
-    conda env update -n test-environment python=$CONDA_PYTHON -f ./tests/environment.${CONDA_PYTHON}.yml;
+    conda env update -n test-environment -f ./tests/environment.${CONDA_PYTHON}.yml;
 fi;
 conda activate test-environment
 conda list
+
+# python 3.7.4 linux h265db76_0 might have cython filename issue
+
+if [[ $(conda list | grep ^python.*3.7.4.*h265db76_0) ]]; then
+    conda install python=3.7.4;
+fi;
