@@ -130,10 +130,18 @@ def test_is_ignore_env_ignore_folder(env_ignore_folder_2):
 def is_ignore(path):
     path_list = path.split(os.sep)
 
+    ignore_list = get_ignore_list()
+
+    return any(map(lambda path_part: path_part in ignore_list, path_list))
+
+
+def get_ignore_list():
     ignore_list = ['.ipynb_checkpoints', '.git', '__pycache__', '.pytest_cache']
     ignore_list += os.environ.get('TEST_IPYNB_IGNORE_FOLDER', '').split(os.pathsep)
 
-    return any(map(lambda path_part: path_part in ignore_list, path_list))
+    assert all(map(lambda path: isinstance(path, str), ignore_list))
+
+    return ignore_list
 
 
 def make_file_list(path='', ext='ipynb'):
