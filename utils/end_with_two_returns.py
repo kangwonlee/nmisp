@@ -79,3 +79,8 @@ def process_file(input_ipynb_filename, output_ipynb_filename=None):
         process_cell(cell)
 
     nbformat.write(nb, output_ipynb_filename)
+
+
+def main():
+    for ipynb_file in gen_ipynb_files_above():
+        process_cell(ipynb_file)
