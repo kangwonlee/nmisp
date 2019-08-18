@@ -78,6 +78,8 @@ def process_file(input_ipynb_filename, output_ipynb_filename=None):
     for cell in nb['cells']:
         process_cell(cell)
 
+    nb['cells'][-1].source = ""
+
     nbformat.write(nb, output_ipynb_filename)
 
 
