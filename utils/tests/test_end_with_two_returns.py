@@ -44,6 +44,33 @@ class TestFile(unittest.TestCase):
         source = tr.get_source_from_cell(cell)
         self.assertIsInstance(source, str)
 
+    def test_process_cell_no_return(self):
+        cell = self.nb['cells'][0]
+        cell.source = cell.source.strip()
+        expected = cell.source.strip() + '\n\n'
+
+        result = tr.process_cell(cell)
+
+        self.assertEqual(result.source, expected)
+
+    def test_process_cell_one_return(self):
+        cell = self.nb['cells'][0]
+        cell.source = cell.source.strip() + '\n'
+        expected = cell.source.strip() + '\n\n'
+
+        result = tr.process_cell(cell)
+
+        self.assertEqual(result.source, expected)
+
+    def test_process_cell_two_returns(self):
+        cell = self.nb['cells'][0]
+        cell.source = cell.source.strip() + '\n\n'
+        expected = cell.source.strip() + '\n\n'
+
+        result = tr.process_cell(cell)
+
+        self.assertEqual(result.source, expected)
+
 
 class TestCell(unittest.TestCase):
     def test_add_two_returns_if_missing_two_returns(self):
