@@ -58,7 +58,7 @@ def get_straight_line_to_next_time_step(t_initial, delta_t, x_initial, slope):
     return{'t': t_array, 'x': x_array, 't_e': t_2, 'x_e': x_2}
 
 
-def format_incremental_plot(x_min=-4, x_max=4, y_min=0, y_max=0):
+def format_incremental_plot(x_min=-4, x_max=4, y_min=0, y_max=6):
     py.axis('equal')
 
     py.xlim(left=x_min, right=x_max)
