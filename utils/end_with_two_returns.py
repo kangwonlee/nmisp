@@ -29,3 +29,9 @@ def gen_files(path, ext='ipynb'):
         if os.path.isfile(item):
             if os.path.splitext(item)[-1].endswith(ext):
                 yield item
+
+
+def gen_ipynb_files_above(path=get_par_dir(), ext='ipynb'):
+    for folder in gen_folders(path):
+        for file in gen_files(folder, ext):
+            yield file
