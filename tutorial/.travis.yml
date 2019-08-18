@@ -1,0 +1,59 @@
+# ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
+#       Anaconda Inc., Using conda with Travis CI, Conda documentation, https://conda.io/docs/user-guide/tasks/use-conda-with-travis-ci.html
+#       .travis.yml for gcc-5 compiler support on Travis CI , https://gist.github.com/cotsog/3ce84675af0d74438d91
+#       CodeChat, .travis.yml - Travis CI configuration, https://pythonhosted.org/CodeChat/.travis.yml.html
+#       Travis CI, Python example (unsupported languages), https://docs.travis-ci.com/user/multi-os/#python-example-unsupported-languages
+
+language: shell
+
+matrix:
+  include:
+    - env: CONDA_PYTHON=3.7.1
+      os: osx
+    - env: CONDA_PYTHON=3.7.3
+      os: linux
+    - env: CONDA_PYTHON=3.7.3
+      os: osx
+    - env: CONDA_PYTHON=2019.07
+      os: windows
+    - env: CONDA_PYTHON=2019.07
+      os: linux
+    - env: CONDA_PYTHON=2019.07
+      os: osx
+    - env: CONDA_PYTHON=nightly
+      os: linux
+  allow_failures:
+    - os: windows
+  fast_finish: true
+
+before_cache:
+  - rm -rf $HOME/miniconda/locks $HOME/miniconda/pkgs $HOME/miniconda/var $HOME/miniconda/conda-meta/history $HOME/miniconda/envs/test-environment/conda-meta/history $HOME/miniconda/lib/python3.6/__pycache__ $HOME/miniconda/lib/python3.7/__pycache__;
+  - touch $HOME/miniconda/conda-meta/history;
+
+cache :
+  directories:
+    - $HOME/download
+    - $HOME/miniconda
+    - $HOME/AppData/Local/Temp/chocolatey
+
+before_install:
+  # When C++14 support becomes more clear, consider revision
+  # https://docs.travis-ci.com/user/multi-os/
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
+      sudo apt-get update -qq;
+    fi
+  - . tests/before_install_nix_win_cache.sh
+
+install:
+  # When C++14 support becomes more clear, consider revision
+  # https://docs.travis-ci.com/user/multi-os/
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      sudo apt-get update;
+      sudo apt-get install -qq g++-6;
+      sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90;
+    fi
+  - . tests/install_nix_win_cache.sh
+
+# https://lord.io/blog/2014/travis-multiple-subdirs/
+script: cd tests && travis_wait 40 py.test --numprocesses=auto
