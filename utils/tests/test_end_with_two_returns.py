@@ -39,6 +39,11 @@ class TestFile(unittest.TestCase):
         for cell in tr.gen_cells(self.fp):
             self.assertIsInstance(cell, nbformat.notebooknode.NotebookNode)
 
+    def test_get_source_from_cell(self):
+        cell = self.nb['cells'][0]
+        source = tr.get_source_from_cell(cell)
+        self.assertIsInstance(source, str)
+
 
 if "__main__" == __name__:
     unittest.main()
