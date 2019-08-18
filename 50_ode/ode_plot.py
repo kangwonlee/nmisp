@@ -47,3 +47,12 @@ def indicate_initial_point(t_0, x_0):
     py.plot(t_0, x_0, 'o')
     py.text(t_0, x_0, '$(t_0, x_0)$')
 
+
+def get_straight_line_to_next_time_step(t_initial, delta_t, x_initial, slope):
+    t_array = py.linspace(t_initial, t_initial + delta_t)
+    x_array = slope * (t_array - t_initial) + x_initial
+
+    # (t_2, x_2) point
+    t_2, x_2 = t_array[-1], x_array[-1]
+
+    return{'t': t_array, 'x': x_array, 't_e': t_2, 'x_e': x_2}
