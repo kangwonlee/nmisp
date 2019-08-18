@@ -35,3 +35,10 @@ def gen_ipynb_files_above(path=get_par_dir(), ext='ipynb'):
     for folder in gen_folders(path):
         for file in gen_files(folder, ext):
             yield file
+
+
+def gen_cells(ipynb_file):
+    nb = nbformat.read(ipynb_file, nbformat.NO_CONVERT)
+
+    for cell in nb['cells']:
+        yield cell
