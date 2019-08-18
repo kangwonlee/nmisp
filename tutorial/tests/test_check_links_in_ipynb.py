@@ -38,7 +38,7 @@ patterns = [
         }
     },
     {
-        'text': '[![CppCon 2015: Greg Law " Give me 15 minutes & I\'ll change your view of GDB"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n\n',
+        'text': '[![CppCon moving pictures](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/user/CppCon/videos)\n\n',
         'urls': {
             'https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg',
         } 
@@ -116,13 +116,11 @@ def test_get_re_markdown_simple_link():
         )
 
 
-# patterns to test urls linked to images
-# not including urls of images
-patterns_image = [
+cell_list_re_pattern_test_image_with_links = [
     {
-        'text': '[![CppCon 2015: Greg Law " Give me 15 minutes & I\'ll change your view of GDB"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n\n',
+        'text': '[![alt text](image_link)](link_here)\n\n',
         'urls': {
-            'https://www.youtube.com/watch?v=PorfLSr3DDI',
+            'link_here',
         } 
     },
 ]
@@ -133,7 +131,7 @@ def test_get_re_markdown_image_link():
     r = cli.get_re_markdown_image_link()
 
     # pattern loop
-    for d in patterns_image:
+    for d in cell_list_re_pattern_test_image_with_links:
         # see if found pattens are all correct
         assert d['urls'] == set(r.findall(d['text'])), (
             # assert message
@@ -258,7 +256,7 @@ sample_ipynb = {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "[![CppCon 2015: Greg Law \" Give me 15 minutes & I'll change your view of GDB\"](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/watch?v=PorfLSr3DDI)\n",
+    "[![CppCon moving pictures](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/user/CppCon/videos)\n",
     "\n"
    ]
   },
