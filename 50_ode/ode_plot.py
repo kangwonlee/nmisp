@@ -32,3 +32,13 @@ def ode_slope_1state(func, x_list, time_list):
     py.ylim((min(x_list) - (x_list[1] - x_list[0]) * 0.125,
                 max(x_list) + (x_list[-1] - x_list[-2]) * 0.125))
     py.grid(True)
+
+
+def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, x_exact_array, filename):
+    ode_slope_1state(dx_dt, x_array, t_array)
+    py.plot(t_array, x_exact_array, label='exact')
+
+    py.legend(loc=0, fontsize='xx-large')
+
+    py.savefig(filename)
+
