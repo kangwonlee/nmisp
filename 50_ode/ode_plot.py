@@ -106,15 +106,13 @@ def title_axis_labels(title='Simple pendulum', x_label='$\\theta(deg)$', y_label
     py.title(title)
 
 
-def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, filename):
+def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array):
     ode_slope_1state(dx_dt, x_array, t_array)
 
     exact = ExactPlotterFirstOrderODE(t_array)
     exact.plot()
 
     py.legend(loc=0, fontsize='xx-large')
-
-    py.savefig(filename)
 
 
 def indicate_initial_point(t_0, x_0):
