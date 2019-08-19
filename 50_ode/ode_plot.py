@@ -62,6 +62,34 @@ def ode_slope_1state(func, x_list, time_list):
     py.grid(True)
 
 
+def ode_slopes_2states_cartesian(func, theta_rad_list, theta_dot_rad_list, time_list):
+    """
+    Plot field of arrows indicating derivatives of the state
+    :param func:
+    :param theta_rad_list:
+    :param theta_dot_rad_list:
+    :param time_list:
+    :return:
+    """
+
+    # cartesian coordinate
+    y_rad = np.meshgrid(theta_rad_list, theta_dot_rad_list)
+
+    # derivatives of state at each point
+    y_rad_dot = func(y_rad, time_list)
+
+    # color
+    color_mesh = np.sqrt(y_rad_dot[0] * y_rad_dot[0] + y_rad_dot[1] * y_rad_dot[1])
+
+    py.figure(figsize=(18, 18))
+    py.axis('equal')
+    py.quiver(py.rad2deg(y_rad[0]), py.rad2deg(y_rad[1]), py.rad2deg(y_rad_dot[0]), py.rad2deg(y_rad_dot[1]), color_mesh, angles='xy')
+    l, r, b, t = py.axis()
+    x_span, y2_mesh = r - l, t - b
+    py.axis([l - 0.05 * x_span, r + 0.05 * x_span, b - 0.05 * y2_mesh, t + 0.05 * y2_mesh])
+    py.grid()
+
+
 def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, filename):
     ode_slope_1state(dx_dt, x_array, t_array)
 
