@@ -2,7 +2,7 @@ def forward_euler_step(f, x0, t0, t1):
     """
     One time step of Forward Euler method
 
-    f:   function dx_dt(x0, t0)
+    f  : function dx_dt(x0, t0)
     x0 : initial condition
     t0 : this step time
     t1 : next step time
@@ -31,7 +31,7 @@ def heun_step(f, x0, t0, t1):
     """
     One time step of Heun's method
 
-    f:   function dx_dt(x0, t0)
+    f  : function dx_dt(x0, t0)
     x0 : initial condition
     t0 : this step time
     t1 : next step time
