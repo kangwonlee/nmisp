@@ -90,6 +90,16 @@ def ode_slopes_2states_cartesian(func, theta_rad_list, theta_dot_rad_list, time_
     py.grid()
 
 
+def set_axis(ax, left, right, bottom, top):
+
+    xlims = py.xlim(left=left, right=right)
+    ylims = py.ylim(bottom=bottom, top=top,)
+
+    # http://matplotlib.1069221.n5.nabble.com/How-do-I-set-grid-spacing-td9968.html
+    ax.set_xticks(np.hstack([np.arange(0, xlims[1]+1, 90), np.arange(-90, xlims[0]-1, -90)]))
+    ax.set_yticks(np.hstack([np.arange(0, ylims[1]+1, 90), np.arange(-90, ylims[0]-1, -90)]))
+
+
 def title_axis_labels(title='Simple pendulum', x_label='$\\theta(deg)$', y_label='$\\frac{d}{dt}\\theta(deg/sec)$'):
     py.xlabel(x_label)
     py.ylabel(y_label)
