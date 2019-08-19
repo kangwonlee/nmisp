@@ -54,8 +54,9 @@ def ode_slope_1state(func, x_list, time_list):
     # https://stackoverflow.com/questions/29589119/plot-width-settings-in-ipython-notebook
     py.figure(figsize=(12, 12))
     py.quiver(time_mesh, x_mesh, u_mesh, v_mesh, color_mesh, angles='xy')
-    py.xlabel('t')
-    py.ylabel('x')
+
+    xy_labels()
+
     py.xlim((time_list[0] - (time_list[1] - time_list[0]) * 0.125, time_list[-1]))
     py.ylim((min(x_list) - (x_list[1] - x_list[0]) * 0.125,
                 max(x_list) + (x_list[-1] - x_list[-2]) * 0.125))
