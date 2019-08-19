@@ -102,8 +102,7 @@ def set_axis(ax, left, right, bottom, top):
 
 
 def title_axis_labels(title='Simple pendulum', x_label='$\\theta(deg)$', y_label='$\\frac{d}{dt}\\theta(deg/sec)$'):
-    py.xlabel(x_label)
-    py.ylabel(y_label)
+    xy_labels(x_label, y_label)
     py.title(title)
 
 
