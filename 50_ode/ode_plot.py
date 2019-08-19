@@ -143,6 +143,11 @@ def format_incremental_plot(x_min=-4, x_max=4, y_min=0, y_max=6):
     py.grid(True)
 
 
+def xy_labels(x_label='t(sec)', y_label='x(m)'):
+    py.xlabel(x_label)
+    py.ylabel(y_label)
+
+
 def get_line_eq(i):
     return f'$x=s_{i}(t-t_{i})+x_{i}$'
 
