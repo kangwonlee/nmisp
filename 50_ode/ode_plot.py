@@ -90,6 +90,12 @@ def ode_slopes_2states_cartesian(func, theta_rad_list, theta_dot_rad_list, time_
     py.grid()
 
 
+def title_axis_labels(title='Simple pendulum', x_label='$\\theta(deg)$', y_label='$\\frac{d}{dt}\\theta(deg/sec)$'):
+    py.xlabel(x_label)
+    py.ylabel(y_label)
+    py.title(title)
+
+
 def plot_slope_fileds_and_exact_solution(dx_dt, t_array, x_array, filename):
     ode_slope_1state(dx_dt, x_array, t_array)
 
