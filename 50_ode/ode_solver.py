@@ -99,6 +99,13 @@ def rk4_step(f, x0, t0, t1):
     return x1
 
 
+def rk4(dx_dt, t_array, x_0):
+
+    time_list, result_list = ode_solver(rk4_step, dx_dt, t_array, x_0)
+
+    return time_list, result_list
+
+
 def ode_solver(step, dx_dt, t_array, x_0):
     time_list = [t_array[0]]
     result_list = [x_0]
