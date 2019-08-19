@@ -21,6 +21,13 @@ def forward_euler_step(f, x0, t0, t1):
 
 
 def forward_euler(dx_dt, t_array, x_0):
+
+    time_list, result_list = ode_solver(forward_euler_step, dx_dt, t_array, x_0)
+
+    return time_list, result_list
+
+
+def ode_solver(step, dx_dt, t_array, x_0):
     time_list = [t_array[0]]
     result_list = [x_0]
 
@@ -28,7 +35,7 @@ def forward_euler(dx_dt, t_array, x_0):
 
     for k, t_i in enumerate(t_array[:-1]):
         # time step
-        x_i_plus_1 = forward_euler_step(dx_dt, x_i, t_i, t_array[k+1])
+        x_i_plus_1 = step(dx_dt, x_i, t_i, t_array[k+1])
 
         time_list.append(t_array[k+1])
         result_list.append(x_i_plus_1)
