@@ -136,8 +136,7 @@ def format_incremental_plot(x_min=-4, x_max=4, y_min=0, y_max=6):
     py.xlim(left=x_min, right=x_max)
     py.ylim(bottom=y_min, top=y_max)
 
-    py.xlabel('t(sec)')
-    py.ylabel('x(m)')
+    xy_labels()
 
     py.legend(loc=0)
     py.grid(True)
