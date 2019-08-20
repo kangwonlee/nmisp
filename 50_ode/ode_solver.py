@@ -1,6 +1,6 @@
 def euler_step(f, x0, t0, t1):
     """
-    One time step of Forward Euler method
+    One time step of Euler method
 
     f  : function dx_dt(x0, t0)
     x0 : initial condition
@@ -43,7 +43,7 @@ def heun_step(f, x0, t0, t1):
     # slope
     s1 = f(x0, t0)
 
-    # next step by Forward Euler
+    # next step by Euler
     x1_euler = x0 + s1 * delta_t
 
     # slope at next step
