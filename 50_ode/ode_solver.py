@@ -20,7 +20,7 @@ def euler_step(f, x0, t0, t1):
     return x1
 
 
-def forward_euler(dx_dt, t_array, x_0):
+def euler(dx_dt, t_array, x_0):
 
     time_list, result_list = ode_solver(euler_step, dx_dt, t_array, x_0)
 
