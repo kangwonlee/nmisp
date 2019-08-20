@@ -1,4 +1,4 @@
-def forward_euler_step(f, x0, t0, t1):
+def euler_step(f, x0, t0, t1):
     """
     One time step of Forward Euler method
 
@@ -22,7 +22,7 @@ def forward_euler_step(f, x0, t0, t1):
 
 def forward_euler(dx_dt, t_array, x_0):
 
-    time_list, result_list = ode_solver(forward_euler_step, dx_dt, t_array, x_0)
+    time_list, result_list = ode_solver(euler_step, dx_dt, t_array, x_0)
 
     return time_list, result_list
 
