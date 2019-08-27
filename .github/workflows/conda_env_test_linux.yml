@@ -10,7 +10,10 @@ jobs:
       matrix:
         os: [ubuntu-18.04]
         anaconda: [3.7.1, 3.7.3, 2019.07, nightly]
-    
+
+        bashrc: [.bashrc]
+        shell: [bash]
+
     steps:
     - uses: actions/checkout@v1
     - name: test_ipynb
