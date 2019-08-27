@@ -25,9 +25,13 @@ jobs:
         echo "init conda ================================="
         $MINICONDA_PATH/etc/profile.d/conda.sh
         conda init bash
+        echo "~/.bashrc ================================="
+        . ~/.bashrc
         echo "hash -r ===================================="
         hash -r
+        echo "============================================"
         echo "CONDA_PYTHON = $CONDA_PYTHON ==============="
+        echo "============================================"
         echo "checking python version ===================="
         python --version
         echo "updating conda ============================="
