@@ -19,7 +19,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: before install (linux)
+    - name: test_ipynb
       env:
         WORKFLOWS_OS: linux
         HOME: ..
