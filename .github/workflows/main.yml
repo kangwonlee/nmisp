@@ -4,11 +4,12 @@ on: [push]
 
 jobs:
   build:
-    name: FirstAttempt
+    name: Anaconda ${{ matrix.anaconda }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-18.04]
+        anaconda: [3.7.3, nightly]
         include:
           - os: ubuntu-18.04
             shell: bash
@@ -25,6 +26,6 @@ jobs:
         HOME: ..
         SHELL: ${{ matrix.shell }}
         BASHRC: ${{ matrix.bashrc }}
-        CONDA_PYTHON: 3.7.3
+        CONDA_PYTHON: ${{ matrix.anaconda }}
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: . ./.github/workflows/create_env_and_test.sh
