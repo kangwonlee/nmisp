@@ -12,7 +12,7 @@ jobs:
     - name: before install (linux)
       env:
         WORKFLOWS_OS: linux
-        HOME: $RUNNER_WORKSPACE
+        HOME: ..
         CONDA_PYTHON: 3.7.3
       run: |
         echo "miniconda paths ============================"
