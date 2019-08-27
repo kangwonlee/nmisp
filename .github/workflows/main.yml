@@ -12,8 +12,10 @@ jobs:
         include:
           - os: ubuntu-18.04
             shell: bash
+            bashrc: .bashrc
           - os: macOS-10.14
             shell: bash
+            bashrc: .bash_profile
     
     steps:
     - uses: actions/checkout@v1
@@ -22,6 +24,7 @@ jobs:
         WORKFLOWS_OS: linux
         HOME: ..
         SHELL: ${{ matrix.shell }}
+        BASHRC: ${{ matrix.bashrc }}
         CONDA_PYTHON: 3.7.3
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: |
@@ -36,8 +39,8 @@ jobs:
         conda init $SHELL
         echo "pwd ========================================"
         pwd
-        echo "~/.bashrc =================================="
-        . ~/.bashrc
+        echo "~/$BASHRC =================================="
+        . ~/$BASHRC
         echo "hash -r ===================================="
         hash -r
         echo "============================================"
