@@ -21,10 +21,6 @@ jobs:
         export MINICONDA_SUB_PATH=$MINICONDA_PATH/bin
         echo "miniconda lib paths ========================"
         export MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin
-        echo "download miniconda ========================="
-        mkdir -p $HOME/download
-        echo "downloading miniconda.sh for linux ========="
-        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
         echo "exporting a new path ======================="
         export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH"
         echo "checking python ============================"
