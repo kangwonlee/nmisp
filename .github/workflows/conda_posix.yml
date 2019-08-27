@@ -44,5 +44,4 @@ jobs:
         echo "activate test-environment =================="
         conda activate test-environment
         conda list
-        echo "run test ==================================="
         py.test --numprocesses=auto tests/
