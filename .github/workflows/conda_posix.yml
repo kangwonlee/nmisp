@@ -14,6 +14,7 @@ jobs:
         WORKFLOWS_OS: linux
         HOME: ..
         CONDA_PYTHON: 3.7.3
+        TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: |
         echo "miniconda paths ============================"
         export MINICONDA_PATH=$CONDA
