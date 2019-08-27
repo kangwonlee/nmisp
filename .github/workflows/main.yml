@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, windows-2016]
+        os: [ubuntu-18.04]
         include:
           - os: ubuntu-18.04
             shell: bash
@@ -28,4 +28,3 @@ jobs:
         CONDA_PYTHON: 3.7.3
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: . ./.github/workflows/create_env_and_test.sh
-        shell: bash
