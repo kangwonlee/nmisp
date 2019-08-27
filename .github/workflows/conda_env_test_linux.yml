@@ -8,15 +8,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, windows-2016]
+        os: [ubuntu-18.04]
         anaconda: [3.7.1, 3.7.3, 2019.07, nightly]
-        include:
-          - os: ubuntu-18.04
-            shell: bash
-            bashrc: .bashrc
-          - os: windows-2016
-            shell: powershell
-            bashrc: .bash_profile
     
     steps:
     - uses: actions/checkout@v1
