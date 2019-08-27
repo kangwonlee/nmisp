@@ -16,10 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: test_ipynb
+    - name: install_miniconda
+      run: bash ./.github/workflows/install_miniconda_win.sh
+    - name: create_env_test
       env:
-        WORKFLOWS_OS: ${{ matrix.os }}
-        HOME: ${{ runner.workspace }}
         SHELL: ${{ matrix.shell }}
         BASHRC: ${{ matrix.bashrc }}
         CONDA_PYTHON: ${{ matrix.anaconda }}
