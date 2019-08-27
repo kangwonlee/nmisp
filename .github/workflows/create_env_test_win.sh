@@ -17,6 +17,8 @@ echo "MINICONDA_LIB_BIN_PATH = $MINICONDA_LIB_BIN_PATH"
 export MINICONDA_DOWNLOAD=$MINICONDA_PATH/download
 echo "MINICONDA_DOWNLOAD = $MINICONDA_DOWNLOAD"
 
+env
+
 echo "============================================"
 echo "Downloading and Installing Miniconda"
 echo "============================================"
