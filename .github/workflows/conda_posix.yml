@@ -24,6 +24,7 @@ jobs:
         export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH"
         echo "init conda ================================="
         $MINICONDA_PATH/etc/profile.d/conda.sh
+        conda init bash
         echo "hash -r ===================================="
         hash -r
         echo "CONDA_PYTHON = $CONDA_PYTHON ==============="
