@@ -14,8 +14,6 @@ jobs:
         WORKFLOWS_OS: linux
         HOME: ./
       run: |
-        echo "pwd ========================================"
-        pwd
         echo "env ========================================"
         env
         echo "miniconda paths ============================"
