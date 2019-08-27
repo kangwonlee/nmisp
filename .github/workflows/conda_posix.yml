@@ -25,8 +25,6 @@ jobs:
         mkdir -p $HOME/download
         echo "downloading miniconda.sh for linux ========="
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-        echo "installing miniconda lib paths ============="
-        bash $HOME/download/miniconda.sh -b -u -p $MINICONDA_PATH
         echo "exporting a new path ======================="
         export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH"
         echo "checking python ============================"
