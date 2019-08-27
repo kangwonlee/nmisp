@@ -8,7 +8,7 @@ else
 fi
 
 echo "MINICONDA_PATH = $MINICONDA_PATH"
-export MINICONDA_SUB_PATH=$MINICONDA_PATH/bin
+export MINICONDA_SUB_PATH=$MINICONDA_PATH/Script
 echo "MINICONDA_SUB_PATH = $MINICONDA_SUB_PATH"
 
 export MINICONDA_PATH_WIN=`cygpath --windows $MINICONDA_PATH`;
@@ -37,6 +37,7 @@ echo "============================================"
 
 echo "exporting a new path ======================="
 export PATH="$MINICONDA_PATH_WIN:$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH"
+echo $PATH
 echo "init conda ================================="
 conda init $SHELL
 echo "pwd ========================================"
