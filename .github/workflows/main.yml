@@ -8,13 +8,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, macOS-10.14]
+        os: [ubuntu-18.04, windows-2016]
         include:
           - os: ubuntu-18.04
             shell: bash
             bashrc: .bashrc
-          - os: macOS-10.14
-            shell: bash
+          - os: windows-2016
+            shell: powershell
             bashrc: .bash_profile
     
     steps:
