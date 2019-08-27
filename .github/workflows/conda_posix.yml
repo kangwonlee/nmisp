@@ -12,7 +12,7 @@ jobs:
     - name: before install (linux)
       env:
         WORKFLOWS_OS: linux
-        HOME: ./
+        HOME: $RUNNER_WORKSPACE
       run: |
         echo "env ========================================"
         env
