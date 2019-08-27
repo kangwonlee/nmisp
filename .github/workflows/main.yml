@@ -28,3 +28,4 @@ jobs:
         CONDA_PYTHON: 3.7.3
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: . ./.github/workflows/create_env_and_test.sh
+        shell: bash
