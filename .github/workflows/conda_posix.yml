@@ -13,6 +13,7 @@ jobs:
       env:
         WORKFLOWS_OS: linux
         HOME: ..
+        SHELL: bash
         CONDA_PYTHON: 3.7.3
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: |
@@ -25,7 +26,7 @@ jobs:
         export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH"
         echo "init conda ================================="
         $MINICONDA_PATH/etc/profile.d/conda.sh
-        conda init bash
+        conda init $SHELL
         echo "~/.bashrc ================================="
         . ~/.bashrc
         echo "hash -r ===================================="
