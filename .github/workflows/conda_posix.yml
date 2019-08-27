@@ -13,6 +13,7 @@ jobs:
       env:
         WORKFLOWS_OS: linux
         HOME: $RUNNER_WORKSPACE
+        CONDA_PYTHON: 3.7.3
       run: |
         echo "env ========================================"
         env
@@ -27,5 +28,7 @@ jobs:
         python --version
         echo "init conda ================================="
         $MINICONDA_PATH/etc/profile.d/conda.sh
+        echo "hash -r ===================================="
+        hash -r
         echo "print time ================================="
         echo The time was ${{ steps.outputs.time }}
