@@ -30,18 +30,3 @@ exists $MINICONDA_LIB_BIN_PATH
 
 export MINICONDA_DOWNLOAD=$MINICONDA_PATH/download
 echo "MINICONDA_DOWNLOAD = $MINICONDA_DOWNLOAD"
-
-echo "============================================"
-echo "Install openssl for Windows"
-echo "============================================"
-choco install openssl.light;
-
-echo "============================================"
-echo "Downloading and Installing Miniconda"
-echo "============================================"
-
-choco install miniconda3 --params="'/JustMe /AddToPath:1 /D:$MINICONDA_PATH_WIN'";
-
-echo "============================================"
-echo "Finished Installing Miniconda"
-echo "============================================"
