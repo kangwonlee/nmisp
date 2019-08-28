@@ -1,5 +1,5 @@
 exists() {
-    folder = $1
+    folder=$1
     if [ -d $folder ]; then
         echo "folder $folder exists"
     fi
