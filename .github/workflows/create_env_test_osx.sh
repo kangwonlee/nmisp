@@ -6,20 +6,17 @@ if [ $RUNNER_WORKSPACE ]; then
 else
     export MINICONDA_PATH=../miniconda
 fi
-
 echo "MINICONDA_PATH = $MINICONDA_PATH"
+
 export MINICONDA_SUB_PATH=$MINICONDA_PATH/bin
 echo "MINICONDA_SUB_PATH = $MINICONDA_SUB_PATH"
-
-export MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin
-echo "MINICONDA_LIB_BIN_PATH = $MINICONDA_LIB_BIN_PATH"
-
-export MINICONDA_DOWNLOAD=$MINICONDA_PATH/download
-echo "MINICONDA_DOWNLOAD = $MINICONDA_DOWNLOAD"
 
 echo "============================================"
 echo "Downloading and Installing Miniconda"
 echo "============================================"
+
+export MINICONDA_DOWNLOAD=$MINICONDA_PATH/download
+echo "MINICONDA_DOWNLOAD = $MINICONDA_DOWNLOAD"
 
 mkdir -p $MINICONDA_DOWNLOAD;
 echo "downloading miniconda.sh for osx ==========="

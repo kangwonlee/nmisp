@@ -11,9 +11,6 @@ echo "MINICONDA_PATH = $MINICONDA_PATH"
 export MINICONDA_SUB_PATH=$MINICONDA_PATH/Scripts
 echo "MINICONDA_SUB_PATH = $MINICONDA_SUB_PATH"
 
-export MINICONDA_LIB_BIN_PATH=$MINICONDA_PATH/Library/bin
-echo "MINICONDA_LIB_BIN_PATH = $MINICONDA_LIB_BIN_PATH"
-
 . ./.github/workflows/build_env.sh
 
 . ./.github/workflows/run_test.sh
