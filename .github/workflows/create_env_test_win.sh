@@ -16,7 +16,13 @@ fi
 echo "MINICONDA_PATH = $MINICONDA_PATH"
 exists $MINICONDA_PATH
 
-export MINICONDA_SUB_PATH=$MINICONDA_PATH/Script
+if [ -d $MINICONDA_PATH/Script ]; then
+    export MINICONDA_SUB_PATH=$MINICONDA_PATH/Script
+elif [ -d $MINICONDA_PATH/bin ]; then
+    export MINICONDA_SUB_PATH=$MINICONDA_PATH/bin
+else
+    echo "ls $MINICONDA_PATH ========================="
+    ls $MINICONDA_PATH
 echo "MINICONDA_SUB_PATH = $MINICONDA_SUB_PATH"
 exists $MINICONDA_SUB_PATH
 
