@@ -16,8 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: kangwonlee/setup-conda@fda0d4d
-        with: 
-          yml: ./tests/environment.${{ matrix.anaconda }}.yml
+      with: 
+        yml: ./tests/environment.${{ matrix.anaconda }}.yml
     - name: test_ipynb
       env:
         WORKFLOWS_OS: ${{ matrix.os }}
