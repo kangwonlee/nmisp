@@ -16,8 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: install_miniconda
-      run: bash ./.github/workflows/install_miniconda_win.sh
     - name: create_env_test
       env:
         SHELL: ${{ matrix.shell }}
