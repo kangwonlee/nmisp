@@ -36,4 +36,5 @@ conda env create -n test-environment -f ./tests/environment.${CONDA_PYTHON}.yml
 echo "activate test-environment =================="
 conda activate test-environment
 conda list
-py.test --numprocesses=auto tests/
+
+. run_test.sh
