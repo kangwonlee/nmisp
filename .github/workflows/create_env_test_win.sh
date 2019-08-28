@@ -19,7 +19,7 @@ export PATH=$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH
 echo "PATH = $PATH"
 echo "============================================"
 echo "init conda ================================="
-conda init $SHELL
+conda init bash
 echo "pwd ========================================"
 pwd
 echo "~/$BASHRC =================================="
