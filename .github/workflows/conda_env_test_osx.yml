@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: kangwonlee/setup-conda@fda0d4d
+    - uses: kangwonlee/setup-conda@setup-conda/feature/action
       with: 
         yml: ./tests/environment.${{ matrix.anaconda }}.yml
     - name: test_ipynb
