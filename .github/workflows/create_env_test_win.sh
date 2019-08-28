@@ -39,6 +39,7 @@ export MINICONDA_DOWNLOAD=$MINICONDA_PATH/download
 echo "MINICONDA_DOWNLOAD = $MINICONDA_DOWNLOAD"
 
 echo "============================================"
+export PATH=$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH
 echo "PATH = $PATH"
 echo "============================================"
 echo "init conda ================================="
