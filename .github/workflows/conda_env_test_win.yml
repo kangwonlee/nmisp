@@ -11,14 +11,12 @@ jobs:
         os: [windows-2016]
         anaconda: [3.7.3]
 
-        bashrc: [.bashrc]
-        shell: [bash]
+        bashrc: [.bash_profile]
 
     steps:
     - uses: actions/checkout@v1
     - name: create_env_test
       env:
-        SHELL: ${{ matrix.shell }}
         BASHRC: ${{ matrix.bashrc }}
         CONDA_PYTHON: ${{ matrix.anaconda }}
         TEST_IPYNB_IGNORE_FOLDER: tutorial
