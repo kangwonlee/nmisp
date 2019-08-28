@@ -35,9 +35,7 @@ echo "============================================"
 echo "exporting a new path ======================="
 export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH"
 echo "init conda ================================="
-conda init $SHELL
-echo "pwd ========================================"
-pwd
+conda init bash
 echo "~/$BASHRC =================================="
 . ~/$BASHRC
 echo "hash -r ===================================="
