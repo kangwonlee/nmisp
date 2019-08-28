@@ -16,7 +16,6 @@ echo "checking python version ===================="
 python --version
 echo "updating conda ============================="
 conda config --set always_yes yes --set changeps1 no;
-conda update -q conda;
 echo "conda info -a =============================="
 conda info -a
 echo "create test-environment ===================="
