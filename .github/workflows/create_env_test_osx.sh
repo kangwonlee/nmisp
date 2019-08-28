@@ -11,23 +11,7 @@ echo "MINICONDA_PATH = $MINICONDA_PATH"
 export MINICONDA_SUB_PATH=$MINICONDA_PATH/bin
 echo "MINICONDA_SUB_PATH = $MINICONDA_SUB_PATH"
 
-echo "============================================"
-echo "Downloading and Installing Miniconda"
-echo "============================================"
-
-export MINICONDA_DOWNLOAD=$MINICONDA_PATH/download
-echo "MINICONDA_DOWNLOAD = $MINICONDA_DOWNLOAD"
-
-mkdir -p $MINICONDA_DOWNLOAD;
-echo "downloading miniconda.sh for osx ==========="
-wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O $MINICONDA_DOWNLOAD/miniconda.sh;
-
-echo "installing miniconda ======================="
-bash $MINICONDA_DOWNLOAD/miniconda.sh -b -u -p $MINICONDA_PATH;
-
-echo "============================================"
-echo "Finished Installing Miniconda"
-echo "============================================"
+. ./.github/workflows/wget_install_miniconda.sh
 
 . ./.github/workflows/build_env.sh
 
