@@ -1,6 +1,9 @@
 echo "exporting a new path ======================="
 export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH"
 echo "init conda ================================="
+if [ ! -e ~/.bashrc ]; then
+    touch ~/.bashrc
+fi
 conda init bash
 echo "~/$BASHRC =================================="
 . ~/$BASHRC
