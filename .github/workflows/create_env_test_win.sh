@@ -23,6 +23,7 @@ elif [ -d $MINICONDA_PATH/bin ]; then
 else
     echo "ls $MINICONDA_PATH ========================="
     ls $MINICONDA_PATH
+fi
 echo "MINICONDA_SUB_PATH = $MINICONDA_SUB_PATH"
 exists $MINICONDA_SUB_PATH
 
