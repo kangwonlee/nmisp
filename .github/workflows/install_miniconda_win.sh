@@ -1,8 +1,8 @@
 echo "============================================"
 echo "Setting environment variables"
 echo "============================================"
-if [ $RUNNER_WORKSPACE ]; then
-    export MINICONDA_PATH=`cygpath --unix $RUNNER_WORKSPACE`/miniconda
+if [ $CONDA ]; then
+    export MINICONDA_PATH=`cygpath --unix $CONDA`
 else
     export MINICONDA_PATH=../miniconda
 fi
