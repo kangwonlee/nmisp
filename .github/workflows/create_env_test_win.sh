@@ -16,7 +16,6 @@ echo "MINICONDA_LIB_BIN_PATH = $MINICONDA_LIB_BIN_PATH"
 
 echo "============================================"
 export PATH=$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH
-echo "PATH = $PATH"
 echo "============================================"
 echo "init conda ================================="
 conda init bash
