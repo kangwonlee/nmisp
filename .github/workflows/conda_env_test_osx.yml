@@ -15,6 +15,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: install_shelljs
+      run: npm install shelljs
     - uses: kangwonlee/setup-conda@setup-conda/feature/action
       with: 
         yml: ./tests/environment.${{ matrix.anaconda }}.yml
