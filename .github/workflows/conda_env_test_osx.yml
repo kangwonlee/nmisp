@@ -1,0 +1,27 @@
+name: CI (OSX)
+
+on: [push]
+
+jobs:
+  build:
+    name: ${{ matrix.anaconda }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-10.14]
+        anaconda: [3.7.1, 3.7.3, 2019.07, nightly]
+
+        bashrc: [.bash_profile]
+        shell: [bash]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: test_ipynb
+      env:
+        WORKFLOWS_OS: ${{ matrix.os }}
+        HOME: ..
+        SHELL: ${{ matrix.shell }}
+        BASHRC: ${{ matrix.bashrc }}
+        CONDA_PYTHON: ${{ matrix.anaconda }}
+        TEST_IPYNB_IGNORE_FOLDER: tutorial
+      run: bash ./.github/workflows/create_env_test_osx.sh
