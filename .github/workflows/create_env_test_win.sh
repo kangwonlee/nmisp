@@ -37,4 +37,4 @@ echo "activate test-environment =================="
 conda activate test-environment
 conda list
 
-. run_test.sh
+. ./.github/workflows/run_test.sh

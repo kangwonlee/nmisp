@@ -33,7 +33,7 @@ echo "Finished Installing Miniconda"
 echo "============================================"
 
 echo "exporting a new path ======================="
-export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$MINICONDA_LIB_BIN_PATH:$PATH"
+export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH"
 echo "init conda ================================="
 conda init bash
 echo "~/$BASHRC =================================="
@@ -56,4 +56,4 @@ echo "activate test-environment =================="
 conda activate test-environment
 conda list
 
-. run_test.sh
+. ./.github/workflows/run_test.sh
