@@ -1,4 +1,4 @@
-name: CI (Win)
+name: CI
 
 on: [push]
 
@@ -8,16 +8,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2016]
+        os: [macOS-10.14, windows-2016]
         anaconda: [3.7.1, 3.7.3, 2019.07, nightly]
-
-        bashrc: [.bash_profile]
 
     steps:
     - uses: actions/checkout@v1
-    - name: create_env_test
+    - name: build environment
       env:
-        BASHRC: ${{ matrix.bashrc }}
         CONDA_PYTHON: ${{ matrix.anaconda }}
+      run: bash ./.github/workflows/build_env.sh
+    - name: pytest
+      env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: bash ./.github/workflows/create_env_test_win.sh
+      run: bash ./.github/workflows/run_test.sh
