@@ -1,4 +1,4 @@
-[![master](https://api.travis-ci.org/kangwonlee/nmisp.svg?branch=master)](https://travis-ci.org/kangwonlee/nmisp/branches)
+[![master](https://github.com/kangwonlee/nmisp/workflows/CI/badge.svg)](https://github.com/kangwonlee/nmisp/actions)
 
 # 사이파이 수치 해석<br>Numerical Methods in SciPy
 
