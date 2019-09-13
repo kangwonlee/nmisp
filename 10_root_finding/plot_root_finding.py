@@ -17,7 +17,7 @@ def plot(f, x_start, x_end, x_interval=None, epsilon=0.15):
     # y = x^2
     py.plot(x, f(x), 'ko', label='$y=x^2-10$')
     # y = 0
-    py.plot(x, py.zeros_like(x), 'ro', label='y=0')
+    py.plot(x, py.zeros_like(x), 'ro', label='$y=0$')
 
     # +/- epsilon
     py.plot(x, epsilon * py.ones_like(x), 'r-.', label=r'$+\epsilon$')
