@@ -6,3 +6,5 @@ __pycache__/
 
 # file generated from jupyter nbconvert
 *.nbconvert.ipynb
+
+.vscode/

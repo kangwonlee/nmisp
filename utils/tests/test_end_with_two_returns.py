@@ -130,6 +130,22 @@ class TestWritingFile(unittest.TestCase):
             if os.path.exists(self.output_file):
                 os.remove(self.output_file)
 
+    @staticmethod
+    def same_length(seq_0, seq_1):
+        return len(seq_0) == len(seq_1)
+
+    @staticmethod
+    def second_one_is_longer_by_one(seq_0, seq_1):
+        return (len(seq_0)+1) == len(seq_1)
+
+    @staticmethod
+    def last_one_source_is_empty(seq):
+        return "" == seq[-1].source
+
+    @staticmethod
+    def last_one_source_is_whitespace_only(seq):
+        return "" == seq[-1].source.strip()
+
     def test_process_file(self):
         # function under test
         tr.process_file(self.input_file, self.output_file)
@@ -139,10 +155,14 @@ class TestWritingFile(unittest.TestCase):
 
         self.assertGreater(len(nb_input['cells']), 0)
 
-        self.assertEqual(
-            len(nb_input['cells']),
-            len(nb_output['cells']),
-        )
+        if self.same_length(nb_input['cells'], nb_output['cells']):
+            self.assertFalse(nb_input['cells'][-1].source)
+            self.assertFalse(nb_output['cells'][-1].source)
+        elif self.second_one_is_longer_by_one(nb_input['cells'], nb_output['cells']):
+            self.assertTrue(nb_input['cells'][-1].source)
+            self.assertFalse(nb_output['cells'][-1].source)
+        else:
+            raise NotImplementedError
 
         for in_cell, out_cell in zip(nb_input['cells'], nb_output['cells']):
             self.assertEqual(
