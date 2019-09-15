@@ -17,6 +17,7 @@ dependencies:
 - pytest=5.0.1
 - requests=2.22.0
 - scipy=1.2.1
+- seaborn=0.9.0
 - statsmodels=0.10.0
 - sympy=1.4
 - pytest-xdist
