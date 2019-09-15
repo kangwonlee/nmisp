@@ -44,7 +44,7 @@ def plot(f, x_start, x_end, x_interval=None, epsilon=0.15):
 
 def plot_derivative(df_dx, x_array):
     # y = 2x
-    py.plot(x_array, df_dx(x_array), 'b.', label='$y=2x$')
+    py.plot(x_array, df_dx(x_array), 'b.', label=r'$\frac{df}{dx}$')
 
     # 범례 표시
     # Show legend
