@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [macOS-10.14, windows-2016]
         anaconda: [3.7.1, 3.7.3, 2019.07, nightly]
-
+      fail-fast: false
     steps:
     - uses: actions/checkout@v1
     - name: build environment
