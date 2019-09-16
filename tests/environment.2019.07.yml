@@ -10,6 +10,7 @@ dependencies:
 # https://docs/anaconda.com/anaconda/packages/py3.7_win-64/
 - cython=0.29.12
 - jupyter=1.0.0
+- lxml=4.3.4
 - matplotlib=3.1.0
 - numpy=1.16.4
 - pandas=0.24.2

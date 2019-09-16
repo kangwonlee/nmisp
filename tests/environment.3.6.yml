@@ -10,6 +10,7 @@ dependencies:
 # https://docs.anaconda.com/anaconda/packages/old-pkg-lists/5.0.1/py3.6_win-64/
 - cython=0.26.1
 - jupyter=1.0.0
+- lxml=4.1.0
 - matplotlib=2.1.0
 - numpy=1.13.3
 - pytest=3.2.1
