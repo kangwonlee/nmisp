@@ -21,4 +21,5 @@ dependencies:
 - seaborn=0.7.1
 - statsmodels=0.6.1
 - sympy=1.0=py35_0
+- xlwt=1.1.2
 - pytest-xdist
