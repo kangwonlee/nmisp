@@ -15,7 +15,6 @@ This software aims to describe various numerical methods in [`Python`](https://e
 
 * 명령행에서 실행해야 할 경우, 경로에 추가하도록 설정<br>To run from a command line, configure to add python to the PATH
 * 경로 이름에 한글을 사용할 수 없음<br>Use ASCII characters for path name
-* 윈도우즈의 경우, 설치 후 [가상 환경 생성, 전환 2회 이상](https://graspthegist.com/post/learn-conda-1/) 확인 추천<br>For Windows, after install, please check [creating a virtual environment](https://conda.io/docs/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands) and [switching between environment](https://conda.io/docs/user-guide/tasks/manage-environments.html#activating-an-environment) more than twice.
 
 ### 깃 버전 관리 소프트웨어<br>Git Version Control Software
 
