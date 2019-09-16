@@ -11,7 +11,7 @@ This software aims to describe various numerical methods in [`Python`](https://e
 
 ### 파이썬 프로그래밍 언어<br>Python Programming Language
 
-#### [Anaconda 5.x Python 3.6.x version](https://www.anaconda.com/distribution/) <br>
+#### [Anaconda 2019.x Python 3.7.x version](https://www.anaconda.com/distribution/) <br>
 
 * 명령행에서 실행해야 할 경우, 경로에 추가하도록 설정<br>To run from a command line, configure to add python to the PATH
 * 경로 이름에 한글을 사용할 수 없음<br>Use ASCII characters for path name
