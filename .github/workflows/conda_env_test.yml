@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-18.04, macOS-10.14, windows-2019, windows-2016]
-        anaconda: [2019.07, nightly]
+        anaconda: [3.7.1, 3.7.3, 2019.07, nightly]
       fail-fast: false
     steps:
     - uses: actions/checkout@v1
