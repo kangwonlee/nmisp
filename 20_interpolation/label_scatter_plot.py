@@ -5,7 +5,7 @@ import pylab as py
 import seaborn as sns
 
 
-def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', label='종목명', font='Batang'):
+def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', label='종목명', font='Batang', height=5):
 
     # https://stackoverflow.com/a/1857
     if platform.system() in ('Linux', 'Windows'):
@@ -33,6 +33,7 @@ def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', label='종목�
         y_field,
         data=data_frame,
         fit_reg=False,
+        height=height,
     )
 
     py.title(f'{x_field} vs {y_field}')
