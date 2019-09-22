@@ -5,7 +5,7 @@ import pylab as py
 import seaborn as sns
 
 
-def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', label='종목명', font='Batang', height=5):
+def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', font='Batang', height=5):
 
     # https://stackoverflow.com/a/1857
     if platform.system() in ('Linux', 'Windows'):
@@ -40,6 +40,5 @@ def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', label='종목�
     py.xlabel(x_field)
     py.ylabel(y_field)
 
-    for i, row in data_frame.iterrows():
-        
-        py.gca().text(row[x_field] + 0.2, row[y_field], row[label])
+    for index, row in data_frame.iterrows():
+        py.gca().text(row[x_field] + 0.2, row[y_field], index)
