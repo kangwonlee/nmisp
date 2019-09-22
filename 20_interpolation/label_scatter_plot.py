@@ -5,7 +5,9 @@ import pylab as py
 import seaborn as sns
 
 
-def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', size='거래량', hue='등락률', font='Batang', height=5):
+def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', size='거래량', hue='등락률', font='Batang', palette=None, height=5):
+
+    sns.set_style('white')
 
     # https://stackoverflow.com/a/1857
     if platform.system() in ('Linux', 'Windows'):
@@ -36,6 +38,7 @@ def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', size='거래량
         hue=hue,
         alpha=0.5,
         data=data_frame,
+        palette=palette,
         height=height,
     )
 
