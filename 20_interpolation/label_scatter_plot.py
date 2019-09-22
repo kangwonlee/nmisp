@@ -5,7 +5,7 @@ import pylab as py
 import seaborn as sns
 
 
-def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', font='Batang', height=5):
+def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', size='거래량', hue='등락률', font='Batang', height=5):
 
     # https://stackoverflow.com/a/1857
     if platform.system() in ('Linux', 'Windows'):
@@ -28,11 +28,14 @@ def label_scatter_plot(data_frame, x_field='ROE', y_field='PER', font='Batang', 
         import matplotlib as mpl
         mpl.rcParams['font.family'] = font
 
-    ax = sns.lmplot(
+    # https://seaborn.pydata.org/examples/scatter_bubbles.html
+    ax = sns.relplot(
         x_field, 
         y_field,
+        size=size,
+        hue=hue,
+        alpha=0.5,
         data=data_frame,
-        fit_reg=False,
         height=height,
     )
 
