@@ -41,11 +41,9 @@ def check_link_in_cell(cell, r):
     # url match loop
     for m in r.finditer(cell['source']):
         # try to open url part of the match
-        req = requests.get(up.unquote(m.group(1)))
-        if 200 == req.status_code:
-            result = True
-        else:
-            raise requests.RequestException(f'unable to get {up.unquote(m.group(1))}')
+        req = requests.get(up.unquote(m.group(1)), timeout=1)
+        # https://2.python-requests.org/en/master/user/quickstart/#response-status-codes
+        req.raise_for_status()
 
 
 def check_links_in_ipynb(filename):
