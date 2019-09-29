@@ -10,6 +10,7 @@ dependencies:
 # https://docs/anaconda.com/anaconda/packages/py3.7_win-64/
 - cython=0.29.12
 - jupyter=1.0.0
+- lxml=4.3.4
 - matplotlib=3.1.0
 - numpy=1.16.4
 - pandas=0.24.2
@@ -17,6 +18,8 @@ dependencies:
 - pytest=5.0.1
 - requests=2.22.0
 - scipy=1.2.1
+- seaborn=0.9.0
 - statsmodels=0.10.0
 - sympy=1.4
+- xlwt=1.3.0
 - pytest-xdist
