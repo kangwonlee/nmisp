@@ -9,13 +9,17 @@ dependencies:
 # Anaconda 2019.07 python 3.7 Win64
 - cython>=0.29.12
 - jupyter>=1.0.0
+- lxml>=4.3.4
 - matplotlib>=3.1.0
+- notebook >= 6.0.0
 - numpy>=1.16.4
 - pandas>=0.24.2
 - pluggy>=0.12.0
 - pytest>=5.0.1
 - requests>=2.22.0
 - scipy>=1.2.1
+- seaborn>=0.9.0
 - statsmodels>=0.10.0
 - sympy>=1.4
+- xlwt>=1.3.0
 - pytest-xdist
