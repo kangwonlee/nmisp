@@ -41,7 +41,7 @@ def check_link_in_cell(cell, r):
     # url match loop
     for m in r.finditer(cell['source']):
         # try to open url part of the match
-        req = requests.get(up.unquote(m.group(1)), timeout=1)
+        req = requests.get(up.unquote(m.group(1)), timeout=10)
         # https://2.python-requests.org/en/master/user/quickstart/#response-status-codes
         req.raise_for_status()
 
