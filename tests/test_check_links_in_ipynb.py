@@ -32,9 +32,9 @@ patterns = [
         }
     },
     {
-        'text': '* In case of `clang`, `lldb` would be your choice. \n[\n[ref](https://lldb.llvm.org/lldb-gdb.html)\n]\n',
+        'text': '* In case of `clang`, `lldb` would be your choice. \n[\n[ref](https://lldb.llvm.org/use/map.html)\n]\n',
         'urls': {
-            'https://lldb.llvm.org/lldb-gdb.html',
+            'https://lldb.llvm.org/use/map.html',
         }
     },
     {
@@ -170,7 +170,7 @@ sample_ipynb = {
    "source": [
     "* In case of `clang`, `lldb` would be your choice. \n",
     "[\n",
-    "[ref](https://lldb.llvm.org/lldb-gdb.html)\n",
+    "[ref](https://lldb.llvm.org/use/map.html)\n",
     "]\n"
    ]
   },
