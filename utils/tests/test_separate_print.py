@@ -29,3 +29,31 @@ def sample_cell() -> str:
         'print(result)\n'
         '\n'
     )
+
+
+def test_is_line_to_separate(sample_cell):
+    separate_list = [
+        False,
+        False,
+        True,
+        True,
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+    ]
+
+    for input_str, expected in zip(sample_cell.splitlines(), separate_list):
+        assert sp.is_line_to_separate(input_str) == expected
+
+
+if "__main__" == __name__:
+    pytest.main()
