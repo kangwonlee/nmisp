@@ -173,48 +173,66 @@ def test_get_new_code_cell():
 
 def test_process_cell():
 
-    line_0 = """print('''3.2.1.3''')"""
-    line_1 = "x = sy.Symbol('x')"
-    line_2 = "y = sy.Symbol('y')"
+    lines_dict = [
+        {'cell': 0, 'line':"""print('''3.2.1.3''')"""},
+        {'cell':-1, 'line':""""""},
+        {'cell': 0, 'line':"""x = sy.Symbol('x')"""},
+        {'cell': 0, 'line':"""y = sy.Symbol('y')"""},
+        {'cell':-1, 'line':""""""},
+        {'cell': 0, 'line':"""print("x+y+x-y = %s" % (x + y + x - y))""", 'expected': "x + y + x - y"},
+        {'cell':-1, 'line':""""""},
+        {'cell': 1, 'line':"""print("(x+y)**2 = %s" % (x + y) ** 2)""", 'expected': "(x + y) ** 2"},
+    ]
 
-    print_line_0 = 'print("x+y+x-y = %s" % (x + y + x - y))'
-    print_line_1 = 'print("(x+y)**2 = %s" % (x + y) ** 2)'
-
-    expected_line_0 = "x + y + x - y"
-    expected_line_1 = "(x + y) ** 2"
-
-    source = '\n'.join([
-        line_0,
-        line_1,
-        line_2,
-
-        print_line_0,
-        print_line_1,
-    ])
-
-    input_cell = nbformat.v4.new_code_cell(source=source)
+    input_cell = nbformat.v4.new_code_cell(source='\n'.join(
+        [d['line'] for d in lines_dict]
+    ))
 
     result_list = sp.process_cell(input_cell)
 
-    assert line_0 in result_list[0].source
-    assert line_1 in result_list[0].source
-    assert line_2 in result_list[0].source
+    for line_dict in lines_dict:
 
-    assert line_0 not in result_list[1].source
-    assert line_1 not in result_list[1].source
-    assert line_2 not in result_list[1].source
+        expected = line_dict.get('expected', line_dict['line'])
 
-    assert line_0 not in result_list[2].source
-    assert line_1 not in result_list[2].source
-    assert line_2 not in result_list[2].source
+        if 0 <= line_dict['cell']:
+            for k, result_cell in enumerate(result_list):
+                if k == line_dict['cell']:
+                    assert expected in result_cell.source
+                else:
+                    assert expected not in result_cell.source
 
-    assert expected_line_0 not in result_list[0].source
-    assert expected_line_0 in result_list[1].source
-    assert expected_line_0 not in result_list[2].source
 
-    assert expected_line_1 not in result_list[0].source
-    assert expected_line_1 not in result_list[1].source
-    assert expected_line_1 in result_list[2].source
+def test_process_cell_interchanging():
+
+    lines_dict = [
+        {'cell': 0, 'line':"""print('''3.2.1.2''')"""},
+        {'cell': 0, 'line':"""print("sy.sqrt(2) = %s" % sy.sqrt(2).evalf(100))"""                 , 'expected': "sy.sqrt(2).evalf(100)"},
+        {'cell':-1, 'line':""""""},
+        {'cell': 1, 'line':"""print("1/2 + 1/3 = %s" % (sy.Rational(1, 2) + sy.Rational(1, 3)))""", 'expected': "(sy.Rational(1, 2) + sy.Rational(1, 3))"},
+        {'cell':-1, 'line':""""""},
+        {'cell': 2, 'line':"""F, r, sigma_max, sf = sy.symbols('F r sigma_max safety_factor')"""},
+        {'cell':-1, 'line':""""""},
+        {'cell': 2, 'line':"""area = sy.pi * r * r"""},
+        {'cell': 2, 'line':"""sigma = F / area"""},
+        {'cell': 2, 'line':"""solution = sy.solve([sigma - sigma_max / sf], r)"""},
+        {'cell': 2, 'line':"""print("solution = %s" % sy.simplify(solution))"""                   , 'expected': "sy.simplify(solution)"},
+    ]
+    input_cell = nbformat.v4.new_code_cell(source='\n'.join(
+        [d['line'] for d in lines_dict]
+    ))
+
+    result_list = sp.process_cell(input_cell)
+
+    for line_dict in lines_dict:
+
+        expected = line_dict.get('expected', line_dict['line'])
+
+        if 0 <= line_dict['cell']:
+            for k, result_cell in enumerate(result_list):
+                if k == line_dict['cell']:
+                    assert expected in result_cell.source
+                else:
+                    assert expected not in result_cell.source
 
 
 def test_process_cell__markdown():
