@@ -26,10 +26,19 @@ def main(argv=sys.argv):
     ipynb_filename = argv[1]
     assert os.path.exists(ipynb_filename), ipynb_filename
 
-    for k, cell in enumerate(gen.gen_cells(ipynb_filename)):
-        if 'code' == cell['cell_type']:
-            print(f'# In[{k}]')
-            print(cell['source'])
+    new_cells = []
+
+    for cell in gen.gen_cells(ipynb_filename):
+        new_cells += process_cell(cell)
+
+    if ('--write' in sys.argv[1:]):
+        nb = nbformat.read(ipynb_filename, nbformat.NO_CONVERT)
+        nb['cells'] = new_cells
+        result = nbformat.write(nb, ipynb_filename)
+    else:
+        result = True
+
+    return result
 
 
 def process_cell(cell:CODE_CELL) -> typing.List[CODE_CELL]:
