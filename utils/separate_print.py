@@ -4,12 +4,12 @@ Following pattern appears repeatedly:
     print("<sympy cmd> %s" % <sympy md>)
 
 This script aims to convert each of such line into an independent cell.
-
 """
 
 
 import os
 import sys
+import typing
 
 import nbformat
 
@@ -49,6 +49,17 @@ def separate_line(line:str) -> str:
     split = strip_parentheses(line.strip('print')).split(' % ')
     assert 2 == len(split)
     return strip_parentheses(split[-1])
+
+
+CODE_CELL = nbformat.notebooknode.NotebookNode
+
+def flush_source_lines(new_source_list:typing.List[str], result:typing.List[CODE_CELL]) -> None:
+    if new_source_list:
+        result.append(get_new_code_cell(new_source_list))
+
+
+def get_new_code_cell(new_source_list:typing.List[str]) -> CODE_CELL:
+    return nbformat.v4.new_code_cell(source='\n'.join(new_source_list))
 
 
 if "__main__" == __name__:
