@@ -29,5 +29,9 @@ def main(argv=sys.argv):
             print(cell['source'])
 
 
+def is_line_to_separate(line:str) -> bool:
+    return line.startswith('print') and '%' in line
+
+
 if "__main__" == __name__:
     main(sys.argv)
