@@ -51,8 +51,8 @@ def process_cell(cell:CODE_CELL) -> typing.List[CODE_CELL]:
         new_source_list = []
         for line in cell['source'].splitlines():
             if is_line_to_separate(line):
+                new_source_list.append(separate_line(line))
                 flush_source_lines(new_source_list, result)
-                new_source_list = [separate_line(line)]
             else:
                 new_source_list.append(line)
 
@@ -86,6 +86,7 @@ def separate_line(line:str) -> str:
 def flush_source_lines(new_source_list:typing.List[str], result:typing.List[CODE_CELL]) -> None:
     if new_source_list:
         result.append(get_new_code_cell(new_source_list))
+    del new_source_list[:]
 
 
 def get_new_code_cell(new_source_list:typing.List[str]) -> CODE_CELL:
