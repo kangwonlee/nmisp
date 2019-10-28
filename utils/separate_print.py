@@ -33,5 +33,17 @@ def is_line_to_separate(line:str, sep=' % ') -> bool:
     return line.startswith('print') and sep in line
 
 
+def strip_parentheses(line:str) -> str:
+    result = line.strip()
+
+    if '(' == result[0]:
+        result = result[1:]
+
+    if ')' == result[-1]:
+        result = result[:-1]
+
+    return result
+
+
 if "__main__" == __name__:
     main(sys.argv)
