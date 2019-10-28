@@ -217,5 +217,18 @@ def test_process_cell():
     assert expected_line_1 in result_list[2].source
 
 
+def test_process_cell__markdown():
+
+    line_0 = '# `sympy`\n'
+
+    input_cell = nbformat.v4.new_markdown_cell(source=line_0)
+
+    result_list = sp.process_cell(input_cell)
+
+    assert line_0 in result_list[0].source
+
+    assert 1 == len(result_list), len(result_list)
+
+
 if "__main__" == __name__:
     pytest.main()
