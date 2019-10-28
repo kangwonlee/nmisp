@@ -54,7 +54,8 @@ def process_cell(cell:CODE_CELL) -> typing.List[CODE_CELL]:
                 new_source_list.append(separate_line(line))
                 flush_source_lines(new_source_list, result)
             else:
-                new_source_list.append(line)
+                if line.strip():
+                    new_source_list.append(line.strip())
 
         flush_source_lines(new_source_list, result)
 
