@@ -12,3 +12,11 @@ import os
 import sys
 
 import nbformat
+
+
+def main(argv=sys.argv):
+    pass
+
+
+if "__main__" == __name__:
+    main(sys.argv)
