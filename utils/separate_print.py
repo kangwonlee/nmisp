@@ -28,7 +28,7 @@ def main(argv=sys.argv):
 
     for k, cell in enumerate(gen.gen_cells(ipynb_filename)):
         if 'code' == cell['cell_type']:
-            print(f'In[{k}]')
+            print(f'# In[{k}]')
             print(cell['source'])
 
 
