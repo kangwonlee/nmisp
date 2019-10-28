@@ -23,8 +23,10 @@ def main(argv=sys.argv):
     ipynb_filename = argv[1]
     assert os.path.exists(ipynb_filename), ipynb_filename
 
-    for cell in gen.gen_cells(ipynb_filename):
-        print(cell['source'])
+    for k, cell in enumerate(gen.gen_cells(ipynb_filename)):
+        if 'code' == cell['cell_type']:
+            print(f'In[{k}]')
+            print(cell['source'])
 
 
 if "__main__" == __name__:
