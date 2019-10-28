@@ -32,6 +32,27 @@ def main(argv=sys.argv):
             print(cell['source'])
 
 
+def process_cell(cell:CODE_CELL) -> typing.List[CODE_CELL]:
+
+    result = []
+
+    if 'code' != cell['cell_type']:
+        result.append(cell)
+    else:
+        new_source_list = []
+        for line in cell['source'].splitlines():
+            if is_line_to_separate(line):
+                flush_source_lines(new_source_list, result)
+                new_source_list = [separate_line(line)]
+                print(repr(line), ':', repr(separate_line(line)), ',')
+            else:
+                new_source_list.append(line)
+
+    flush_source_lines(new_source_list, result)
+
+    return result
+
+
 def is_line_to_separate(line:str, sep=' % ') -> bool:
     return line.startswith('print') and sep in line
 
