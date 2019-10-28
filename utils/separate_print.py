@@ -51,7 +51,7 @@ def strip_parentheses(line:str) -> str:
 def separate_line(line:str) -> str:
     split = strip_parentheses(line.strip('print')).split(' % ')
     assert 2 == len(split)
-    return strip_parentheses(split[-1])
+    return split[-1]
 
 
 def flush_source_lines(new_source_list:typing.List[str], result:typing.List[CODE_CELL]) -> None:
