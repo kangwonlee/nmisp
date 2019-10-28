@@ -171,5 +171,51 @@ def test_get_new_code_cell():
     assert line_0 in result['source']
 
 
+def test_process_cell():
+
+    line_0 = """print('''3.2.1.3''')"""
+    line_1 = "x = sy.Symbol('x')"
+    line_2 = "y = sy.Symbol('y')"
+
+    print_line_0 = 'print("x+y+x-y = %s" % (x + y + x - y))'
+    print_line_1 = 'print("(x+y)**2 = %s" % (x + y) ** 2)'
+
+    expected_line_0 = "x + y + x - y"
+    expected_line_1 = "(x + y) ** 2"
+
+    source = '\n'.join([
+        line_0,
+        line_1,
+        line_2,
+
+        print_line_0,
+        print_line_1,
+    ])
+
+    input_cell = nbformat.v4.new_code_cell(source=source)
+
+    result_list = sp.process_cell(input_cell)
+
+    assert line_0 in result_list[0].source
+    assert line_1 in result_list[0].source
+    assert line_2 in result_list[0].source
+
+    assert line_0 not in result_list[1].source
+    assert line_1 not in result_list[1].source
+    assert line_2 not in result_list[1].source
+
+    assert line_0 not in result_list[2].source
+    assert line_1 not in result_list[2].source
+    assert line_2 not in result_list[2].source
+
+    assert expected_line_0 not in result_list[0].source
+    assert expected_line_0 in result_list[1].source
+    assert expected_line_0 not in result_list[2].source
+
+    assert expected_line_1 not in result_list[0].source
+    assert expected_line_1 not in result_list[1].source
+    assert expected_line_1 in result_list[2].source
+
+
 if "__main__" == __name__:
     pytest.main()
