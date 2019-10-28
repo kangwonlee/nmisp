@@ -23,6 +23,9 @@ def main(argv=sys.argv):
     ipynb_filename = argv[1]
     assert os.path.exists(ipynb_filename), ipynb_filename
 
+    for cell in gen.gen_cells(ipynb_filename):
+        print(cell['source'])
+
 
 if "__main__" == __name__:
     main(sys.argv)
