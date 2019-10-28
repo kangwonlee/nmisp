@@ -1,9 +1,12 @@
 import os
 import sys
 
+import nbformat
 import pytest
 
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
+
 
 import separate_print as sp
 
@@ -133,6 +136,39 @@ def test_is_line_to_separate(sample_cell):
 def test_separate_line(sample_seperation_dict):
     for input_str, expected in sample_seperation_dict.items():
         assert sp.separate_line(input_str) == expected, (input_str, expected)
+
+
+def test_flush_source_lines_empty():
+    result_list = []
+    input_list = []
+
+    sp.flush_source_lines(input_list, result_list)
+
+    assert not result_list
+
+
+def test_flush_source_lines_one_line():
+    line_0 = 'print("Hello Python")'
+    result_list = []
+    input_list = [line_0]
+
+    assert not result_list
+
+    sp.flush_source_lines(input_list, result_list)
+
+    assert result_list
+    assert 'code' == result_list[0]['cell_type']
+    assert line_0 in result_list[0]['source']
+
+
+def test_get_new_code_cell():
+    line_0 = 'print("Hello Python")'
+    input_list = [line_0]
+
+    result = sp.get_new_code_cell(input_list)
+
+    assert 'code' == result['cell_type']
+    assert line_0 in result['source']
 
 
 if "__main__" == __name__:
