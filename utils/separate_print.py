@@ -18,6 +18,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 import end_with_two_returns as gen
 
 
+CODE_CELL = nbformat.notebooknode.NotebookNode
+
+
 def main(argv=sys.argv):
     assert 1 < len(argv)
     ipynb_filename = argv[1]
@@ -50,8 +53,6 @@ def separate_line(line:str) -> str:
     assert 2 == len(split)
     return strip_parentheses(split[-1])
 
-
-CODE_CELL = nbformat.notebooknode.NotebookNode
 
 def flush_source_lines(new_source_list:typing.List[str], result:typing.List[CODE_CELL]) -> None:
     if new_source_list:
