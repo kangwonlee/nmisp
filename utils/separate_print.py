@@ -45,5 +45,11 @@ def strip_parentheses(line:str) -> str:
     return result
 
 
+def separate_line(line:str) -> str:
+    split = strip_parentheses(line.strip('print')).split(' % ')
+    assert 2 == len(split)
+    return strip_parentheses(split[-1])
+
+
 if "__main__" == __name__:
     main(sys.argv)
