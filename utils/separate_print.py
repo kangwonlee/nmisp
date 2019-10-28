@@ -19,7 +19,9 @@ import end_with_two_returns as gen
 
 
 def main(argv=sys.argv):
-    pass
+    assert 1 < len(argv)
+    ipynb_filename = argv[1]
+    assert os.path.exists(ipynb_filename), ipynb_filename
 
 
 if "__main__" == __name__:
