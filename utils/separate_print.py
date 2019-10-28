@@ -47,7 +47,7 @@ def process_cell(cell:CODE_CELL) -> typing.List[CODE_CELL]:
             else:
                 new_source_list.append(line)
 
-    flush_source_lines(new_source_list, result)
+        flush_source_lines(new_source_list, result)
 
     return result
 
