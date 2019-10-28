@@ -31,6 +31,24 @@ def sample_cell() -> str:
     )
 
 
+def test_strip_parentheses_single():
+    input_str = '("sy.pi**2 = %s" % sy.pi ** 2)'
+    expected = input_str[1:-1]
+
+    result = sp.strip_parentheses(input_str)
+
+    assert result == expected
+
+
+def test_strip_parentheses_double():
+    input_str = '("sy.satisfiable(x&y) = %s" % sy.satisfiable(x & y))'
+    expected = input_str[1:-1]
+
+    result = sp.strip_parentheses(input_str)
+
+    assert result == expected
+
+
 def test_is_line_to_separate(sample_cell):
     separate_list = [
         False,
