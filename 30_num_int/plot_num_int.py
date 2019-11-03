@@ -29,6 +29,11 @@ def half_circle(x, half_circle_area=1.0):
     return np.sqrt(np.abs(radius_square_of_half_circle_area(half_circle_area) - x**2))
 
 
+def axis_equal_grid_True():
+    plt.axis('equal')
+    plt.grid(True)
+
+
 def plot_half_circle(n=10, half_circle_area=1):
     theta_deg_array = np.linspace(180, 0, 180+1)
     theta_rad_array = np.deg2rad(theta_deg_array)
