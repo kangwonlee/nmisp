@@ -58,6 +58,10 @@ def plot_half_circle(n=10, half_circle_area=1):
     axis_equal_grid_True()
 
 
+def linspace_r(r, n):
+    return np.linspace(-r, r, n)
+
+
 @functools.lru_cache(1024)
 def theta_space(begin:int=180, end:int=0, n:int=None):
 
