@@ -73,3 +73,10 @@ def theta_space(begin:int=180, end:int=0, n:int=None):
     theta_rad_array = np.deg2rad(theta_deg_array)
 
     return np.cos(theta_rad_array)
+
+
+def plot_a_half_circle_of_area(area=1):
+    x_array = radius_of_half_circle_area(area) * theta_space(180, 0)
+    y_plus = half_circle(x_array, area)
+
+    plt.fill_between(x_array, y_plus)
