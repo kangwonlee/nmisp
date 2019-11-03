@@ -76,7 +76,12 @@ def theta_space(begin:int=180, end:int=0, n:int=None):
 
 
 def plot_a_half_circle_of_area(area=1):
-    x_array = radius_of_half_circle_area(area) * theta_space(180, 0)
-    y_plus = half_circle(x_array, area)
+    x_array, y_plus = get_half_circle_xy_theta_space(area)
 
     plt.fill_between(x_array, y_plus)
+
+
+def get_half_circle_xy_theta_space(area):
+    x_array = radius_of_half_circle_area(area) * theta_space(180, 0)
+    y_plus = half_circle(x_array, area)
+    return x_array, y_plus
