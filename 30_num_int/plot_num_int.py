@@ -34,7 +34,7 @@ def axis_equal_grid_True():
     plt.grid(True)
 
 
-def plot_half_circle(n=10, half_circle_area=1):
+def plot_half_circle_with_stems(n=10, half_circle_area=1):
     plot_half_circle_theta_space(half_circle_area)
 
     x_array_bar, y_array_bar = get_half_circle_xy_linspace(half_circle_area, n)
