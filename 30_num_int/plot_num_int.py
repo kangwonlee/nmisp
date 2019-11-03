@@ -52,3 +52,20 @@ def plot_half_circle(n=10, half_circle_area=1):
 
     plt.axis('equal')
     plt.grid(True)
+
+
+@functools.lru_cache(1024)
+def theta_space(begin:int=180, end:int=0, n:int=None):
+
+    assert isinstance(begin, int)
+    assert isinstance(end, int)
+
+    if n is None:
+        n = int(abs(end - begin))
+
+    assert isinstance(n, int)
+
+    theta_deg_array = np.linspace(begin, end, n+1)
+    theta_rad_array = np.deg2rad(theta_deg_array)
+
+    return np.cos(theta_rad_array)
