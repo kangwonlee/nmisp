@@ -39,13 +39,18 @@ def plot_half_circle(n=10, half_circle_area=1):
 
     plt.plot(x_array, y_plus)
 
-    x_array_bar = linspace_r(radius_of_half_circle_area(half_circle_area), n+1)
-    y_array_bar = half_circle(x_array_bar)
+    x_array_bar, y_array_bar = get_half_circle_xy_linspace(half_circle_area, n)
 
     # https://stackoverflow.com/40896356
     plt.stem(x_array_bar, y_array_bar, markerfmt='.', use_line_collection=True)
 
     axis_equal_grid_True()
+
+
+def get_half_circle_xy_linspace(half_circle_area, n):
+    x_array_bar = linspace_r(radius_of_half_circle_area(half_circle_area), n+1)
+    y_array_bar = half_circle(x_array_bar)
+    return x_array_bar, y_array_bar
 
 
 def linspace_r(r, n):
