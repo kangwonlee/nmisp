@@ -45,11 +45,7 @@ def plot_half_circle(n=10, half_circle_area=1):
     plt.plot(x_array, y_plus)
     plt.plot(x_array, y_minus)
 
-    x_array_bar = np.linspace(
-        -radius_of_half_circle_area(half_circle_area),
-        radius_of_half_circle_area(half_circle_area),
-        n+1
-    )
+    x_array_bar = linspace_r(radius_of_half_circle_area(half_circle_area), n+1)
     y_array_bar = half_circle(x_array_bar)
 
     # https://stackoverflow.com/40896356
