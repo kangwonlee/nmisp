@@ -60,7 +60,7 @@ def linspace_r(r, n):
     return np.linspace(-r, r, n)
 
 
-@functools.lru_cache(1024)
+@functools.lru_cache()
 def theta_space(begin:int=180, end:int=0, n:int=None):
 
     assert isinstance(begin, int)
