@@ -46,7 +46,9 @@ def plot_half_circle_stems(n, half_circle_area):
     x_array_bar, y_array_bar = get_half_circle_xy_linspace(n, half_circle_area)
 
     # https://stackoverflow.com/40896356
-    plt.stem(x_array_bar, y_array_bar, markerfmt='.', use_line_collection=True)
+    plt.stem(x_array_bar, y_array_bar, markerfmt='.')
+    # For anaconda 2019.07 or later
+    # plt.stem(x_array_bar, y_array_bar, markerfmt='.', use_line_collection=True)
 
 
 def plot_half_circle_theta_space(half_circle_area):
