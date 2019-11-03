@@ -43,7 +43,7 @@ def plot_half_circle_with_stems(n=10, half_circle_area=1):
 
 
 def plot_half_circle_stems(n, half_circle_area):
-    x_array_bar, y_array_bar = get_half_circle_xy_linspace(half_circle_area, n)
+    x_array_bar, y_array_bar = get_half_circle_xy_linspace(n, half_circle_area)
 
     # https://stackoverflow.com/40896356
     plt.stem(x_array_bar, y_array_bar, markerfmt='.', use_line_collection=True)
@@ -54,7 +54,7 @@ def plot_half_circle_theta_space(half_circle_area):
     plt.plot(x_array, y_plus)
 
 
-def get_half_circle_xy_linspace(half_circle_area, n):
+def get_half_circle_xy_linspace(n, half_circle_area):
     x_array_bar = linspace_r(radius_of_half_circle_area(half_circle_area), n+1)
     y_array_bar = half_circle(x_array_bar)
     return x_array_bar, y_array_bar
