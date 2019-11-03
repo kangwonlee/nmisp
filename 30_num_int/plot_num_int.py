@@ -55,8 +55,7 @@ def plot_half_circle(n=10, half_circle_area=1):
     # https://stackoverflow.com/40896356
     plt.stem(x_array_bar, y_array_bar, markerfmt='.', use_line_collection=True)
 
-    plt.axis('equal')
-    plt.grid(True)
+    axis_equal_grid_True()
 
 
 @functools.lru_cache(1024)
