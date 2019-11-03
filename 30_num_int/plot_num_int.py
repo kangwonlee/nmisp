@@ -37,12 +37,12 @@ def axis_equal_grid_True():
 def plot_half_circle_with_stems(n=10, half_circle_area=1):
     plot_half_circle_theta_space(half_circle_area)
 
-    plot_half_circle_stems(half_circle_area, n)
+    plot_half_circle_stems(n, half_circle_area)
 
     axis_equal_grid_True()
 
 
-def plot_half_circle_stems(half_circle_area, n):
+def plot_half_circle_stems(n, half_circle_area):
     x_array_bar, y_array_bar = get_half_circle_xy_linspace(half_circle_area, n)
 
     # https://stackoverflow.com/40896356
