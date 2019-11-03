@@ -35,15 +35,9 @@ def axis_equal_grid_True():
 
 
 def plot_half_circle(n=10, half_circle_area=1):
-    theta_deg_array = np.linspace(180, 0, 180+1)
-    theta_rad_array = np.deg2rad(theta_deg_array)
-
-    x_array = radius_of_half_circle_area(half_circle_area) * np.cos(theta_rad_array)
-    y_plus = half_circle(x_array)
-    y_minus = -y_plus
+    x_array, y_plus = get_half_circle_xy_theta_space(half_circle_area)
 
     plt.plot(x_array, y_plus)
-    plt.plot(x_array, y_minus)
 
     x_array_bar = linspace_r(radius_of_half_circle_area(half_circle_area), n+1)
     y_array_bar = half_circle(x_array_bar)
