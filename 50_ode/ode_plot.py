@@ -47,7 +47,7 @@ def ode_slope_1state(func, x_list, time_list):
     """
     time_mesh, x_mesh = np.meshgrid(time_list, x_list)
     u_mesh = np.ones_like(x_mesh)
-    v_mesh = func(x_mesh, time_mesh)
+    v_mesh = func(time_mesh, x_mesh)
     # magnitude as color
     color_mesh = np.sqrt(u_mesh * u_mesh + v_mesh * v_mesh)
 
@@ -77,7 +77,7 @@ def ode_slopes_2states_cartesian(func, theta_rad_list, theta_dot_rad_list, time_
     y_rad = np.meshgrid(theta_rad_list, theta_dot_rad_list)
 
     # derivatives of state at each point
-    y_rad_dot = func(y_rad, time_list)
+    y_rad_dot = func(time_list, y_rad)
 
     # color
     color_mesh = np.sqrt(y_rad_dot[0] * y_rad_dot[0] + y_rad_dot[1] * y_rad_dot[1])
