@@ -2,7 +2,7 @@ def euler_step(f, x0, t0, t1):
     """
     One time step of Euler method
 
-    f  : function dx_dt(x0, t0)
+    f  : function dx_dt(t0, x0)
     x0 : initial condition
     t0 : this step time
     t1 : next step time
@@ -12,7 +12,7 @@ def euler_step(f, x0, t0, t1):
     delta_t = t1 - t0
 
     # slope
-    s1 = f(x0, t0)
+    s1 = f(t0, x0)
 
     # next step
     x1 = x0 + s1 * delta_t
@@ -31,7 +31,7 @@ def heun_step(f, x0, t0, t1):
     """
     One time step of Heun's method
 
-    f  : function dx_dt(x0, t0)
+    f  : function dx_dt(t0, x0)
     x0 : initial condition
     t0 : this step time
     t1 : next step time
@@ -41,13 +41,13 @@ def heun_step(f, x0, t0, t1):
     delta_t = t1 - t0
 
     # slope
-    s1 = f(x0, t0)
+    s1 = f(t0, x0)
 
     # next step by Euler
     x1_euler = x0 + s1 * delta_t
 
     # slope at next step
-    s2 = f(x1_euler, t1)
+    s2 = f(t1, x1_euler)
 
     # average of two slopes
     s_average = (s1 + s2) * 0.5
@@ -69,7 +69,7 @@ def rk4_step(f, x0, t0, t1):
     """
     One time step of Runge-Kutta method
 
-    f  : function dx_dt(x0, t0)
+    f  : function dx_dt(t0, x0)
     x0 : initial condition
     t0 : this step time
     t1 : next step time
@@ -79,16 +79,16 @@ def rk4_step(f, x0, t0, t1):
     t_half = t0 + delta_t_half
     
     # Step 1
-    s1 = f(x0, t0)
+    s1 = f(t0, x0)
 
     # Step 2
-    s2 = f(x0 + s1 * delta_t_half, t_half)
+    s2 = f(t_half, x0 + s1 * delta_t_half)
 
     # Step 3
-    s3 = f(x0 + s2 * delta_t_half, t_half)
+    s3 = f(t_half, x0 + s2 * delta_t_half)
 
     # Step 4
-    s4 = f(x0 + s3 * delta_t, t1)
+    s4 = f(t1, x0 + s3 * delta_t)
 
     # Step 5
     s = (1.0 / 6.0) * (s1 + (s2 + s3) * 2 + s4)
