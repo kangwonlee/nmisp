@@ -8,6 +8,7 @@ dependencies:
 - python=3.7.1
 # Anaconda 2018.12 python 3.7.1
 # https://docs.anaconda.com/anaconda/packages/old-pkg-lists/2018.12/py3.7_win-64/
+- attrs=19.1.0  # for pytest 4.0.2
 - cython=0.29.2
 - jupyter=1.0.0
 - lxml=4.2.5
