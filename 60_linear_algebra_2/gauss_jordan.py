@@ -1,11 +1,21 @@
 import numpy as np
 
 
-def elimination(AX:np.ndarray, b_verbose:bool=True) -> np.ndarray:
+def inv(A:np.ndarray, b_verbose:bool=True) -> np.ndarray:
+    return elimination(
+        np.array(
+            np.hstack(
+                [A, np.identity(A.shape[0])]
+            )
+        )*1.0,
+        b_verbose=b_verbose,
+    )
 
+
+def elimination(AX:np.ndarray, b_verbose:bool=True) -> np.ndarray:
     # pivot loop
     for p in range(AX.shape[0]):
-        
+
         if b_verbose:
             print(f"Row {p+1} is now the Pivot Row.")
         
