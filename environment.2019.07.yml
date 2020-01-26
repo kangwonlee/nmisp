@@ -7,7 +7,7 @@ channels:
 dependencies:
 - python=3.7.3
 # Anaconda 2019.07 python 3.7
-# https://docs/anaconda.com/anaconda/packages/py3.7_win-64/
+# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/2019.07/py3.7_win-64/
 - cython=0.29.12
 - jupyter=1.0.0
 - lxml=4.3.4
