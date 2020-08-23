@@ -1,13 +1,12 @@
 # ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
+#       https://docs.anaconda.com/anaconda/packages/old-pkg-lists/5.3.0/py3.7_win-64/
 
-name: travis_anaconda_jupyter
+name: anaconda_5_3_python_3_7
 channels:
 - defaults
 
 dependencies:
 - python=3.7
-# Anaconda 5.3 (2018.09) python 3.7
-# https://docs.anaconda.com/anaconda/packages/old-pkg-lists/5.3.0/py3.7_win-64/
 - cython=0.28.5
 - jupyter=1.0.0
 - lxml=4.2.5
