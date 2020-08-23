@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, macOS-10.14, windows-2016]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
         anaconda: [2019.07, "2019.10", 2020.02, nightly]
       fail-fast: false
     timeout-minutes: 10
