@@ -1,12 +1,12 @@
 # ref : Francesco Mosconi, Travis + Anaconda + Jupyter, https://github.com/ghego/travis_anaconda_jupyter
+#       https://docs/anaconda.com/anaconda/packages/py3.7_win-64/
 
-name: travis_anaconda_jupyter
+name: anaconda_python_latest
 channels:
 - defaults
 
 dependencies:
 - python>=3.8.3
-# Anaconda 2020.02 python 3.8 Win64
 - cython>=0.29.21
 - jupyter>=1.0.0
 - lxml>=4.5.2
