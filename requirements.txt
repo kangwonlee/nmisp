@@ -3,7 +3,7 @@
 
 # name: conda test environment anaconda 2019.07
 
-python >= 3.7.3
+# python >= 3.7.3
 cython >= 0.29.12
 jupyter >= 1.0.0
 lxml >= 4.3.4
