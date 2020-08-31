@@ -1,3 +1,9 @@
+[tool.poetry]
+name = "nmisp"
+version = "2020090101"
+description = "Numerical Methods in SciPy"
+authors = ["KangWon Lee<kangwon.lee@kpu.ac.kr>"]
+
 [tool.poetry.dependencies]
 python = "^3.7"
 cython = "^0.29.12"
