@@ -86,3 +86,9 @@ def matshow33(counter, abs_ars, r, s, mat_a0, mat_x):
     length=1, normalize=True,
   )
   axes[1][1].grid(True)
+
+
+def remove_all_figure_files(ext:str='png') -> None:
+  for filename in os.listdir():
+    if os.path.splitext(filename)[-1].lower().endswith(ext.lower()):
+      os.remove(filename)
