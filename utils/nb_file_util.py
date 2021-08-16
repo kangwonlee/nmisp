@@ -1,4 +1,5 @@
 import itertools
+import multiprocessing as mp
 import os
 import subprocess
 
@@ -6,7 +7,6 @@ import nbformat
 
 
 class FileProcessor(object):
-
     """
     Interface to jupyter notebook file
     """
@@ -196,8 +196,14 @@ def insert_code_cell_to_ipynb(index:int, code:str, full_path_ipynb:str):
     write_nodes_to_ipynb(full_path_ipynb, nb_node)
 
 
-def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder()):
+def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder(), b_debug:bool=False):
     def gen_i_c_p():
         for full_path in gen_ipynb(path):
             yield index, code, full_path
-    list(itertools.starmap(insert_code_cell_to_ipynb, gen_i_c_p()))
+    if b_debug:
+        list(itertools.starmap(insert_code_cell_to_ipynb, gen_i_c_p()))
+    else:
+        pool = mp.Pool(mp.cpu_count()-1)
+        pool.starmap(insert_code_cell_to_ipynb, gen_i_c_p())
+        pool.close()
+        pool.join()
