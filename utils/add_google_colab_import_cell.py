@@ -11,9 +11,24 @@ def main(argv=sys.argv):
     else:
         path = nb.get_upper_folder()
 
-    code = "# test code"
+    for root, filename in nb.one_level_ipynb_path_file(path):
+        folder_name = os.path.split(root)[-1]
+        code = get_google_colab_import_cell(folder_name)
+        nb.insert_code_cell_to_ipynb(0, code, os.path.join(root, filename))
 
-    nb.add_code_to_all_ipynb_tree(0, code, path)
+
+def get_google_colab_import_cell(folder_name:str, repo_name:str="nmisp") -> str:
+    code = (
+        "# https://stackoverflow.com/a/63519730\n"
+        "if 'google.colab' in str(get_ipython()):\n"
+        "  # https://colab.research.google.com/notebooks/io.ipynb\n"
+        "  import google.colab.drive as gcdrive\n"
+        "  # may need to visit a link for the Google Colab authorization code\n"
+        '''  gcdrive.mount("/content/drive/")\n'''
+        "  import sys\n"
+        f'''  sys.path.insert(0,"/content/drive/My Drive/Colab Notebooks/{repo_name}/{folder_name}")\n'''
+    )
+    return code
 
 
 if "__main__" == __name__:
