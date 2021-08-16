@@ -2,9 +2,9 @@ import itertools
 import multiprocessing as mp
 import os
 import subprocess
+from typing import Tuple
 
 import nbformat
-
 
 class FileProcessor(object):
     """
@@ -162,7 +162,7 @@ def get_upper_folder() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
-def one_level_ipynb(path:str=get_upper_folder()) -> str:
+def one_level_ipynb_path_file(path:str=get_upper_folder()) -> Tuple[str]:
     """
     generator of full paths to ipynb files one level under the given folder
     """
@@ -172,7 +172,15 @@ def one_level_ipynb(path:str=get_upper_folder()) -> str:
             files_in_root = filter(lambda x: os.path.isfile(os.path.join(root, x)), os.listdir(root))
             for filename in files_in_root:
                 if os.path.splitext(filename)[-1].lower().endswith("ipynb"):
-                    yield os.path.join(root, filename)
+                    yield root, filename
+
+
+def one_level_ipynb(path:str=get_upper_folder()) -> str:
+    """
+    generator of full paths to ipynb files one level under the given folder
+    """
+    for root, filename in one_level_ipynb_path_file(path):
+        yield os.path.join(root, filename)
 
 
 def read_nodes_from_ipynb(full_path_ipynb:str) -> nbformat.NotebookNode:
