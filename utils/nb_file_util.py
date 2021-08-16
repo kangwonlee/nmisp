@@ -162,14 +162,17 @@ def get_upper_folder() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
-def gen_ipynb(path:str=get_upper_folder()) -> str:
+def one_level_ipynb(path:str=get_upper_folder()) -> str:
     """
-    generator of full paths to ipynb files under the given folder
+    generator of full paths to ipynb files one level under the given folder
     """
-    for root, _, filelist in os.walk(path):
-        for filename in filelist:
-            if os.path.splitext(filename)[-1].lower().endswith("ipynb"):
-                yield os.path.join(root, filename)
+    for item in os.listdir(path):
+        if os.path.isdir(item) and (not item.startswith('.')):
+            root = os.path.join(path, item)
+            files_in_root = filter(lambda x: os.path.isfile(os.path.join(root, x)), os.listdir(root))
+            for filename in files_in_root:
+                if os.path.splitext(filename)[-1].lower().endswith("ipynb"):
+                    yield os.path.join(root, filename)
 
 
 def read_nodes_from_ipynb(full_path_ipynb:str) -> nbformat.NotebookNode:
@@ -198,7 +201,7 @@ def insert_code_cell_to_ipynb(index:int, code:str, full_path_ipynb:str):
 
 def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder(), b_debug:bool=False):
     def gen_i_c_p():
-        for full_path in gen_ipynb(path):
+        for full_path in one_level_ipynb(path):
             yield index, code, full_path
     if b_debug:
         list(itertools.starmap(insert_code_cell_to_ipynb, gen_i_c_p()))
