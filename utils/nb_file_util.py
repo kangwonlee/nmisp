@@ -168,3 +168,16 @@ def gen_ipynb(path:str=get_upper_folder()) -> str:
         for filename in filelist:
             if os.path.splitext(filename)[-1].lower().endswith("ipynb"):
                 yield os.path.join(root, filename)
+
+
+def read_nodes_from_ipynb(full_path_ipynb:str) -> nbformat.NotebookNode:
+    assert os.path.exists(full_path_ipynb), f"Unable to find {full_path_ipynb}"
+
+    with open(full_path_ipynb, 'rb') as nb_file:
+        nb_node = nbformat.read(nb_file, nbformat.NO_CONVERT)
+
+    return nb_node
+
+
+def write_nodes_to_ipynb(full_path_ipynb:str, nb_node:nbformat.NotebookNode):
+    nbformat.write(nb_node, full_path_ipynb)
