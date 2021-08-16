@@ -181,3 +181,8 @@ def read_nodes_from_ipynb(full_path_ipynb:str) -> nbformat.NotebookNode:
 
 def write_nodes_to_ipynb(full_path_ipynb:str, nb_node:nbformat.NotebookNode):
     nbformat.write(nb_node, full_path_ipynb)
+
+
+def insert_code_cell(nb_node:nbformat.NotebookNode, index:int, code:str) -> nbformat.NotebookNode:
+    nb_node["cells"].insert(index, nbformat.v4.new_code_cell(source=code))
+    return nb_node
