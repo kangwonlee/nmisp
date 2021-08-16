@@ -1,8 +1,10 @@
+import itertools
+import multiprocessing as mp
 import os
 import subprocess
+from typing import Tuple
 
 import nbformat
-
 
 class FileProcessor(object):
     """
@@ -154,3 +156,65 @@ class CellProcessorBase(object):
     def process_cell(self):
         # virtual method
         raise NotImplementedError()
+
+
+def get_upper_folder() -> str:
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+
+
+def one_level_ipynb_path_file(path:str=get_upper_folder()) -> Tuple[str]:
+    """
+    generator of full paths to ipynb files one level under the given folder
+    """
+    for item in os.listdir(path):
+        if os.path.isdir(item) and (not item.startswith('.')):
+            root = os.path.join(path, item)
+            files_in_root = filter(lambda x: os.path.isfile(os.path.join(root, x)), os.listdir(root))
+            for filename in files_in_root:
+                if os.path.splitext(filename)[-1].lower().endswith("ipynb"):
+                    yield root, filename
+
+
+def one_level_ipynb(path:str=get_upper_folder()) -> str:
+    """
+    generator of full paths to ipynb files one level under the given folder
+    """
+    for root, filename in one_level_ipynb_path_file(path):
+        yield os.path.join(root, filename)
+
+
+def read_nodes_from_ipynb(full_path_ipynb:str) -> nbformat.NotebookNode:
+    assert os.path.exists(full_path_ipynb), f"Unable to find {full_path_ipynb}"
+
+    with open(full_path_ipynb, 'rb') as nb_file:
+        nb_node = nbformat.read(nb_file, nbformat.NO_CONVERT)
+
+    return nb_node
+
+
+def write_nodes_to_ipynb(full_path_ipynb:str, nb_node:nbformat.NotebookNode):
+    nbformat.write(nb_node, full_path_ipynb)
+
+
+def insert_code_cell(nb_node:nbformat.NotebookNode, index:int, code:str) -> nbformat.NotebookNode:
+    nb_node["cells"].insert(index, nbformat.v4.new_code_cell(source=code))
+    return nb_node
+
+
+def insert_code_cell_to_ipynb(index:int, code:str, full_path_ipynb:str):
+    nb_node = read_nodes_from_ipynb(full_path_ipynb)
+    insert_code_cell(nb_node, index, code)
+    write_nodes_to_ipynb(full_path_ipynb, nb_node)
+
+
+def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder(), b_debug:bool=False):
+    def gen_i_c_p():
+        for full_path in one_level_ipynb(path):
+            yield index, code, full_path
+    if b_debug:
+        list(itertools.starmap(insert_code_cell_to_ipynb, gen_i_c_p()))
+    else:
+        pool = mp.Pool(mp.cpu_count()-1)
+        pool.starmap(insert_code_cell_to_ipynb, gen_i_c_p())
+        pool.close()
+        pool.join()
