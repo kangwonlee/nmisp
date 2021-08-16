@@ -154,3 +154,17 @@ class CellProcessorBase(object):
     def process_cell(self):
         # virtual method
         raise NotImplementedError()
+
+
+def get_upper_folder() -> str:
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+
+
+def gen_ipynb(path:str=get_upper_folder()) -> str:
+    """
+    generator of full paths to ipynb files under the given folder
+    """
+    for root, _, filelist in os.walk(path):
+        for filename in filelist:
+            if os.path.splitext(filename)[-1].lower().endswith("ipynb"):
+                yield os.path.join(root, filename)
