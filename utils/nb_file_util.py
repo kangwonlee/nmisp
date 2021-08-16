@@ -1,3 +1,4 @@
+import itertools
 import os
 import subprocess
 
@@ -5,6 +6,7 @@ import nbformat
 
 
 class FileProcessor(object):
+
     """
     Interface to jupyter notebook file
     """
@@ -186,3 +188,16 @@ def write_nodes_to_ipynb(full_path_ipynb:str, nb_node:nbformat.NotebookNode):
 def insert_code_cell(nb_node:nbformat.NotebookNode, index:int, code:str) -> nbformat.NotebookNode:
     nb_node["cells"].insert(index, nbformat.v4.new_code_cell(source=code))
     return nb_node
+
+
+def insert_code_cell_to_ipynb(index:int, code:str, full_path_ipynb:str):
+    nb_node = read_nodes_from_ipynb(full_path_ipynb)
+    insert_code_cell(nb_node, index, code)
+    write_nodes_to_ipynb(full_path_ipynb, nb_node)
+
+
+def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder()):
+    def gen_i_c_p():
+        for full_path in gen_ipynb(path):
+            yield index, code, full_path
+    list(itertools.starmap(insert_code_cell_to_ipynb, gen_i_c_p()))
