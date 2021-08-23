@@ -201,10 +201,11 @@ def insert_code_cell(nb_node:nbformat.NotebookNode, index:int, code:str) -> nbfo
     return nb_node
 
 
-def insert_code_cell_to_ipynb(index:int, code:str, full_path_ipynb:str):
+def insert_code_cell_to_ipynb(index:int, code:str, full_path_ipynb:str, b_allow_duplicate:bool=False):
     nb_node = read_nodes_from_ipynb(full_path_ipynb)
-    insert_code_cell(nb_node, index, code)
-    write_nodes_to_ipynb(full_path_ipynb, nb_node)
+    if b_allow_duplicate or (nb_node["cells"][index]["source"] != code):
+        insert_code_cell(nb_node, index, code)
+        write_nodes_to_ipynb(full_path_ipynb, nb_node)
 
 
 def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder(), b_debug:bool=False):
