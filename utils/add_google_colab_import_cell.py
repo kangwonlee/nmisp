@@ -19,6 +19,7 @@ def main(argv=sys.argv):
 
 def get_google_colab_import_cell(folder_name:str, repo_name:str="nmisp") -> str:
     code = (
+        "# This cell is for the Google Colaboratory\n"
         "# https://stackoverflow.com/a/63519730\n"
         "if 'google.colab' in str(get_ipython()):\n"
         "  # https://colab.research.google.com/notebooks/io.ipynb\n"
