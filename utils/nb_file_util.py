@@ -4,9 +4,13 @@ import os
 import subprocess
 from typing import Tuple
 
+
 import nbformat
+from nbformat.v4.nbbase import new_code_cell
+
 
 class FileProcessor(object):
+
     """
     Interface to jupyter notebook file
     """
@@ -197,7 +201,13 @@ def write_nodes_to_ipynb(full_path_ipynb:str, nb_node:nbformat.NotebookNode):
 
 
 def insert_code_cell(nb_node:nbformat.NotebookNode, index:int, code:str) -> nbformat.NotebookNode:
-    nb_node["cells"].insert(index, nbformat.v4.new_code_cell(source=code))
+    new_cell = nbformat.v4.new_code_cell(source=code)
+
+    if "id" in new_cell:
+        del new_cell["id"]
+
+    nb_node["cells"].insert(index, new_cell)
+
     return nb_node
 
 
