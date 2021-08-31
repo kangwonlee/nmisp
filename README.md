@@ -9,18 +9,7 @@ This software aims to describe various numerical methods in [`Python`](https://e
 
 ## 설치 항목<br>Software to install
 
-### 파이썬 프로그래밍 언어<br>Python Programming Language
-
-#### [Anaconda](https://www.anaconda.com/distribution/) <br>
-
-* Python 3.7.x
-* 2019.07판 이후<br>Latter or equal to 2019.07
-* 명령행에서 실행해야 할 경우, 경로에 추가하도록 설정<br>To run from a command line, configure to add python to the PATH
-* 경로 이름에 한글을 사용할 수 없음<br>Use ASCII characters for path name
-
-### 깃 버전 관리 소프트웨어<br>Git Version Control Software
-
-#### CUI
+### 깃 버전 관리 소프트웨어 : 명령행 실행 환경<br>Git Version Control Software : Commadline interface
 
 * 우분투 리눅스의 경우 다음과 같이 설치<br>For Ubuntu Linux, install as follows
 
@@ -47,7 +36,44 @@ To use Microsoft Visual Studio Code among IDEs below, an administrator may consi
 이후 MS vscode 에서도 한두가지 추가 설정을 실시하면 내장 터미널로 `git-bash` 를 사용할 수 있음<br>
 With a few additional configurations in MS vscode, one could use `git-bash` as the integrated terminal.
 
-#### GUI
+### 파이썬 프로그래밍 언어<br>Python Programming Language
+
+#### [Miniconda](https://docs.conda.io/en/latest/miniconda.html) <br>
+
+* Python 3.7 이후<br>Python 3.7 or latter
+* 64bit 판 추천<br>Recommend 64 bit versions
+* 리눅스 명령어 환경에서 다음 실행<br>Run following commands in a Linux shell
+
+``` sh
+# Download & install miniconda
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+chmod +x Miniconda3-latest-Linux-x86_64.sh
+./Miniconda3-latest-Linux-x86_64.sh
+source ~/.bashrc
+
+# Install python modules
+git clone https://github.com/kangwonlee/nmisp
+pushd nmisp
+# You may choose a different environment configuration under ./tests/ folder
+conda env create -n nmisp -f ./tests/environment.2020.07.yml
+
+# Start the jupyter notebook
+conda activate nmisp
+jupyter notebook &
+# please do not close the shell
+
+# to run tests
+pytest -n auto tests/
+```
+
+#### [Anaconda](https://www.anaconda.com/distribution/) <br>
+
+* Python 3.7.x
+* 2019.07판 이후<br>Latter or equal to 2019.07
+* 명령행에서 실행해야 할 경우, 경로에 추가하도록 설정<br>To run from a command line, configure to add python to the PATH
+* 경로 이름에 한글을 사용할 수 없음<br>Use ASCII characters for path name
+
+### 깃 버전 관리 소프트웨어 : 그래픽 실행 환경<br>Git Version Control Software : Graphic user interface
 
 아래 가운데 택일<br>Choose one from below 
 * [SourceTree](https://www.sourcetreeapp.com/download/) 
@@ -60,7 +86,7 @@ With a few additional configurations in MS vscode, one could use `git-bash` as t
 
 #### Spyder
 
-* Anaconda 5.x 와 함께 설치됨.<br>Anaconda 5.x includes spyder.
+* Anaconda 와 함께 설치될 수 있음.<br>Anaconda may include spyder.
 
 #### [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
