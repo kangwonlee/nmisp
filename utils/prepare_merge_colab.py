@@ -11,13 +11,16 @@ def main(argv=sys.argv):
     else:
         path = nb.get_upper_folder()
 
-    # TODO : check if the folder has any .py file
-    # TODO : check if the ipynb file imports one of the .py files
-
     for root, filename in nb.one_level_ipynb_path_file(path):
-        folder_name = os.path.split(root)[-1]
-        code = get_google_colab_import_cell(folder_name)
-        nb.insert_code_cell_to_ipynb(0, code, os.path.join(root, filename))
+        full_path = os.path.join(root, filename)
+        nodes = nb.read_nodes_from_ipynb(full_path)
+
+        nb.remove_cell_id_from_nodes(nodes)
+
+        if "colab" in nodes["metadata"]:
+            del nodes["metadata"]["colab"]
+
+        nb.write_nodes_to_ipynb(full_path, nodes)
 
 
 def get_google_colab_import_cell(folder_name:str, repo_name:str="nmisp") -> str:
