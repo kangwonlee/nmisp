@@ -113,3 +113,6 @@ ENV/
 
 # .svg vector drawing files
 *.svg
+
+20_probability/*.csv
+20_probability/*.xls
