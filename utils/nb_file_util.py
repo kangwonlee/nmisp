@@ -232,6 +232,19 @@ def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder(),
 
 
 def remove_cell_id_from_nodes(nb_node:nbformat.NotebookNode) -> None:
+    """
+    Sometimes, ipynb files may contain cell IDs
+    Also, sometimes, some users may prefer metadata without IDs
+
+    =======
+    Example
+    =======
+    >>> ipynb_full_path = "sample.ipynb"
+    >>> nodes = read_nodes_from_ipynb(ipynb_full_path)
+    >>> remove_cell_id_from_nodes(nodes)
+    >>> write_nodes_to_ipynb(full_path, nodes)
+    """
+
     for cell in nb_node["cells"]:
         if "id" in cell["metadata"]:
             del cell["metadata"]["id"]
