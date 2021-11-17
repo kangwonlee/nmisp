@@ -229,3 +229,9 @@ def add_code_to_all_ipynb_tree(index:int, code:str, path:str=get_upper_folder(),
         pool.starmap(insert_code_cell_to_ipynb, gen_i_c_p())
         pool.close()
         pool.join()
+
+
+def remove_cell_id_from_nodes(nb_node:nbformat.NotebookNode) -> None:
+    for cell in nb_node["cells"]:
+        if "id" in cell["metadata"]:
+            del cell["metadata"]["id"]
