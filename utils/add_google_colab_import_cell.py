@@ -11,6 +11,9 @@ def main(argv=sys.argv):
     else:
         path = nb.get_upper_folder()
 
+    # TODO : check if the folder has any .py file
+    # TODO : check if the ipynb file imports one of the .py files
+
     for root, filename in nb.one_level_ipynb_path_file(path):
         folder_name = os.path.split(root)[-1]
         code = get_google_colab_import_cell(folder_name)
