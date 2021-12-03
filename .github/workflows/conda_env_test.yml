@@ -9,9 +9,9 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
-        anaconda: [2020.02, 2020.07, 2021.04, nightly]
+        anaconda: [2020.07, 2021.04, nightly]
       fail-fast: false
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v1
     - name: build environment
