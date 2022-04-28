@@ -1,4 +1,3 @@
-import nbutils.symbol_converter as sc
 import os
 
 ignore_path_list = {'__pycache__', '.ipynb_checkpoints', '.git', '.cache', '.idea', 
@@ -70,17 +69,3 @@ def iter_ipynb(root:str=get_proj_root()):
         for ipynb_filename in filter(is_ipynb, filename_list):
             full_path = os.path.join(root_name, ipynb_filename)
             yield full_path
-
-
-def main():
-
-    # file processor
-    fp = sc.IpynbUnitConverter(None)
-
-    # Chapter loop
-    for full_path in iter_ipynb(os.pardir):
-        fp.process_nb_file(full_path, b_write_file=True)
-
-
-if __name__ == '__main__':
-    main()
