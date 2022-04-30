@@ -1,5 +1,5 @@
+import math
 import numpy as np
-
 
 def inv(A:np.ndarray, b_verbose:bool=True) -> np.ndarray:
     return elimination(
@@ -21,7 +21,7 @@ def elimination(AX:np.ndarray, b_verbose:bool=True) -> np.ndarray:
         
         one_over_pivot = 1.0 / AX[p, p]
 
-        if abs(1 - one_over_pivot) > np.finfo(np.float32).eps:
+        if not math.isclose(1, one_over_pivot):
             if b_verbose:
                 print(f"Normalize Row {p+1} with {one_over_pivot}.")
 
@@ -34,7 +34,7 @@ def elimination(AX:np.ndarray, b_verbose:bool=True) -> np.ndarray:
 
         # row loop
         for i in range(AX.shape[0]):
-            if i != p and (abs(AX[i, p]) > np.finfo(np.float32).eps):
+            if i != p and (not math.isclose(AX[i, p], 0)):
                 # row operation
                 multiplier = - AX[i, p]
                 

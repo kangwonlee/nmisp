@@ -1,3 +1,4 @@
+import math
 import pylab as py
 
 
@@ -46,16 +47,16 @@ def bisection(f, x_lower, x_upper, epsilon):
     """
 
     counter = 0
-    
+
     # 간격이 epsilon 보다 더 길다면 계속 반복
     # Iterate while the interval is longer than epsilon
-    while abs(x_upper - x_lower) > epsilon:
+    while math.isclose(x_upper, x_lower, abs_tol=epsilon):
         # 구간을 둘로 나누는 x 를 계산
         # Calculate x bisecting the interval
         x_new = (x_upper + x_lower) * 0.5
-        
+
         counter += 1
-        
+
         # x_new 와 x_upper 사이에서 f(x)의 부호가 바뀐다면
         # If f(x)'s sign changes between x_new and x_upper
         if 0 > (f(x_upper) * f(x_new)):
@@ -86,7 +87,7 @@ def bisection(f, x_lower, x_upper, epsilon):
             )
 
     print('counter =', counter)
-            
+
     return x_new
 
 
@@ -101,7 +102,7 @@ def newton_raphson(f, df_dx, x_initial, epsilon):
     epsilon : 희망하는 근의 정밀도 Desirable precision of the root
     """
     counter = 0
-    
+
     # 변수 x_i 를 초기화
     # Initialize variable x_i
     x_i = x_initial
@@ -112,7 +113,7 @@ def newton_raphson(f, df_dx, x_initial, epsilon):
         # x_i 지점에서의 접선의 기울기
         # Slope of the tangent at x_i
         slope = df_dx(x_i)
-        
+
         assert abs(slope) > epsilon
 
         # 접선과 x축의 교점
@@ -120,8 +121,8 @@ def newton_raphson(f, df_dx, x_initial, epsilon):
         x_i += - f(x_i) / slope
 
         counter += 1
-    
+
     print('counter =', counter)
-        
+
     return x_i
 
