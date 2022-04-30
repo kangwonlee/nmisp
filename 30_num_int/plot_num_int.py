@@ -1,14 +1,16 @@
+import functools
+import math
 import numpy as np
 import matplotlib.pyplot as plt
-import functools
 
 
 def assert_almost_equal(expected, result, relative_error=1e-3):
-    assert relative_error > abs(expected - result)/expected, (f"expected = {expected} result = {result}")
+    assert math.isclose(result, expected, rel_tol=relative_error), (f"expected = {expected} result = {result}")
 
 
 @functools.lru_cache(10)
 def radius_square_of_half_circle_area(area=1):
+
     result = 2 * area / np.pi
 
     assert_almost_equal(area, result*np.pi*0.5)
