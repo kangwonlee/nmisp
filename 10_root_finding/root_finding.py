@@ -50,7 +50,7 @@ def bisection(f, x_lower, x_upper, epsilon):
 
     # 간격이 epsilon 보다 더 길다면 계속 반복
     # Iterate while the interval is longer than epsilon
-    while math.isclose(x_upper, x_lower, abs_tol=epsilon):
+    while not math.isclose(x_upper, x_lower, abs_tol=epsilon):
         # 구간을 둘로 나누는 x 를 계산
         # Calculate x bisecting the interval
         x_new = (x_upper + x_lower) * 0.5
