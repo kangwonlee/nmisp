@@ -7,7 +7,16 @@
 이 소프트웨어는 다양한 수치 해법을 [`Python`](https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%B4%EC%8D%AC) 언어와 그 확장 기능인 `SciPy` 를 이용하여 설명하고자 함.<br>
 This software aims to describe various numerical methods in [`Python`](https://en.wikipedia.org/wiki/Python_%28programming_language%29) programming language and its extesion `SciPy`.
 
-## How to run on [Google Colab](https://colab.research.google.com)<br>[구글 코랩](https://colab.research.google.com)에서 읽는 법
+## How to Open in [Google Colab](https://colab.research.google.com)<br>[구글 코랩](https://colab.research.google.com)에서 읽는 법
+
+### Shortcut<br>지름길
+
+1. Open an `ipynb` file of [this repository](https://github.com/kangwonlee/nmisp)<br>이 [저장소](https://github.com/kangwonlee/nmisp)의 `ipynb` 파일을 엶
+1. If the `ipynb` file starts with a *cell for Google Colaboratory*, open a different one<br>해당 파일의 첫 셀이 *cell for Google Colaboratory* 이면, 다른 파일을 엶
+1. Click on ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)<br>![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg) 클릭
+1. Try `Run all` of `Runtime`<br>`런타임` 아래 `모두 실행` 시도
+
+### Longer travel<br>긴 방법
 
 1. Download `nmisp-main.zip` file from [github.com](https://github.com/kangwonlee/nmisp/archives/refs/heads/main.zip)<br>`nmisp-main.zip` 파일을 [github.com](https://github.com/kangwonlee/nmisp/archives/refs/heads/main.zip) 으로부터 받음
 1. Unzip to an appropriate folder<br>적절한 폴더에 해당 파일을 풂
@@ -25,7 +34,7 @@ This software aims to describe various numerical methods in [`Python`](https://e
 1. [Fork](https://github.com/kangwonlee/nmisp/fork) the repository<br>저장소의 [분기](https://github.com/kangwonlee/nmisp/fork) 사본을 만듦
 1. Double click on the ipynb file from the [Google Drive](https://drive.google.com)<br>[구글 드라이브](https://drive.google.com)에서 ipynb 파일을 더블클릭
 1. Choose `Save a copy in GitHub` under `File` menu<br>`파일` 메뉴 아래 `Github 에 사본 저장`
-1. Adjust permission<br>권한 조정
+1. Adjust permissions and/or retry if necessary<br>필요시 권한 조정 후 재시도
 
 ## 설치 항목<br>Software to install
 
