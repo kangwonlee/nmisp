@@ -20,6 +20,13 @@ This software aims to describe various numerical methods in [`Python`](https://e
 1. Open one of subfolders whose names start with numbers<br>이름이 숫자로 시작하는 하위 폴더 가운데 하나를 엶.
 1. Double click on one of `ipynb` files<br>`ipynb` 파일 가운데 하나를 더블 클릭
 
+## How to commit changes on [Google Colab](https://colab.research.google.com) to Github<br>[구글 코랩](https://colab.research.google.com)의 변경 사항을 Github 에 반영하는 법
+
+1. [Fork](https://github.com/kangwonlee/nmisp/fork) the repository<br>저장소의 [분기](https://github.com/kangwonlee/nmisp/fork) 사본을 만듦
+1. Double click on the ipynb file from the [Google Drive](https://drive.google.com)<br>[구글 드라이브](https://drive.google.com)에서 ipynb 파일을 더블클릭
+1. Choose `Save a copy in GitHub` under `File` menu<br>`파일` 메뉴 아래 `Github 에 사본 저장`
+1. Adjust permission<br>권한 조정
+
 ## 설치 항목<br>Software to install
 
 ### 깃 버전 관리 소프트웨어 : 명령행 실행 환경<br>Git Version Control Software : Commadline interface
