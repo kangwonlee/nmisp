@@ -112,7 +112,7 @@ def get_colab_link(full_path:str, github_id:str=None, repo:str=None) -> str:
             "https",
             "colab.research.google.com",
             '/'.join(
-                ["github", github_id, repo, "blob", "main"] + rel_path_list,
+                ["github", github_id, repo, "blob", "tutorial-draft"] + rel_path_list,
             ),
             None,
             None,
