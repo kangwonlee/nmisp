@@ -9,25 +9,9 @@ This software aims to describe various numerical methods in [`Python`](https://e
 
 ## How to Open in [Google Colab](https://colab.research.google.com)<br>[구글 코랩](https://colab.research.google.com)에서 읽는 법
 
-### Shortcut<br>지름길
-
 1. Open an `ipynb` file of [this repository](https://github.com/kangwonlee/nmisp)<br>이 [저장소](https://github.com/kangwonlee/nmisp)의 `ipynb` 파일을 엶
-1. If the `ipynb` file starts with a *cell for Google Colaboratory*, open a different one<br>해당 파일의 첫 셀이 *cell for Google Colaboratory* 이면, 다른 파일을 엶
 1. Click on ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)<br>![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg) 클릭
 1. Try `Run all` of `Runtime`<br>`런타임` 아래 `모두 실행` 시도
-
-### Longer travel<br>긴 방법
-
-1. Download `nmisp-main.zip` file from [github.com](https://github.com/kangwonlee/nmisp/archives/refs/heads/main.zip)<br>`nmisp-main.zip` 파일을 [github.com](https://github.com/kangwonlee/nmisp/archives/refs/heads/main.zip) 으로부터 받음
-1. Unzip to an appropriate folder<br>적절한 폴더에 해당 파일을 풂
-1. Open the unzipped folder<br>압축을 푼 폴더를 엶
-1. Rename `nmisp-main` folder inside to `nmisp`<br>폴더 아래 `nmisp-main` 폴더를 `nmisp` 로 이름 변경
-1. Login to [Google Drive](https://drive.google.com)<br>[구글 드라이브](https://drive.google.com)에 로그인
-1. Open `Colab Notebooks` folder. Make one if missing.<br>`Colab Notebooks` 폴더를 엶. 없으면 하나 만듦.
-1. Upload `nmisp` folder to `Colab Notebooks` folder<br>`nmisp` 폴더를 `Colab Notebooks` 폴더로 업로드
-1. Open `nmisp` folder under `Colab Notebooks`<br>`Colab Notebooks` 아래 `nmisp` 폴더를 엶
-1. Open one of subfolders whose names start with numbers<br>이름이 숫자로 시작하는 하위 폴더 가운데 하나를 엶.
-1. Double click on one of `ipynb` files<br>`ipynb` 파일 가운데 하나를 더블 클릭
 
 ## How to commit changes on [Google Colab](https://colab.research.google.com) to Github<br>[구글 코랩](https://colab.research.google.com)의 변경 사항을 Github 에 반영하는 법
 
