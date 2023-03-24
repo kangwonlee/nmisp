@@ -100,10 +100,13 @@ def get_rel_path(full_path:str) -> str:
     return os.path.relpath(full_path, get_proj_root())
 
 
-def get_colab_link(full_path:str, github_id:str=None, repo:str=None) -> str:
+def get_colab_link(full_path:str, github_id:str=None, repo:str=None, branch:str=None) -> str:
 
     if (github_id is None) or (repo is None):
         github_id, repo = get_github_username_repo(full_path)
+
+    if (branch is None):
+        branch = get_current_branch()
 
     rel_path = get_rel_path(full_path)
     rel_path_list = rel_path.split(os.sep)
@@ -112,7 +115,7 @@ def get_colab_link(full_path:str, github_id:str=None, repo:str=None) -> str:
             "https",
             "colab.research.google.com",
             '/'.join(
-                ["github", github_id, repo, "blob", "main"] + rel_path_list,
+                ["github", github_id, repo, "blob", branch] + rel_path_list,
             ),
             None,
             None,
@@ -120,6 +123,17 @@ def get_colab_link(full_path:str, github_id:str=None, repo:str=None) -> str:
         )
     )
     return result
+
+
+def get_current_branch() -> str:
+    """
+    ref :
+        https://stackoverflow.com/questions/6245570/how-to-get-the-current-branch-name-in-git
+    """
+    return subprocess.check_output(
+        ("git", "branch", "--show-current"),
+        encoding="utf8",
+    ).strip()
 
 
 def get_button_img_tag() -> str:
