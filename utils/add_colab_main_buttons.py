@@ -42,6 +42,17 @@ def proc_file(full_path:str):
         notebook.write(full_path)
 
 
+def remove_cell_id_from_nodes(cells, allowed_id:Tuple[str]=("view-in-github",)) -> None:
+    """
+    Remove all cell["metadata"]["id"]
+    """
+    for c in cells:
+        if "metadata" in c:
+            if "id" in c["metadata"]:
+                if "id" not in allowed_id:
+                    del c["metadata"]
+
+
 def get_github_username_repo(full_path:str) -> Tuple[str]:
     return get_github_username_repo_folder(
         os.path.dirname(full_path)
