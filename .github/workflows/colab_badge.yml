@@ -27,4 +27,4 @@ jobs:
       id: commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message : Add Github badges
+        commit_message : Add Github badges or remove ipynb `id`s
