@@ -20,6 +20,8 @@ def proc_file(full_path:str):
     notebook = nbf.NotebookFile(full_path)
     cells = list(notebook.gen_cells())
 
+    remove_cell_id_from_nodes(cells)
+
     first_cell = cells[0]
     union_cell = copy.deepcopy(first_cell)
     union_cell.update(get_colab_button_cell(full_path))
