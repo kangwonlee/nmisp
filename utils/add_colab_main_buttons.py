@@ -20,11 +20,11 @@ def proc_file(full_path:str):
     notebook = nbf.NotebookFile(full_path)
     cells = list(notebook.gen_cells())
 
+    b_write = remove_cell_id_from_nodes(cells)
+
     first_cell = cells[0]
     union_cell = copy.deepcopy(first_cell)
     union_cell.update(get_colab_button_cell(full_path))
-
-    b_write = False
 
     if first_cell == union_cell:
         # already has the correct button
@@ -40,6 +40,22 @@ def proc_file(full_path:str):
 
     if b_write:
         notebook.write(full_path)
+
+
+def remove_cell_id_from_nodes(cells, allowed_id:Tuple[str]=("view-in-github",)) -> bool:
+    """
+    Remove all cell["metadata"]["id"]
+    """
+    b_write = False
+
+    for c in cells:
+        if "metadata" in c:
+            if "id" in c["metadata"]:
+                if c["metadata"]["id"] not in allowed_id:
+                    del c["metadata"]["id"]
+                    b_write = True
+
+    return b_write
 
 
 def get_github_username_repo(full_path:str) -> Tuple[str]:
