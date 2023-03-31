@@ -51,8 +51,8 @@ def remove_cell_id_from_nodes(cells, allowed_id:Tuple[str]=("view-in-github",)) 
     for c in cells:
         if "metadata" in c:
             if "id" in c["metadata"]:
-                if "id" not in allowed_id:
-                    del c["metadata"]
+                if c["metadata"]["id"] not in allowed_id:
+                    del c["metadata"]["id"]
 
 
 def get_github_username_repo(full_path:str) -> Tuple[str]:
