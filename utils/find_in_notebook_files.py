@@ -87,6 +87,9 @@ class NotebookFile(object):
                     if c["metadata"]["id"] not in allowed_id:
                         del c["metadata"]["id"]
                         b_write = True
+            if "id" in c:
+                del c["id"]
+                b_write = True
 
         return b_write
 
