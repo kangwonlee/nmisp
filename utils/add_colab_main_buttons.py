@@ -2,11 +2,15 @@ import copy
 import functools
 import json
 import os
+import pathlib
 import subprocess
 import urllib.parse as up
+
 from typing import Dict, Tuple
 
+
 import bs4
+
 
 import recursively_convert_units as rsc
 import find_in_notebook_files as nbf
@@ -42,7 +46,8 @@ def proc_file(full_path:str):
     if b_write:
         notebook.write(full_path)
 
-    ipynb_json = json.loads(full_path.read_text())
+    ipynb_path = pathlib.Path(full_path)
+    ipynb_json = json.loads(ipynb_path.read_text())
     for cell in ipynb_json["cells"]:
         assert "id" not in cell
         assert "id" not in cell["metadata"]
