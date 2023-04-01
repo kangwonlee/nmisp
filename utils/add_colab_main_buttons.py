@@ -1,5 +1,6 @@
 import copy
 import functools
+import json
 import os
 import subprocess
 import urllib.parse as up
@@ -40,6 +41,11 @@ def proc_file(full_path:str):
 
     if b_write:
         notebook.write(full_path)
+
+    ipynb_json = json.loads(full_path.read_text())
+    for cell in ipynb_json["cells"]:
+        assert "id" not in cell
+        assert "id" not in cell["metadata"]
 
 
 def remove_cell_id_from_nodes(cells, allowed_id:Tuple[str]=("view-in-github",)) -> bool:
