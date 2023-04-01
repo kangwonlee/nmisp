@@ -33,9 +33,13 @@ to this = '''하중<br>Load'''
 
 import ast
 import configparser as configparser
+import json
 import os
+import pathlib
 import re
 import sys
+
+from typing import Tuple
 
 import nbformat
 
@@ -67,7 +71,33 @@ class NotebookFile(object):
         return nbformat.validate(self.nb_node)
 
     def write(self, new_file_full_path):
-        nbformat.write(self.nb_node, new_file_full_path)
+        output_path = pathlib.Path(new_file_full_path)
+        with output_path.open('w', encoding='utf-8') as f:
+            json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
+
+    def remove_cell_id_from_nodes(self, allowed_id:Tuple[str]=("view-in-github",)) -> bool:
+        """
+        Remove all cell["metadata"]["id"]
+        """
+        b_write = False
+
+        for c in self.nb_node["cells"]:
+            if "metadata" in c:
+                if "id" in c["metadata"]:
+                    if c["metadata"]["id"] not in allowed_id:
+                        del c["metadata"]["id"]
+                        b_write = True
+            if "id" in c:
+                del c["id"]
+                b_write = True
+
+        return b_write
+
+    def assert_has_not_id(self, allowed_id:Tuple[str]=("view-in-github",)):
+        for c in self.nb_node["cells"]:
+            assert "id" not in c, c
+            if "id" in c.get("metadata"):
+                assert c["metadata"]["id"] in allowed_id, c
 
 
 class FindOrReplaceNotebookFile(NotebookFile):

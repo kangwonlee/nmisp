@@ -6,7 +6,33 @@ on:
   push:
 
 jobs:
-  build:
+  badges:
+    name: Add Google Colab Badges
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 20
+    steps:
+    - name: checkout
+      id: checkout
+      uses: actions/checkout@v3
+
+    - name: setup environment
+      id: setup
+      run: python -m pip install bs4 jupyter lxml
+
+    - name: Add/Update badges
+      id: badges
+      run: python ./utils/add_colab_main_buttons.py
+
+    - name: Commit & push
+      id: commit
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message : Add Github badges or remove ipynb `id`s
+
+  test_ipynb:
+    needs: badges
     name: ${{ matrix.anaconda }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -25,3 +51,21 @@ jobs:
       env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: bash ./.github/workflows/run_test.sh
+
+  test_links:
+    needs: badges
+    name: Check links in ipynb
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - name: checkout
+      id: checkout
+      uses: actions/checkout@v3
+
+    - name: setup environment
+      id: setup
+      run: python -m pip install pytest requests jupyter
+
+    - name: check links
+      id: links
+      run: python -m pytest -k 'links' ./tests
