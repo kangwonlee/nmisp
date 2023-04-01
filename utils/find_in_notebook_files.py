@@ -39,6 +39,8 @@ import pathlib
 import re
 import sys
 
+from typing import Tuple
+
 import nbformat
 
 import recursively_convert_units as rcu
@@ -73,10 +75,11 @@ class NotebookFile(object):
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
-    def assert_has_not_id(self):
+    def assert_has_not_id(self, allowed_id:Tuple[str]=("view-in-github",)):
         for c in self.nb_node["cells"]:
-            assert "id" not in c
-            assert "id" not in c.get("metadata")
+            assert "id" not in c, c
+            if "id" in c.get("metadata"):
+                assert c["metadata"]["id"] in allowed_id, c
 
 
 class FindOrReplaceNotebookFile(NotebookFile):

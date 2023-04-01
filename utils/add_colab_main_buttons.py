@@ -31,6 +31,8 @@ def proc_file(full_path:str):
     union_cell = copy.deepcopy(first_cell)
     union_cell.update(get_colab_button_cell(full_path))
 
+    assert_id_not_in(ipynb_json["cells"])
+
     if first_cell == union_cell:
         # already has the correct button
         pass
@@ -40,6 +42,8 @@ def proc_file(full_path:str):
     else:
         b_write = True
         notebook.insert_cell(0, get_colab_button_cell(full_path))
+
+    notebook.assert_has_not_id()
 
     notebook.validate()
 
@@ -55,10 +59,11 @@ def proc_file(full_path:str):
     assert_id_not_in(ipynb_json["cells"])
 
 
-def assert_id_not_in(cells) -> bool:
+def assert_id_not_in(cells, allowed_id=("view-in-github",)) -> bool:
     for c in cells:
         assert "id" not in c
-        assert "id" not in c.get("metadata")
+        if "id" in c.get("metadata"):
+            assert c["metadata"]["id"] in allowed_id
 
 
 def remove_cell_id_from_nodes(cells, allowed_id:Tuple[str]=("view-in-github",)) -> bool:
