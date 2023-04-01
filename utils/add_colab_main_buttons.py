@@ -41,11 +41,9 @@ def proc_file(full_path:str):
         b_write = True
         notebook.insert_cell(0, get_colab_button_cell(full_path))
 
-    b_write |= notebook.remove_cell_id_from_nodes()
-
-    notebook.assert_has_not_id()
-
     notebook.validate()
+
+    b_write |= notebook.remove_cell_id_from_nodes()
 
     notebook.assert_has_not_id()
 
