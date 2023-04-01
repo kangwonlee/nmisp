@@ -73,6 +73,11 @@ class NotebookFile(object):
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
+    def assert_has_not_id(self):
+        for c in self.nb_node["cells"]:
+            assert "id" not in c
+            assert "id" not in c.get("metadata")
+
 
 class FindOrReplaceNotebookFile(NotebookFile):
     def __init__(self, ipynb_full_path, replace_this, to_this, b_verbose=False, b_replace=False, b_arm=False):

@@ -43,15 +43,22 @@ def proc_file(full_path:str):
 
     notebook.validate()
 
+    notebook.assert_has_not_id()
+
     ipynb_path = pathlib.Path(full_path)
 
     if b_write:
         notebook.write(full_path)
 
     ipynb_json = json.loads(ipynb_path.read_text())
-    for cell in ipynb_json["cells"]:
-        assert "id" not in cell
-        assert "id" not in cell["metadata"]
+
+    assert_id_not_in(ipynb_json["cells"])
+
+
+def assert_id_not_in(cells) -> bool:
+    for c in cells:
+        assert "id" not in c
+        assert "id" not in c.get("metadata")
 
 
 def remove_cell_id_from_nodes(cells, allowed_id:Tuple[str]=("view-in-github",)) -> bool:
