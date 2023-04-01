@@ -75,6 +75,21 @@ class NotebookFile(object):
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
+    def remove_cell_id_from_nodes(self, allowed_id:Tuple[str]=("view-in-github",)) -> bool:
+        """
+        Remove all cell["metadata"]["id"]
+        """
+        b_write = False
+
+        for c in self.nb_node["cells"]:
+            if "metadata" in c:
+                if "id" in c["metadata"]:
+                    if c["metadata"]["id"] not in allowed_id:
+                        del c["metadata"]["id"]
+                        b_write = True
+
+        return b_write
+
     def assert_has_not_id(self, allowed_id:Tuple[str]=("view-in-github",)):
         for c in self.nb_node["cells"]:
             assert "id" not in c, c
