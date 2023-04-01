@@ -33,7 +33,9 @@ to this = '''하중<br>Load'''
 
 import ast
 import configparser as configparser
+import json
 import os
+import pathlib
 import re
 import sys
 
@@ -67,7 +69,9 @@ class NotebookFile(object):
         return nbformat.validate(self.nb_node)
 
     def write(self, new_file_full_path):
-        nbformat.write(self.nb_node, new_file_full_path)
+        output_path = pathlib.Path(new_file_full_path)
+        with output_path.open('w', encoding='utf-8') as f:
+            json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
 
 class FindOrReplaceNotebookFile(NotebookFile):

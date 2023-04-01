@@ -43,10 +43,11 @@ def proc_file(full_path:str):
 
     notebook.validate()
 
+    ipynb_path = pathlib.Path(full_path)
+
     if b_write:
         notebook.write(full_path)
 
-    ipynb_path = pathlib.Path(full_path)
     ipynb_json = json.loads(ipynb_path.read_text())
     for cell in ipynb_json["cells"]:
         assert "id" not in cell
