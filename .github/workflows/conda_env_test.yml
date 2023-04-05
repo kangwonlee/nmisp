@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    timeout-minutes: 20
+    timeout-minutes: 5
     steps:
     - name: checkout
       id: checkout
@@ -56,7 +56,7 @@ jobs:
     needs: badges
     name: Check links in ipynb
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 5
     steps:
     - name: checkout
       id: checkout
