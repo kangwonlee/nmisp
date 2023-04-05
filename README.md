@@ -16,7 +16,9 @@ This software aims to describe various numerical methods in [`Python`](https://e
 ## How to commit changes on [Google Colab](https://colab.research.google.com) to Github<br>[구글 코랩](https://colab.research.google.com)의 변경 사항을 Github 에 반영하는 법
 
 1. [Fork](https://github.com/kangwonlee/nmisp/fork) the repository<br>저장소의 [분기](https://github.com/kangwonlee/nmisp/fork) 사본을 만듦
-1. Double click on the ipynb file from the [Google Drive](https://drive.google.com)<br>[구글 드라이브](https://drive.google.com)에서 ipynb 파일을 더블클릭
+1. Open the ipynb file from the forked repository<br>분기된 저장소에서 ipynb 파일을 엶
+1. Click on ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)<br>![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg) 클릭
+1. Make changes<br>파일을 수정
 1. Choose `Save a copy in GitHub` under `File` menu<br>`파일` 메뉴 아래 `Github 에 사본 저장`
 1. Adjust permissions and/or retry if necessary<br>필요시 권한 조정 후 재시도
 
