@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '45 01 30 * *'
   push:
+  fork:
 
 jobs:
   badges:
