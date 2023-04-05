@@ -69,7 +69,7 @@ def main():
         )
 
         subprocess.check_call(
-            ["git", "push"],
+            ["git", "push", "--set-upstream", "origin", current_branch],
             cwd=clone_dest,
         )
 
