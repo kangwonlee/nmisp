@@ -36,7 +36,7 @@ def main():
 
         assert clone_dest.exists()
 
-        branch_business(clone_dest, current_branch)
+        b_new_branch = branch_business(clone_dest, current_branch)
 
         # Recursively remove all .py files in the cloned repository
         for path in clone_dest.rglob("*.py"):
@@ -68,20 +68,34 @@ def main():
             cwd=clone_dest,
         )
 
-        subprocess.check_call(
-            ["git", "push", "--set-upstream", "origin", current_branch],
+        push_command = ["git", "push"]
+
+        if b_new_branch:
+            push_command += ["--set-upstream", "origin", current_branch]
+
+        completed_process = subprocess.run(
+            push_command,
             cwd=clone_dest,
+            encoding="utf-8",
+            capture_output=True,
         )
+
+        if completed_process.returncode != 0:
+            print(completed_process.stdout)
+            print(completed_process.stderr)
+            raise RuntimeError("Failed to push the changes to the nmisp_py repository")
 
     # Remove the temporary directory
 
 
-def branch_business(clone_dest, current_branch:str):
+def branch_business(clone_dest, current_branch:str) -> bool:
     """
     Check if the current branch exists in the cloned repository.
     If it exists, checkout that branch.
     Otherwise, create a new branch.
     """
+
+    b_new_branch = False
 
     # get the name of the branch of the cloned repository
     current_cloned_branch = subprocess.check_output(
@@ -113,6 +127,9 @@ def branch_business(clone_dest, current_branch:str):
                 ["git", "switch", "-c", current_branch],
                 cwd=clone_dest,
             )
+            b_new_branch = True
+
+    return b_new_branch
 
 
 def get_repo_path() -> pathlib.Path:
