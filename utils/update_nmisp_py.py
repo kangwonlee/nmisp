@@ -47,6 +47,8 @@ def main():
             if not (
                 ("tests" in path.relative_to(repo_path).parts[0:2])
                 or
+                ("build_util" in path.relative_to(repo_path).parts[0:2])
+                or
                 ("utils" == path.relative_to(repo_path).parts[0])
             ):
                 print(path.relative_to(repo_path))
