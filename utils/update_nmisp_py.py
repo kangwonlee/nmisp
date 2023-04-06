@@ -44,7 +44,8 @@ def main():
 
         # Recursively copy all .py files into the nmisp_py repository
         for path in repo_path.rglob("*.py"):
-            if path.relative_to(clone_dest).parts[0] not in ("tests", "utils"):
+            if path.relative_to(repo_path).parts[0] not in ("tests", "utils"):
+                print(path.relative_to(repo_path))
                 shutil.copy(path, clone_dest / path.name)
 
         # Commit and push the changes to the nmisp_py repository
