@@ -9,13 +9,13 @@ import pylab as py
 nr.seed()
 
 
-def plot(f, x_start, x_end, x_interval=None, epsilon=0.15):
+def plot(f, x_start:float, x_end:float, x_interval:float=None, epsilon:float=0.15, f_label:str='$y=x^2-10$') -> py.ndarray:
     if x_interval is None:
         x_interval = x_end - x_start
 
     x = py.arange(x_start, x_end+0.1*x_interval, x_interval)
     # y = x^2
-    py.plot(x, f(x), 'ko', label='$y=x^2-10$')
+    py.plot(x, f(x), 'ko', label=f_label)
     # y = 0
     py.plot(x, py.zeros_like(x), 'ro', label='$y=0$')
 
