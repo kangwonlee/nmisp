@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    timeout-minutes: 20
+    timeout-minutes: 5
     steps:
     - name: checkout
       id: checkout
@@ -57,7 +57,7 @@ jobs:
     needs: badges
     name: Check links in ipynb
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 5
     steps:
     - name: checkout
       id: checkout
@@ -69,4 +69,20 @@ jobs:
 
     - name: check links
       id: links
-      run: python -m pytest -k 'links' ./tests
+      run: python -m pytest -k 'links or update_nmisp_py' ./tests
+
+  update_nmisp_py:
+    needs: [test_ipynb, test_links]
+    name: Update nmisp_py
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - name: checkout
+      id: checkout
+      uses: actions/checkout@v3
+
+    - name: run nmisp_py updater
+      id: updater
+      env:
+        LOGIN_INFO: ${{ secrets.LOGIN_INFO }}
+      run: python ./utils/update_nmisp_py.py
