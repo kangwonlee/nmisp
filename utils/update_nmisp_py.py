@@ -62,7 +62,7 @@ def main():
             encoding="utf-8",
         ).strip()
         
-        b_change = "nothing to commit, working tree clean" not in status_out.splitlines()[-1]
+        b_change = "nothing to commit, working tree clean" not in status_output.splitlines()[-1]
         
         if b_change:
 
