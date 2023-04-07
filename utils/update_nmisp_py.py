@@ -54,11 +54,20 @@ def main():
                 print(path.relative_to(repo_path))
                 shutil.copy(path, clone_dest / path.name)
 
+        # Is there any change
+        # https://stackoverflow.com/questions/31523712/git-status-in-brief-or-short-format-like-ls-1
+        status_output = subprocess.check_output(
+            ["git", "status", "--porcelain"],
+            cwd=clone_dest,
+            encoding="utf-8",
+        )
+
         # Commit and push the changes to the nmisp_py repository
         subprocess.check_call(
             ["git", "config", "user.name", "github-actions"],
             cwd=clone_dest,
         )
+
         subprocess.check_call(
             ["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"],
             cwd=clone_dest,
@@ -70,27 +79,30 @@ def main():
             cwd=clone_dest,
         )
 
-        subprocess.check_call(
-            ["git", "commit", "-m", "Update nmisp_py"],
-            cwd=clone_dest,
-        )
+        try:
+            subprocess.check_call(
+                ["git", "commit", "-m", "Update nmisp_py"],
+                cwd=clone_dest,
+            )
+        except :
+            print(status_output)
+        else:
+            push_command = ["git", "push"]
 
-        push_command = ["git", "push"]
+            if b_new_branch:
+                push_command += ["--set-upstream", "origin", current_branch]
 
-        if b_new_branch:
-            push_command += ["--set-upstream", "origin", current_branch]
+            completed_process = subprocess.run(
+                push_command,
+                cwd=clone_dest,
+                encoding="utf-8",
+                capture_output=True,
+            )
 
-        completed_process = subprocess.run(
-            push_command,
-            cwd=clone_dest,
-            encoding="utf-8",
-            capture_output=True,
-        )
-
-        if completed_process.returncode != 0:
-            print(completed_process.stdout)
-            print(completed_process.stderr)
-            raise RuntimeError("Failed to push the changes to the nmisp_py repository")
+            if completed_process.returncode != 0:
+                print(completed_process.stdout)
+                print(completed_process.stderr)
+                raise RuntimeError("Failed to push the changes to the nmisp_py repository")
 
     # Remove the temporary directory
 
