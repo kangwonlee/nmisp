@@ -60,37 +60,39 @@ def main():
             ["git", "status", "--porcelain"],
             cwd=clone_dest,
             encoding="utf-8",
-        )
+        ).strip()
 
-        # Commit and push the changes to the nmisp_py repository
-        subprocess.check_call(
-            ["git", "config", "user.name", "github-actions"],
-            cwd=clone_dest,
-        )
+        b_change = len(status_output)
 
-        subprocess.check_call(
-            ["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"],
-            cwd=clone_dest,
-        )
+        if b_change:
 
-        # Commit and push the changes to the nmisp_py repository
-        subprocess.check_call(
-            ["git", "add", "."],
-            cwd=clone_dest,
-        )
+            # Commit and push the changes to the nmisp_py repository
+            subprocess.check_call(
+                ["git", "config", "user.name", "github-actions"],
+                cwd=clone_dest,
+            )
 
-        try:
+            subprocess.check_call(
+                ["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"],
+                cwd=clone_dest,
+            )
+
+            # Commit and push the changes to the nmisp_py repository
+            subprocess.check_call(
+                ["git", "add", "."],
+                cwd=clone_dest,
+            )
+
             subprocess.check_call(
                 ["git", "commit", "-m", "Update nmisp_py"],
                 cwd=clone_dest,
             )
-        except :
-            print(status_output)
-        else:
+
             push_command = ["git", "push"]
 
             if b_new_branch:
                 push_command += ["--set-upstream", "origin", current_branch]
+            # end if b_new_branch
 
             completed_process = subprocess.run(
                 push_command,
@@ -103,7 +105,8 @@ def main():
                 print(completed_process.stdout)
                 print(completed_process.stderr)
                 raise RuntimeError("Failed to push the changes to the nmisp_py repository")
-
+            # end if completed_process.returncode != 0:
+        # end if b_change:
     # Remove the temporary directory
 
 
