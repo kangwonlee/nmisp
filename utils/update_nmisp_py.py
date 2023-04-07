@@ -61,9 +61,9 @@ def main():
             cwd=clone_dest,
             encoding="utf-8",
         ).strip()
-        
-        b_change = "nothing to commit, working tree clean" not in status_output.splitlines()[-1]
-        
+
+        b_change = len(status_output)
+
         if b_change:
 
             # Commit and push the changes to the nmisp_py repository
