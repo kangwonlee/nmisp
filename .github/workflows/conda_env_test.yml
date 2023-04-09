@@ -32,27 +32,6 @@ jobs:
       with:
         commit_message : Add Github badges or remove ipynb `id`s
 
-  test_ipynb:
-    needs: badges
-    name: ${{ matrix.anaconda }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
-        anaconda: [2021.04, nightly]
-      fail-fast: false
-    timeout-minutes: 30
-    steps:
-    - uses: actions/checkout@v1
-    - name: build environment
-      env:
-        CONDA_PYTHON: ${{ matrix.anaconda }}
-      run: bash ./.github/workflows/build_env.sh
-    - name: pytest
-      env:
-        TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: bash ./.github/workflows/run_test.sh
-
   test_links_utils:
     needs: badges
     name: Check links in ipynb
@@ -71,8 +50,31 @@ jobs:
       id: links
       run: python -m pytest ./tests/test_check_links_in_ipynb.py ./utils/tests/
 
+  test_ipynb:
+    needs: test_links_utils
+    name: ${{ matrix.anaconda }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        anaconda: [2021.04, nightly]
+      fail-fast: false
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: build environment
+      env:
+        CONDA_PYTHON: ${{ matrix.anaconda }}
+      run: bash ./.github/workflows/build_env.sh
+
+    - name: pytest
+      env:
+        TEST_IPYNB_IGNORE_FOLDER: tutorial
+      run: bash ./.github/workflows/run_test.sh
+
   update_nmisp_py:
-    needs: [test_ipynb, test_links_utils]
+    needs: test_ipynb
     name: Update nmisp_py
     runs-on: ubuntu-latest
     timeout-minutes: 5
