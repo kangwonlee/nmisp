@@ -7,9 +7,9 @@ import nbformat
 
 
 acb_folder = pathlib.Path(__file__).parent.parent.absolute()
-assert acb_folder.exists()
+assert acb_folder.exists(), acb_folder
 assert acb_folder.is_dir()
-assert (acb_folder / "add_colab_main_buttons.py").exists()
+assert (acb_folder / "add_colab_main_buttons.py").exists(), acb_folder
 
 
 sys.path.insert(0,
@@ -25,20 +25,20 @@ class TestAddColabMainButtons(unittest.TestCase):
         self.without_button_filename = "test_add_colab_main_buttons_without_button.ipynb"
 
         self.without_button_folder = pathlib.Path(__file__).parent.absolute()
-        assert self.without_button_folder.exists()
+        assert self.without_button_folder.exists(), self.without_button_folder
         assert self.without_button_folder.is_dir()
 
         self.without_button_full_path = self.without_button_folder / self.without_button_filename
-        assert self.without_button_full_path.exists()
+        assert self.without_button_full_path.exists(), self.without_button_full_path
         assert self.without_button_full_path.is_file()
 
         self.with_button_filename = "test_add_colab_main_buttons_with_button.ipynb"
         self.with_button_folder = pathlib.Path(__file__).parent.absolute()
-        assert self.with_button_folder.exists()
+        assert self.with_button_folder.exists(), self.with_button_folder
         assert self.with_button_folder.is_dir()
 
         self.with_button_full_path = self.with_button_folder / self.with_button_filename
-        assert self.with_button_full_path.exists()
+        assert self.with_button_full_path.exists(), self.with_button_full_path
         assert self.with_button_full_path.is_file()
 
         self.button_cell = nbformat.read(self.with_button_full_path, nbformat.NO_CONVERT)["cells"][0]
@@ -68,11 +68,11 @@ class TestAddColabMainButtons(unittest.TestCase):
 
     def test_get_proj_root(self):
         result = acb.get_proj_root()
-        assert result.exists()
+        assert result.exists(), result
         assert result.is_dir()
 
-        assert (result/".gitignore").exists()
-        assert (result/"Ch02_Strain").exists() or (result/"00_introduction").exists()
+        assert (result/".gitignore").exists(), result
+        assert (result/"Ch02_Strain").exists() or (result/"00_introduction").exists(), result
 
     def test_get_rel_path(self):
         result = acb.get_rel_path(self.with_button_full_path)

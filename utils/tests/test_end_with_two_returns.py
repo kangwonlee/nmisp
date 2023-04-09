@@ -106,11 +106,11 @@ class TestWritingFile(unittest.TestCase):
     def setUp(self):
         self.test_file_path = pathlib.Path(__file__)
         self.test_folder_path = self.test_file_path.parent.absolute()
-        assert self.test_folder_path.exists()
+        assert self.test_folder_path.exists(), self.test_folder_path
         assert self.test_folder_path.is_dir()
 
         self.input_file_path = self.test_folder_path / 'sample.ipynb'
-        assert self.input_file_path.exists()
+        assert self.input_file_path.exists(), self.input_file_path
         assert self.input_file_path.is_file()
 
     @staticmethod

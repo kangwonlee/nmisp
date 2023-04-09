@@ -6,14 +6,14 @@ import nb_file_util as fu
 import ipynb_remove_output as rm
 
 utils_tests_folder_path = pathlib.Path(__file__).parent.absolute()
-assert utils_tests_folder_path.exists()
+assert utils_tests_folder_path.exists(), utils_tests_folder_path
 assert utils_tests_folder_path.is_dir()
 
 
 class TestRemoveOutput(unittest.TestCase):
     def setUp(self):
         self.original_file_name = utils_tests_folder_path / 'sample_with_output.ipynb'
-        assert self.original_file_name.exists()
+        assert self.original_file_name.exists(), self.original_file_name
 
         self.del_this_later = utils_tests_folder_path / 'del_this.ipynb'
 

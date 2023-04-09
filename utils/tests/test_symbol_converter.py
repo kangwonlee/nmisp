@@ -1,4 +1,4 @@
-import os
+import pathlib
 import unittest
 
 import nb_file_util as fu
@@ -7,7 +7,10 @@ import symbol_converter as sc
 
 class TestSymbolLister(unittest.TestCase):
     def setUp(self):
-        self.input_file_name = os.path.join('tests', 'sample.ipynb')
+
+        self.input_file_name = pathlib.Path(__file__).parent.absolute() / 'sample.ipynb'
+        assert self.input_file_name.exists(), self.input_file_name
+
         self.file_processor = fu.FileProcessor(self.input_file_name)
 
         # class under test
@@ -60,7 +63,9 @@ class TestSymbolLister(unittest.TestCase):
 
 class MyLineConverterTesterBase(unittest.TestCase):
     def setUp(self):
-        self.input_file_name = os.path.join('tests', 'sample.ipynb')
+
+        self.input_file_name = pathlib.Path(__file__).parent.absolute() / 'sample.ipynb'
+        assert self.input_file_name.exists(), self.input_file_name
 
         # class under test
         self.cp = sc.SymbolConverter()

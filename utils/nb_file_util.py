@@ -1,22 +1,19 @@
+import functools
 import itertools
 import multiprocessing as mp
-import os
+import pathlib
 import subprocess
-from typing import Tuple
-
 
 import nbformat
 from nbformat.v4.nbbase import new_code_cell
 
-
 class FileProcessor(object):
-
     """
     Interface to jupyter notebook file
     """
 
     def __init__(self, nb_filename, cell_processor=None):
-        self.nb_filename = nb_filename
+        self.nb_filename = pathlib.Path(nb_filename)
         self.nb_node = None
         if cell_processor is None:
             cell_processor = CellProcessorBase()
@@ -24,14 +21,12 @@ class FileProcessor(object):
 
     def read_file(self, nb_filename=None):
         nb_filename = self.use_default_filename_if_missing(nb_filename)
-        assert os.path.exists(nb_filename)
+        assert nb_filename.exists(), nb_filename
 
-        with open(nb_filename, 'rb') as nb_file:
-            txt = nb_file.read()
-
-        nb_node = nbformat.reads(txt.decode(), nbformat.NO_CONVERT)
-
-        return nb_node
+        return nbformat.reads(
+            nb_filename.read_text(),
+            nbformat.NO_CONVERT
+        )
 
     def use_default_filename_if_missing(self, nb_filename):
         if nb_filename is None:
@@ -162,35 +157,34 @@ class CellProcessorBase(object):
         raise NotImplementedError()
 
 
-def get_upper_folder() -> str:
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+@functools.lru_cache(maxsize=1)
+def get_upper_folder() -> pathlib.Path:
+    proj_folder = pathlib.Path(__file__).parent.parent.absolute()
+    assert proj_folder.is_dir(), proj_folder
+    assert (proj_folder / ".gitignore").exists(), proj_folder
+    return proj_folder
 
 
-def one_level_ipynb_path_file(path:str=get_upper_folder()) -> Tuple[str]:
+def one_level_ipynb(proj_path:pathlib.Path=get_upper_folder()) -> pathlib.Path:
     """
     generator of full paths to ipynb files one level under the given folder
     """
-    for item in os.listdir(path):
-        if os.path.isdir(item) and (not item.startswith('.')):
-            root = os.path.join(path, item)
-            files_in_root = filter(lambda x: os.path.isfile(os.path.join(root, x)), os.listdir(root))
-            for filename in files_in_root:
-                if os.path.splitext(filename)[-1].lower().endswith("ipynb"):
-                    yield root, filename
+    proj_path = pathlib.Path(proj_path).absolute()
+    assert proj_path.is_dir(), proj_path
 
-
-def one_level_ipynb(path:str=get_upper_folder()) -> str:
-    """
-    generator of full paths to ipynb files one level under the given folder
-    """
-    for root, filename in one_level_ipynb_path_file(path):
-        yield os.path.join(root, filename)
+    for item in proj_path.iterdir():
+        if item.is_dir() and (not item.name.startswith('.')):
+            chapter_dir = item.absolute()
+            for chapter_item in chapter_dir.iterdir():
+                if chapter_item.is_file() and ("ipynb" == chapter_item.suffix.lower()):
+                    yield chapter_item
 
 
 def read_nodes_from_ipynb(full_path_ipynb:str) -> nbformat.NotebookNode:
-    assert os.path.exists(full_path_ipynb), f"Unable to find {full_path_ipynb}"
+    full_path_ipynb = pathlib.Path(full_path_ipynb).absolute()
+    assert full_path_ipynb.exists(), full_path_ipynb
 
-    with open(full_path_ipynb, 'rb') as nb_file:
+    with full_path_ipynb.open('rb') as nb_file:
         nb_node = nbformat.read(nb_file, nbformat.NO_CONVERT)
 
     return nb_node

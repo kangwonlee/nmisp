@@ -4,12 +4,12 @@ import subprocess
 import sys
 
 utils_tests_folder_path = pathlib.Path(__file__).parent.absolute()
-assert utils_tests_folder_path.exists()
+assert utils_tests_folder_path.exists(), utils_tests_folder_path
 assert utils_tests_folder_path.is_dir()
 
 utils_folder_path = utils_tests_folder_path.parent
 assert utils_folder_path.is_dir()
-assert (utils_folder_path / "update_nmisp_py.py").exists()
+assert (utils_folder_path / "update_nmisp_py.py").exists(), utils_folder_path
 
 sys.path.insert(
     0,
@@ -37,7 +37,7 @@ def cloned_repo(tmp_path, org_name, repo_name):
     )
     result = tmp_path / repo_name
 
-    assert result.exists()
+    assert result.exists(), result
     assert result.is_dir()
 
     return result

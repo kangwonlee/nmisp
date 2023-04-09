@@ -117,7 +117,7 @@ def has_button_img(cell:Dict) -> bool:
 @functools.lru_cache()
 def get_proj_root() -> pathlib.Path:
     result = pathlib.Path(__file__).parent.parent.absolute()
-    assert result.exists()
+    assert result.exists(), result
     assert result.is_dir()
     assert (result / ".gitignore").exists(), (result, result.glob("*"))
     return result
