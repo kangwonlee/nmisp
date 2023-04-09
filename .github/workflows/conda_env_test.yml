@@ -57,7 +57,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
-        anaconda: [2021.04, nightly]
+        anaconda: ["2021.11", nightly]
       fail-fast: false
     timeout-minutes: 30
     steps:
