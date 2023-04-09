@@ -3,17 +3,17 @@ import pytest
 import subprocess
 import sys
 
-test_folder_path = pathlib.Path(__file__).parent.absolute()
-assert test_folder_path.exists()
-assert test_folder_path.is_dir()
+utils_tests_folder_path = pathlib.Path(__file__).parent.absolute()
+assert utils_tests_folder_path.exists()
+assert utils_tests_folder_path.is_dir()
 
-util_folder_path = test_folder_path.parent / "utils"
-assert util_folder_path.exists()
-assert util_folder_path.is_dir()
+utils_folder_path = utils_tests_folder_path.parent
+assert utils_folder_path.is_dir()
+assert (utils_folder_path / "update_nmisp_py.py").exists()
 
 sys.path.insert(
     0,
-    str(util_folder_path),
+    str(utils_folder_path),
 )
 
 import update_nmisp_py as unp

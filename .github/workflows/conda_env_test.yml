@@ -69,7 +69,7 @@ jobs:
 
     - name: check links
       id: links
-      run: python -m pytest -k 'links or update_nmisp_py' ./tests
+      run: python -m pytest ./tests/test_check_links_in_ipynb.py ./utils/tests/
 
   update_nmisp_py:
     needs: [test_ipynb, test_links]
