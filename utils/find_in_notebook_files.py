@@ -77,6 +77,9 @@ class NotebookFile(object):
 
     def write(self, new_file_full_path):
         output_path = pathlib.Path(new_file_full_path)
+
+        self.splitline_src()
+
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 

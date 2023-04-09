@@ -86,3 +86,27 @@ def test_splitline_src(notebook_file__src_str, notebook_cells_src_splitlines):
     nb_list = notebook_cells_src_splitlines
     assert nb.nb_node["cells"][0]["source"] == nb_list["cells"][0]["source"]
     assert nb.nb_node["cells"][1]["source"] == nb_list["cells"][1]["source"]
+
+
+def test_write(notebook_file__src_str, notebook_cells_src_splitlines):
+    nb = notebook_file__src_str
+    assert isinstance(nb.nb_node["cells"][0]["source"], str)
+    assert isinstance(nb.nb_node["cells"][1]["source"], str)
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_dir_path = pathlib.Path(tmpdir)
+
+        new_ipynb_path = tmp_dir_path / "new.ipynb"
+
+        # function under test
+        nb.write(new_ipynb_path)
+
+        with new_ipynb_path.open("rt") as f:
+            nb_new = json.load(f)
+
+        assert isinstance(nb_new["cells"][0]["source"], list)
+        assert isinstance(nb_new["cells"][1]["source"], list)
+
+        nb_list = notebook_cells_src_splitlines
+        assert nb.nb_node["cells"][0]["source"] == nb_list["cells"][0]["source"]
+        assert nb.nb_node["cells"][1]["source"] == nb_list["cells"][1]["source"]
