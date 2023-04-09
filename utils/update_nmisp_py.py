@@ -67,15 +67,17 @@ def main():
         if b_change:
 
             # Commit and push the changes to the nmisp_py repository
-            subprocess.check_call(
-                ["git", "config", "user.name", "github-actions"],
-                cwd=clone_dest,
-            )
+            if not subprocess.check_output(("git", "config", "user.name")).strip():
+                subprocess.check_call(
+                    ["git", "config", "user.name", "github-actions"],
+                    cwd=clone_dest,
+                )
 
-            subprocess.check_call(
-                ["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"],
-                cwd=clone_dest,
-            )
+            if not subprocess.check_output(("git", "config", "user.email")).strip():
+                subprocess.check_call(
+                    ["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"],
+                    cwd=clone_dest,
+                )
 
             # Commit and push the changes to the nmisp_py repository
             subprocess.check_call(
