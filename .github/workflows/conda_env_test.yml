@@ -53,7 +53,7 @@ jobs:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: bash ./.github/workflows/run_test.sh
 
-  test_links:
+  test_links_utils:
     needs: badges
     name: Check links in ipynb
     runs-on: ubuntu-latest
@@ -65,14 +65,14 @@ jobs:
 
     - name: setup environment
       id: setup
-      run: python -m pip install pytest requests jupyter
+      run: python -m pip install pytest requests jupyter sympy lxml
 
     - name: check links
       id: links
       run: python -m pytest ./tests/test_check_links_in_ipynb.py ./utils/tests/
 
   update_nmisp_py:
-    needs: [test_ipynb, test_links]
+    needs: [test_ipynb, test_links_utils]
     name: Update nmisp_py
     runs-on: ubuntu-latest
     timeout-minutes: 5
