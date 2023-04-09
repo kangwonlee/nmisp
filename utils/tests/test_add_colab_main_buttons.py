@@ -1,7 +1,7 @@
 import pathlib
 import sys
 import unittest
-
+import urllib.parse as up
 
 import nbformat
 
@@ -11,9 +11,11 @@ assert acb_folder.exists()
 assert acb_folder.is_dir()
 assert (acb_folder / "add_colab_main_buttons.py").exists()
 
+
 sys.path.insert(0,
     str(acb_folder)
 )
+
 
 import add_colab_main_buttons as acb
 
@@ -81,10 +83,16 @@ class TestAddColabMainButtons(unittest.TestCase):
 
     def test_get_colab_link(self):
         result = acb.get_colab_link(self.with_button_full_path)
-        self.assertIn(
-            result,
-            self.button_cell["source"]
-        )
+
+        parsed = up.urlparse(result)
+        assert parsed.scheme == "https"
+        assert parsed.netloc == "colab.research.google.com"
+
+        path_parts = tuple(parsed.path.split("/"))
+
+        assert path_parts[0] == ""
+        assert path_parts[1] == "github"
+        assert path_parts[-1] == self.with_button_filename
 
     def test_get_colab_button_cell(self):
         result = acb.get_colab_button_cell(self.with_button_full_path)
