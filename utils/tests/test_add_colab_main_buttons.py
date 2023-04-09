@@ -1,4 +1,4 @@
-import os
+import pathlib
 import sys
 import unittest
 
@@ -6,14 +6,14 @@ import unittest
 import nbformat
 
 
-sys.path.insert(0,
-    os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__), os.pardir
-        )
-    )
-)
+acb_folder = pathlib.Path(__file__).parent.parent.absolute()
+assert acb_folder.exists()
+assert acb_folder.is_dir()
+assert (acb_folder / "add_colab_main_buttons.py").exists()
 
+sys.path.insert(0,
+    str(acb_folder)
+)
 
 import add_colab_main_buttons as acb
 
@@ -21,18 +21,26 @@ import add_colab_main_buttons as acb
 class TestAddColabMainButtons(unittest.TestCase):
     def setUp(self) -> None:
         self.without_button_filename = "test_add_colab_main_buttons_without_button.ipynb"
-        self.without_button_folder = os.path.abspath(os.path.dirname(__file__))
-        self.without_button_full_path = os.path.join(self.without_button_folder, self.without_button_filename)
+
+        self.without_button_folder = pathlib.Path(__file__).parent.absolute()
+        assert self.without_button_folder.exists()
+        assert self.without_button_folder.is_dir()
+
+        self.without_button_full_path = self.without_button_folder / self.without_button_filename
+        assert self.without_button_full_path.exists()
+        assert self.without_button_full_path.is_file()
 
         self.with_button_filename = "test_add_colab_main_buttons_with_button.ipynb"
-        self.with_button_folder = os.path.abspath(os.path.dirname(__file__))
-        self.with_button_full_path = os.path.join(self.with_button_folder, self.with_button_filename)
+        self.with_button_folder = pathlib.Path(__file__).parent.absolute()
+        assert self.with_button_folder.exists()
+        assert self.with_button_folder.is_dir()
+
+        self.with_button_full_path = self.with_button_folder / self.with_button_filename
+        assert self.with_button_full_path.exists()
+        assert self.with_button_full_path.is_file()
 
         self.button_cell = nbformat.read(self.with_button_full_path, nbformat.NO_CONVERT)["cells"][0]
-
         self.second_code_cell = nbformat.read(self.without_button_full_path, nbformat.NO_CONVERT)["cells"][-1]
-
-        return super().setUp()
 
     def test__self_button_cell__markdown(self):
         self.assertEqual(self.button_cell["cell_type"], "markdown")
@@ -58,12 +66,16 @@ class TestAddColabMainButtons(unittest.TestCase):
 
     def test_get_proj_root(self):
         result = acb.get_proj_root()
-        self.assertIn("Ch02_Strain", os.listdir(result), result)
+        assert result.exists()
+        assert result.is_dir()
+
+        assert (result/".gitignore").exists()
+        assert (result/"Ch02_Strain").exists() or (result/"00_introduction").exists()
 
     def test_get_rel_path(self):
         result = acb.get_rel_path(self.with_button_full_path)
         self.assertEqual(
-            os.path.join(acb.get_proj_root(), result),
+            acb.get_proj_root() / result,
             self.with_button_full_path
         )
 
