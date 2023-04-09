@@ -119,7 +119,7 @@ class TestWritingFile(unittest.TestCase):
             )
 
         elif 'posix' == os.name:
-            self.output_file = tempfile.TemporaryFile(mode='wt', suffix='.ipynb', encodeing='utf-8')
+            self.output_file = tempfile.TemporaryFile(mode='wt', suffix='.ipynb', encoding='utf-8')
         else:
             raise NotImplementedError
 
