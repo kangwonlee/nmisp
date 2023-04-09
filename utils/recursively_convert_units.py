@@ -1,18 +1,14 @@
 import os
+import pathlib
+
 
 ignore_path_list = {'__pycache__', '.ipynb_checkpoints', '.git', '.cache', '.idea', 
-                    'nbutils', 'tests'}
+                    'nbutils', 'tests', 'utils', '.github'}
 
 
-def is_ignore(path):
-    result = False
-    path_split_set = set(path.split(os.sep))
-    for ignore in ignore_path_list:
-        if ignore in path_split_set:
-            result= True
-            break
-
-    return result
+def is_ignore(path:pathlib.Path, ignore_set:set=set(ignore_path_list)) -> bool:
+    path_split_set = set(pathlib.Path(path).parts)
+    return len(ignore_set.intersection(path_split_set))
 
 
 def os_walk_if_not_ignore(root):
@@ -26,8 +22,8 @@ def os_walk_if_not_ignore(root):
             yield root_name, dir_list, filename_list
 
 
-def is_ipynb(path):
-    return '.ipynb' == os.path.splitext(path)[-1]
+def is_ipynb(path:pathlib.Path) -> bool:
+    return '.ipynb' == pathlib.Path(path).suffix
 
 
 def gen_filename_ipynb(filename_list):

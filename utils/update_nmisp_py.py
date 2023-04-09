@@ -34,7 +34,7 @@ def main():
             ["git", "clone", f"https://github-actions:{LOGIN_INFO}@github.com/{org_name}/{repo_name}", os.fspath(clone_dest.absolute())],
         )
 
-        assert clone_dest.exists()
+        assert clone_dest.exists(), clone_dest
 
         b_new_branch = branch_business(clone_dest, current_branch)
 
@@ -161,11 +161,11 @@ def get_repo_path() -> pathlib.Path:
     Get the path to the repository
     """
     util_path = pathlib.Path(__file__).parent.absolute()
-    assert util_path.exists()
+    assert util_path.exists(), util_path
     assert util_path.is_dir()
 
     repo_path = util_path.parent.absolute()
-    assert repo_path.exists()
+    assert repo_path.exists(), repo_path
     assert repo_path.is_dir()
     return repo_path
 

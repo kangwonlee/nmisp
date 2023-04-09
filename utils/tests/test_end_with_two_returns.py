@@ -1,4 +1,5 @@
 import os
+import pathlib
 import sys
 import tempfile
 import unittest
@@ -103,32 +104,14 @@ class TestCell(unittest.TestCase):
 
 class TestWritingFile(unittest.TestCase):
     def setUp(self):
-        self.test_folder = os.path.dirname(__file__)
-        self.input_file = os.path.join(
-            os.path.dirname(__file__), 
-            'sample.ipynb'
-        )
+        self.test_file_path = pathlib.Path(__file__)
+        self.test_folder_path = self.test_file_path.parent.absolute()
+        assert self.test_folder_path.exists(), self.test_folder_path
+        assert self.test_folder_path.is_dir()
 
-        if 'nt' == os.name:
-            tf = tempfile.NamedTemporaryFile(suffix='.ipynb')
-            output_basename = os.path.basename(tf.name)
-            tf.close()
-
-            self.output_file = os.path.abspath(
-                os.path.join(os.path.dirname(__file__), output_basename)
-            )
-
-        elif 'posix' == os.name:
-            self.output_file = tempfile.TemporaryFile(mode='wt', suffix='.ipynb', encodeing='utf-8')
-        else:
-            raise NotImplementedError
-
-    def tearDown(self):
-        if 'posix' == os.name:
-            self.output_file.close()
-        elif 'nt' == os.name:
-            if os.path.exists(self.output_file):
-                os.remove(self.output_file)
+        self.input_file_path = self.test_folder_path / 'sample.ipynb'
+        assert self.input_file_path.exists(), self.input_file_path
+        assert self.input_file_path.is_file()
 
     @staticmethod
     def same_length(seq_0, seq_1):
@@ -148,27 +131,33 @@ class TestWritingFile(unittest.TestCase):
 
     def test_process_file(self):
         # function under test
-        tr.process_file(self.input_file, self.output_file)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = pathlib.Path(tmpdir)
 
-        nb_input = nbformat.read(self.input_file, nbformat.NO_CONVERT)
-        nb_output = nbformat.read(self.output_file, nbformat.NO_CONVERT)
+            output_path = tmppath / self.input_file_path.name
+            assert not output_path.exists()
 
-        self.assertGreater(len(nb_input['cells']), 0)
+            tr.process_file(self.input_file_path, output_path)
 
-        if self.same_length(nb_input['cells'], nb_output['cells']):
-            self.assertFalse(nb_input['cells'][-1].source)
-            self.assertFalse(nb_output['cells'][-1].source)
-        elif self.second_one_is_longer_by_one(nb_input['cells'], nb_output['cells']):
-            self.assertTrue(nb_input['cells'][-1].source)
-            self.assertFalse(nb_output['cells'][-1].source)
-        else:
-            raise NotImplementedError
+            nb_input = nbformat.read(self.input_file_path, nbformat.NO_CONVERT)
+            nb_output = nbformat.read(output_path, nbformat.NO_CONVERT)
 
-        for in_cell, out_cell in zip(nb_input['cells'], nb_output['cells']):
-            self.assertEqual(
-                in_cell.source.strip() + '\n\n',
-                out_cell.source
-            )
+            self.assertGreater(len(nb_input['cells']), 0)
+
+            if self.same_length(nb_input['cells'], nb_output['cells']):
+                self.assertFalse(nb_input['cells'][-1].source)
+                self.assertFalse(nb_output['cells'][-1].source)
+            elif self.second_one_is_longer_by_one(nb_input['cells'], nb_output['cells']):
+                self.assertTrue(nb_input['cells'][-1].source)
+                self.assertFalse(nb_output['cells'][-1].source)
+            else:
+                raise NotImplementedError
+
+            for in_cell, out_cell in zip(nb_input['cells'], nb_output['cells']):
+                self.assertEqual(
+                    in_cell.source.strip() + '\n\n',
+                    out_cell.source
+                )
 
 
 if "__main__" == __name__:
