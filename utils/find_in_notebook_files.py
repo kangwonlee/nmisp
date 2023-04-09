@@ -70,8 +70,16 @@ class NotebookFile(object):
     def validate(self):
         return nbformat.validate(self.nb_node)
 
+    def splitline_src(self):
+        for cell in self.nb_node.cells:
+            if "source" in cell and isinstance(cell.source, str):
+                cell.source = [line+'\n' for line in cell.source.splitlines()]
+
     def write(self, new_file_full_path):
         output_path = pathlib.Path(new_file_full_path)
+
+        self.splitline_src()
+
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
