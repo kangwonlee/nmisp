@@ -61,7 +61,7 @@ jobs:
       fail-fast: false
     timeout-minutes: 30
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
     - name: build environment
       env:
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
     - name: build environment
       uses: conda-incubator/setup-miniconda@v2
