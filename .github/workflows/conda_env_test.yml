@@ -95,7 +95,7 @@ jobs:
       run: python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
 
   update_nmisp_py:
-    needs: test_ipynb
+    needs: [test_ipynb, test_ipynb_colab]
     name: Update nmisp_py
     runs-on: ubuntu-latest
     timeout-minutes: 5
