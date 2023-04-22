@@ -81,11 +81,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: build environment
-      uses: actions/setup-python@v2
+    - name: setup python
+      uses: actions/setup-python@v4
       with:
-        python-version: 3.9.16
-    - run: python -m pip install -r ./tests/requirements.colab.2023.04.txt
+        python-version: '3.9.16'
+
+    - name: install dependencies
+      run: python -m pip install -r ./tests/requirements.colab.2023.04.txt
 
     - name: pytest
       env:
