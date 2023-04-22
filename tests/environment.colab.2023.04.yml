@@ -1,0 +1,33 @@
+# This file is used to create a conda environment on Google Colab
+# To get the list of packages installed in the current environment, run the following command in a cell:
+# pip_txt = !pip list
+# dep = "python tensorflow".split()
+# for line in pip_txt:
+#     pkg, ver = line.strip().split()
+#     if pkg in dep:
+#         print(f"- {pkg}={ver}")
+
+name: Google Colab
+channels:
+- defaults
+
+dependencies:
+- python=3.9.16
+- cython
+- jupyter
+- lxml=4.9.2
+- matplotlib=3.7.1
+- notebook=6.4.8
+- numpy=1.22.4
+- pandas=1.5.3
+- pandas-datareader=0.10.0
+- pytest=7.2.2
+- pytest-xdist
+- requests=2.27.1
+- scikit-learn=1.2.2
+- scipy=1.10.1
+- seaborn=0.12.2
+- statsmodels=0.13.5
+- sympy
+- tensorflow=2.12.0
+- xlwt
