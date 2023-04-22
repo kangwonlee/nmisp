@@ -82,11 +82,10 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: build environment
-      uses: conda-incubator/setup-miniconda@v2
+      uses: actions/setup-python@v2
       with:
-        environment-file: tests/environment.colab.2023.04.yml
         python-version: 3.9.16
-        auto-update-conda: true
+    - run: python -m pip install -r ./tests/requirements.colab.2023.04.txt
 
     - name: pytest
       env:
