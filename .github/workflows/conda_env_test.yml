@@ -73,6 +73,26 @@ jobs:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: bash ./.github/workflows/run_test.sh
 
+  test_ipynb_colab:
+    needs: badges
+    name: test ipynb on Google Colab
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: build environment
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        environment-file: tests/environment.colab.2023.04.yml
+        python-version: 3.9.16
+        auto-update-conda: true
+
+    - name: pytest
+      env:
+        TEST_IPYNB_IGNORE_FOLDER: tutorial
+      run: python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
+
   update_nmisp_py:
     needs: test_ipynb
     name: Update nmisp_py
