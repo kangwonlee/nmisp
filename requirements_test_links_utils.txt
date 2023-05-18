@@ -1,0 +1,9 @@
+pytest
+pytest-xdist
+requests
+jupyter
+lxml
+numpy
+matplotlib
+scipy
+sympy

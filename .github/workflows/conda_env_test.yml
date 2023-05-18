@@ -16,9 +16,30 @@ jobs:
       id: checkout
       uses: actions/checkout@v3
 
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9.16'
+        cache: 'pip'
+
+    - name: Update pip
+      run: python -m pip install --upgrade pip
+
+    - name: Create venv
+      run: python -m venv venv
+
+    - name: Activate venv
+      run: source venv/bin/activate
+
+    - name: Cache venv
+      uses: actions/cache@v2
+      with:
+        path: venv
+        key: ${{ runner.os }}-${{ hashFiles('requirements_test_links_utils.txt') }}
+
     - name: setup environment
       id: setup
-      run: python -m pip install pytest pytest-xdist requests jupyter lxml numpy matplotlib scipy sympy
+      run: python -m pip install -r requirements_test_links_utils.txt
 
     - name: check links
       id: links
@@ -36,9 +57,30 @@ jobs:
       id: checkout
       uses: actions/checkout@v3
 
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9.16'
+        cache: 'pip'
+
+    - name: Update pip
+      run: python -m pip install --upgrade pip
+
+    - name: Create venv
+      run: python -m venv venv
+
+    - name: Activate venv
+      run: source venv/bin/activate
+
+    - name: Cache venv
+      uses: actions/cache@v2
+      with:
+        path: venv
+        key: ${{ runner.os }}-${{ hashFiles('requirements_badge.txt') }}
+
     - name: setup environment
       id: setup
-      run: python -m pip install bs4 jupyter lxml
+      run: python -m pip install -r requirements_badge.txt
 
     - name: Add/Update badges
       id: badges
@@ -85,6 +127,22 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.9.16'
+        cache: 'pip'
+
+    - name: Update pip
+      run: python -m pip install --upgrade pip
+
+    - name: Create venv
+      run: python -m venv venv
+
+    - name: Activate venv
+      run: source venv/bin/activate
+
+    - name: Cache venv
+      uses: actions/cache@v2
+      with:
+        path: venv
+        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2023.04.txt') }}
 
     - name: install dependencies
       run: python -m pip install -r ./tests/requirements.colab.2023.04.txt
@@ -103,6 +161,15 @@ jobs:
     - name: checkout
       id: checkout
       uses: actions/checkout@v3
+
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9.16'
+        cache: 'pip'
+
+    - name: Update pip
+      run: python -m pip install --upgrade pip
 
     - name: run nmisp_py updater
       id: updater
