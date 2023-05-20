@@ -7,57 +7,7 @@ on:
   fork:
 
 jobs:
-  test_links_utils:
-    name: Check links in ipynb
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-    - name: checkout
-      id: checkout
-      uses: actions/checkout@v3
-
-    - name: Update pip
-      run: python -m pip install --upgrade pip
-
-    - name: setup environment
-      id: setup
-      run: python -m pip install pytest pytest-xdist requests jupyter lxml numpy matplotlib scipy sympy
-
-    - name: check links
-      id: links
-      run: python -m pytest -n auto ./tests/test_check_links_in_ipynb.py ./utils/tests/
-
-  badges:
-    name: Add Google Colab Badges
-    needs: test_links_utils
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    timeout-minutes: 5
-    steps:
-    - name: checkout
-      id: checkout
-      uses: actions/checkout@v3
-
-    - name: Update pip
-      run: python -m pip install --upgrade pip
-
-    - name: setup environment
-      id: setup
-      run: python -m pip install bs4 jupyter lxml
-
-    - name: Add/Update badges
-      id: badges
-      run: python ./utils/add_colab_main_buttons.py
-
-    - name: Commit & push
-      id: commit
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message : Add Github badges or remove ipynb `id`s
-
   test_ipynb:
-    needs: badges
     name: ${{ matrix.anaconda }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -80,7 +30,6 @@ jobs:
       run: bash ./.github/workflows/run_test.sh
 
   test_ipynb_nightly:
-    needs: badges
     name: ${{ matrix.anaconda }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -101,65 +50,3 @@ jobs:
       env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: bash ./.github/workflows/run_test.sh
-
-  test_ipynb_colab:
-    needs: badges
-    name: test ipynb on Google Colab
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: setup python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9.16'
-        cache: 'pip'
-
-    - name: Update pip
-      run: python -m pip install --upgrade pip
-
-    - name: Create venv
-      run: python -m venv venv
-
-    - name: Activate venv
-      run: source venv/bin/activate
-
-    - name: Cache venv
-      uses: actions/cache@v2
-      with:
-        path: venv
-        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2023.04.txt') }}
-
-    - name: install dependencies
-      run: python -m pip install -r ./tests/requirements.colab.2023.04.txt
-
-    - name: pytest
-      env:
-        TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
-
-  update_nmisp_py:
-    needs: [test_ipynb, test_ipynb_nightly, test_ipynb_colab]
-    name: Update nmisp_py
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-    - name: checkout
-      id: checkout
-      uses: actions/checkout@v3
-
-    - name: setup python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9.16'
-        cache: 'pip'
-
-    - name: Update pip
-      run: python -m pip install --upgrade pip
-
-    - name: run nmisp_py updater
-      id: updater
-      env:
-        LOGIN_INFO: ${{ secrets.LOGIN_INFO }}
-      run: python ./utils/update_nmisp_py.py
