@@ -22,7 +22,10 @@ jobs:
     - name: cache test-environment
       uses: actions/cache@v3
       with:
-        path: $CONDA/envs/test-environment
+        path: |
+          /usr/local/miniconda/bin//envs/test-environment
+          /usr/share/miniconda/envs/test-environment
+          C:\Miniconda\envs\test-environment
         key: ${{ runner.os }}-${{ matrix.anaconda }}
 
     - name: build environment
