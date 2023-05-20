@@ -19,6 +19,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: cache test-environment
+      uses: actions/cache@v3
+      with:
+        path: $CONDA/envs/test-environment
+        key: ${{ runner.os }}-${{ matrix.anaconda }}
+
     - name: build environment
       env:
         CONDA_PYTHON: ${{ matrix.anaconda }}
