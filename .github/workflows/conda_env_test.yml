@@ -24,6 +24,11 @@ jobs:
         CONDA_PYTHON: ${{ matrix.anaconda }}
       run: bash ./.github/workflows/build_env.sh
 
+    - name: python path
+      run: |
+        which python
+        python -m pip show numpy
+
     - name: pytest
       env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
