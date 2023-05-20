@@ -3,7 +3,7 @@ if [[ $RUNNER_OS ==  "Linux" ]]; then
     export CONDA_SCRIPT=bin         # l o
     export BASHRC=.bashrc           # l 
 elif [[ $RUNNER_OS ==  "macOS" ]]; then
-    export MINICONDA_PATH=$RUNNER_WORKSPACE/miniconda
+    export MINICONDA_PATH=$CONDA
     export CONDA_SCRIPT=bin         # l o
     export BASHRC=.bash_profile     # o w
 elif [[ $RUNNER_OS ==  "Windows" ]]; then

@@ -20,20 +20,14 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: build environment
-      run: |
-        $CONDA/bin/conda config --set always_yes yes --set changeps1 no;
-        $CONDA/bin/conda update --quiet conda;
-        $CONDA/bin/conda info -a
-        $CONDA/bin/conda env create --name test-environment --file ./tests/environment.${{ matrix.anaconda }}.yml
+      env:
+        CONDA_PYTHON: ${{ matrix.anaconda }}
+      run: bash ./.github/workflows/build_env.sh
 
     - name: pytest
       env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: |
-        source $CONDA/bin/conda activate test-environment
-        $CONDA/bin/conda list
-        which python
-        python -m pytest --numprocesses=auto -k 'not (links or update_nmisp_py)' tests/
+      run: bash ./.github/workflows/run_test.sh
 
   test_ipynb_nightly:
     name: ${{ matrix.anaconda }} on ${{ matrix.os }}
