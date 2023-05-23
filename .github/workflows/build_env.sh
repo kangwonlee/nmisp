@@ -3,10 +3,6 @@
 echo "exporting a new path ======================="
 export PATH="$MINICONDA_PATH:$MINICONDA_SUB_PATH:$PATH"
 
-if [[ $RUNNER_OS ==  "macOS" ]]; then
-    . ./.github/workflows/wget_install_miniconda.sh
-fi
-
 echo "init conda ================================="
 $MINICONDA_SUB_PATH/conda init bash
 echo "~/$BASHRC =================================="
