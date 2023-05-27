@@ -125,6 +125,7 @@ def get_config_field(field:str, clone_dest:pathlib.Path) -> str:
         ("git", "config", field),
         cwd=clone_dest,
         capture_output=True,
+        encoding='utf-8',
     )
 
     assert 0 == completed_process.returncode, completed_process
