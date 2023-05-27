@@ -67,13 +67,13 @@ def main():
         if b_change:
 
             # Commit and push the changes to the nmisp_py repository
-            if not subprocess.check_output(("git", "config", "user.name")).strip():
+            if not get_current_user_name(clone_dest):
                 subprocess.check_call(
                     ["git", "config", "user.name", "github-actions"],
                     cwd=clone_dest,
                 )
 
-            if not subprocess.check_output(("git", "config", "user.email")).strip():
+            if not get_current_user_email(clone_dest):
                 subprocess.check_call(
                     ["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"],
                     cwd=clone_dest,
@@ -110,6 +110,26 @@ def main():
             # end if completed_process.returncode != 0:
         # end if b_change:
     # Remove the temporary directory
+
+
+def get_current_user_name(clone_dest:pathlib.Path) -> str:
+    return get_config_field(field="user.name", clone_dest=clone_dest)
+
+
+def get_current_user_email(clone_dest:pathlib.Path) -> str:
+    return get_config_field(field="user.email", clone_dest=clone_dest)
+
+
+def get_config_field(field:str, clone_dest:pathlib.Path) -> str:
+    completed_process = subprocess.run(
+        ("git", "config", field),
+        cwd=clone_dest,
+        capture_output=True,
+    )
+
+    assert 0 == completed_process.returncode, completed_process
+
+    return completed_process.stdout.strip()
 
 
 def branch_business(clone_dest, current_branch:str) -> bool:
