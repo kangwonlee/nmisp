@@ -24,8 +24,10 @@ def matshow(counter, abs_ars, r, s, mat_a0, mat_x):
       ))
     )
     plt.title(get_title(counter, abs_ars, r, s))
+    plt.colorbar()
 
-  plt.savefig(f"iteration{counter:03d}.png")
+  plt.savefig(f"iteration_{len(mat_a0):03d}_{counter:03d}.png")
+  plt.close()
 
 
 def get_title(counter, abs_ars, r, s) -> str:
