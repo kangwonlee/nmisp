@@ -18,13 +18,12 @@ def matshow(counter, abs_ars, r, s, mat_a0, mat_x):
   elif 3 == len(mat_a0):
     matshow33(counter, abs_ars, r, s, mat_a0, mat_x)
   else:
-    plt.matshow(
+    hinton(
       np.hstack((
         np.array(mat_a0), np.array(mat_x)
       ))
     )
     plt.title(get_title(counter, abs_ars, r, s))
-    plt.colorbar()
 
   plt.savefig(f"iteration_{len(mat_a0):03d}_{counter:03d}.png")
   plt.close()
@@ -96,3 +95,38 @@ def remove_all_figure_files(ext:str='png') -> None:
   for filename in os.listdir():
     if os.path.splitext(filename)[-1].lower().endswith(ext.lower()):
       os.remove(filename)
+
+
+def hinton(matrix, max_weight=None, ax=None):
+    '''
+    Draw Hinton diagram for visualizing a weight matrix.
+    https://matplotlib.org/stable/gallery/specialty_plots/hinton_demo.html
+    '''
+    if ax is None:
+      b_ax_none = True
+      ax = plt.gca()
+    else:
+      b_ax_none = False
+
+    if not max_weight:
+        max_weight = 2 ** np.ceil(np.log2(np.abs(matrix).max()))
+
+    ax.patch.set_facecolor('gray')
+    ax.set_aspect('equal', 'box')
+
+    ax.xaxis.set_major_locator(plt.NullLocator())
+    ax.yaxis.set_major_locator(plt.NullLocator())
+
+    for (y, x), w in np.ndenumerate(matrix):
+        color = 'white' if w > 0 else 'black'
+        size = np.sqrt(abs(w) / max_weight)
+        rect = plt.Rectangle([x - size / 2, y - size / 2], size, size,
+                             facecolor=color, edgecolor=color)
+        ax.add_patch(rect)
+
+    ax.autoscale_view()
+    ax.invert_yaxis()
+
+    if b_ax_none:
+      plt.show()
+      plt.close()
