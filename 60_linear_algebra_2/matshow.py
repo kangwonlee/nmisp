@@ -11,22 +11,27 @@ Vector = List[Scalar]
 Matrix = List[Vector]
 
 
-def matshow(counter, abs_ars, r, s, mat_a0, mat_x):
+def matshow(counter, abs_ars, r, s, mat_a0, mat_x, ax=None):
 
-  if 3 > len(mat_a0):
-    matshow22(counter, abs_ars, r, s, mat_a0, mat_x)
-  elif 3 == len(mat_a0):
-    matshow33(counter, abs_ars, r, s, mat_a0, mat_x)
-  else:
-    hinton(
-      np.hstack((
-        np.array(mat_a0), np.array(mat_x)
-      ))
-    )
-    plt.title(get_title(counter, abs_ars, r, s))
+    if 3 > len(mat_a0):
+        matshow22(counter, abs_ars, r, s, mat_a0, mat_x)
+    elif 3 == len(mat_a0):
+        matshow33(counter, abs_ars, r, s, mat_a0, mat_x)
+    else:
+        if ax is None:
+            ax = plt.gca()
+        else:
+            ax.cla()
+        hinton(
+            np.hstack((
+                np.array(mat_a0), np.array(mat_x)
+            )),
+            ax=ax
+        )
+        ax.set_title(get_title(counter, abs_ars, r, s))
 
-  plt.savefig(f"iteration_{len(mat_a0):03d}_{counter:03d}.png")
-  plt.close()
+    plt.savefig(f"iteration_{len(mat_a0):03d}_{counter:03d}.png")
+    plt.close()
 
 
 def get_title(counter, abs_ars, r, s) -> str:
