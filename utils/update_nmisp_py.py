@@ -128,9 +128,13 @@ def get_config_field(field:str, clone_dest:pathlib.Path) -> str:
         encoding='utf-8',
     )
 
-    assert 0 == completed_process.returncode, completed_process
+    if completed_process.returncode != 0:
+        result = ""
+    else:
+        result = completed_process.stdout.strip()
+    # end if completed_process.returncode != 0:
 
-    return completed_process.stdout.strip()
+    return result
 
 
 def branch_business(clone_dest, current_branch:str) -> bool:
