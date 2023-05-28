@@ -4,7 +4,9 @@ import json
 import os
 import pathlib
 import subprocess
+import sys
 import urllib.parse as up
+
 
 from typing import Dict, Tuple
 
@@ -16,8 +18,21 @@ import recursively_convert_units as rsc
 import find_in_notebook_files as nbf
 
 
-def main():
-    for full_path in rsc.iter_ipynb():
+def main(argv):
+    if len(argv) > 1:
+        full_path = pathlib.Path(argv[1]).absolute()
+        if full_path.is_file():
+            proc_file(full_path)
+        elif full_path.is_dir():
+            proc_dir(full_path)
+        else:
+            raise NotImplementedError(full_path)
+    else:
+        proc_dir()
+
+
+def proc_dir(root:str=None):
+    for full_path in rsc.iter_ipynb(root):
         proc_file(full_path)
 
 
@@ -184,4 +199,4 @@ def get_colab_button_cell(full_path:str,) -> Dict:
 
 
 if "__main__" == __name__:
-    main()
+    main(sys.argv)

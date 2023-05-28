@@ -50,16 +50,19 @@ def gen_ipynb(root):
             yield chapter_path, ipynb_filename
 
 
-def get_proj_root() -> str:
-    return os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__),
-            os.pardir
-        )
-    )
+def get_proj_root() -> pathlib.Path:
+    result = pathlib.Path(__file__).parent.parent.absolute()
+    assert result.exists(), result
+    assert result.is_dir()
+    assert (result / ".gitignore").exists(), (result, result.glob("*"))
+    return result
 
 
-def iter_ipynb(root:str=get_proj_root()):
+def iter_ipynb(root:str=None):
+
+    if root is None:
+        root = get_proj_root()
+
     for root_name, _, filename_list in os_walk_if_not_ignore(root):
         # ipynb file loop
         for ipynb_filename in filter(is_ipynb, filename_list):
