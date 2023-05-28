@@ -1,3 +1,4 @@
+import argparse
 import copy
 import functools
 import json
@@ -8,7 +9,7 @@ import sys
 import urllib.parse as up
 
 
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
 
 
 import bs4
@@ -19,16 +20,23 @@ import find_in_notebook_files as nbf
 
 
 def main(argv):
-    if len(argv) > 1:
-        full_path = pathlib.Path(argv[1]).absolute()
-        if full_path.is_file():
-            proc_file(full_path)
-        elif full_path.is_dir():
-            proc_dir(full_path)
-        else:
-            raise NotImplementedError(full_path)
+    parsed = parse_argv(argv)
+
+    if parsed.file != pathlib.Path('None') and parsed.file.is_file():
+        proc_file(parsed.file)
     else:
-        proc_dir()
+        proc_dir(parsed.directory)
+
+
+def parse_argv(argv:List[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+
+    # Just in case to process only one file
+    parser.add_argument('-f', "--file", required=False, type=pathlib.Path, default='None')
+    # Just in case to process only one folder
+    parser.add_argument('-d', "--directory", required=False, type=pathlib.Path, default=get_proj_root())
+
+    return parser.parse_args(argv[1:])
 
 
 def proc_dir(root:str=None):
@@ -131,11 +139,10 @@ def has_button_img(cell:Dict) -> bool:
 
 @functools.lru_cache()
 def get_proj_root() -> pathlib.Path:
-    result = pathlib.Path(__file__).parent.parent.absolute()
-    assert result.exists(), result
-    assert result.is_dir()
-    assert (result / ".gitignore").exists(), (result, result.glob("*"))
-    return result
+    '''
+    Cache version of rsc.get_proj_root()
+    '''
+    return rsc.get_proj_root()
 
 
 def get_rel_path(full_path:str) -> str:

@@ -107,5 +107,23 @@ class TestAddColabMainButtons(unittest.TestCase):
         self.assertFalse(result)
 
 
+class TestAddColabMainButtonsParseArgv(unittest.TestCase):
+    def test_parse_argv__no_args(self):
+        result = acb.parse_argv([])
+        self.assertEqual(result.file, pathlib.Path('None'))
+        self.assertEqual(result.directory, acb.get_proj_root())
+
+    def test_parse_argv__one_file_arg(self):
+        filename = "test.ipynb"
+        result = acb.parse_argv(['dummy.py', "-f", "test.ipynb"])
+        self.assertEqual(result.file, pathlib.Path(filename))
+
+    def test_parse_argv__one_dir_arg(self):
+        dirname = "test_folder"
+        result = acb.parse_argv(['dummy.py', "-d", dirname])
+        self.assertEqual(result.file, pathlib.Path('None'))
+        self.assertEqual(result.directory, pathlib.Path(dirname))
+
+
 if "__main__" == __name__:
     unittest.main()
