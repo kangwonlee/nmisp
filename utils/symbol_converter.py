@@ -23,7 +23,7 @@ class SymbolLister(fu.CellProcessorBase):
         if self.is_code():
             if self.has_source():
                 for line_number, source_line in enumerate(self.cell['source'].splitlines()):
-                    if ('sy.symbols' in source_line) or ('sy.Symbol' in source_line):
+                    if ('sym.symbols' in source_line) or ('sym.Symbol' in source_line):
                         result.append({'line number': line_number, 'source': source_line})
 
         return result
@@ -34,10 +34,10 @@ class SymbolLister(fu.CellProcessorBase):
 
 class SymbolConverter(SymbolLister):
     """
-    sy.symbols('L_AB_m', real=True, nonnegative=True) -> sy.symbols('L_{AB}[m]', real=True, nonnegative=True)
-    sy.symbols('w0_N_m', real=True) -> sy.symbols('w0[N/m]', real=True)
+    sym.symbols('L_AB_m', real=True, nonnegative=True) -> sym.symbols('L_{AB}[m]', real=True, nonnegative=True)
+    sym.symbols('w0_N_m', real=True) -> sym.symbols('w0[N/m]', real=True)
 
-    "L_AB_m, L_AC_m = sy.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)"
+    "L_AB_m, L_AC_m = sym.symbols('L_AB_m, L_AC_m', real=True, nonnegative=True)"
     -> [find symbol location] -> 'L_AB_m, L_AC_m' ->
     'L_AB_m' -> [wrap_symbol_name] -> 'L_{AB}_{m}' -> 'L_{AB}[m]'
 
@@ -155,11 +155,11 @@ class SymbolConverter(SymbolLister):
         :return: (int, int)
 
         >>> cp = SymbolConverter()
-        >>> source_line = "L_AB_m = sy.symbols('L_AB_m', real=True, nonnegative=True)"
+        >>> source_line = "L_AB_m = sym.symbols('L_AB_m', real=True, nonnegative=True)"
         >>> result = cp.find_symbol_name_location(source_line)
         >>> source_line[result[0]:result[1]]
         'L_AB_m'
-        >>> source_line = "L_AB_m = sy.Symbol('L_AB_m', real=True, nonnegative=True)"
+        >>> source_line = "L_AB_m = sym.Symbol('L_AB_m', real=True, nonnegative=True)"
         >>> result = cp.find_symbol_name_location(source_line)
         >>> source_line[result[0]:result[1]]
         'L_AB_m'
