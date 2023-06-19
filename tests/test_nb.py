@@ -171,4 +171,4 @@ def test_ipynb_file(filename, tmp_path):
 
 
 if "__main__" == __name__:
-    pytest.main()
+    pytest.main(['-n', 'auto', __file__])
