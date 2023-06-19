@@ -411,3 +411,7 @@ def test_check_link__fail(fail_cell):
     r = cli.get_re_markdown_simple_link()
     with pytest.raises((urllib.error.URLError, requests.exceptions.HTTPError)):
         cli.check_link_in_cell(fail_cell, r)
+
+
+if "__main__" == __name__:
+    pytest.main([__file__])
