@@ -1,3 +1,4 @@
+import os
 import pathlib
 import sys
 import urllib
@@ -12,20 +13,13 @@ test_folder = test_file_path.parent.absolute()
 sys.path.insert(0, str(test_folder))
 
 import check_links_in_ipynb as cli
+import ipynb_list
 
 # type aliases
 CELL = Dict[str, Union[str, Set[str]]]
 IPYNB = List[CELL]
 
 base_path = test_folder.parent.absolute()
-
-
-@pytest.fixture
-def ipynb_file_list() -> List[pathlib.Path]:
-    """
-    Prepare a list of ipynb files of the base_path
-    """
-    return [filename for filename in base_path.glob('*.ipynb')]
 
 
 def test_check_links_in_ipynb_cells_list(sample_ipynb):
@@ -411,6 +405,20 @@ def test_check_link__fail(fail_cell):
     r = cli.get_re_markdown_simple_link()
     with pytest.raises((urllib.error.URLError, requests.exceptions.HTTPError)):
         cli.check_link_in_cell(fail_cell, r)
+
+
+# https://docs.pytest.org/en/latest/example/parametrize.html
+@pytest.mark.parametrize(
+    "filename", ipynb_list.get_filename_tuple(
+        os.path.abspath(
+            os.environ.get('TEST_IPYNB_FOLDER', '')
+        )
+    ),
+)
+def test_links_in_ipynb_file(filename):
+    print('test() : %s' % filename)
+    assert os.path.exists(filename), f"File Not Found {filename}"
+    cli.check_links_in_ipynb(pathlib.Path(filename))
 
 
 if "__main__" == __name__:

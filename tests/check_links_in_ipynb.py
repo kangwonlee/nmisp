@@ -1,3 +1,5 @@
+import functools
+import pathlib
 import re
 import urllib.parse as up
 import urllib.request as ur
@@ -13,6 +15,7 @@ def is_cell_markdown(cell):
     return cell['cell_type'].strip().lower().startswith('markdown')
 
 
+@functools.lru_cache(maxsize=1)
 def get_re_markdown_simple_link():
     """
     Regular Expression to find markdown urls
@@ -21,6 +24,7 @@ def get_re_markdown_simple_link():
     return re.compile(r'\[.+?\]\((.+?)\)')
 
 
+@functools.lru_cache(maxsize=1)
 def get_re_markdown_image_link():
     """
     Regular Expression to find urls linked to images
@@ -28,10 +32,6 @@ def get_re_markdown_image_link():
     """
     return re.compile(r'\[\!\[.+?\]\(.+?\)\]\((.+?)\)')
 
-
-# to avoid compiling repetitively
-ri = get_re_markdown_image_link()
-rs = get_re_markdown_simple_link()
 
 def check_link_in_cell(cell, r):
     """
@@ -46,15 +46,16 @@ def check_link_in_cell(cell, r):
         req.raise_for_status()
 
 
-def check_links_in_ipynb(filename):
+def check_links_in_ipynb(ipynb_file_path:pathlib.Path):
     """
     filename : path to an ipynb file
     """
-    # open file and read
-    with open(filename, encoding='utf-8') as ipynb:
-        nb = nbformat.read(ipynb, nbformat.NO_CONVERT)
-
-    check_links_in_ipynb_cells_list(nb['cells'])
+    check_links_in_ipynb_cells_list(
+        nbformat.read(
+            ipynb_file_path,
+            nbformat.NO_CONVERT,
+        )['cells']
+    )
 
 
 def check_links_in_ipynb_cells_list(cells_list):
@@ -71,6 +72,6 @@ def check_links_in_ipynb_cells_list(cells_list):
         # https://stackoverflow.com/questions/16778435/python-check-if-website-exists
 
         # check simple urls
-        check_link_in_cell(cell, rs)
+        check_link_in_cell(cell, get_re_markdown_simple_link())
         # check urls linked to 
-        check_link_in_cell(cell, ri)
+        check_link_in_cell(cell, get_re_markdown_image_link())
