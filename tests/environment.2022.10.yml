@@ -12,6 +12,7 @@ dependencies:
 - lxml<=4.9.1
 - matplotlib<=3.5.2
 - numpy<=1.21.5
+- openpyxl<=3.0.10
 - pandas<=1.4.4
 - pandas-datareader<=0.10.0
 - pytest<=7.1.2
