@@ -128,10 +128,10 @@ jobs:
       uses: actions/cache@v3
       with:
         path: venv
-        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2023.04.txt') }}
+        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2024.02.txt') }}
 
     - name: install dependencies
-      run: python -m pip install -r ./tests/requirements.colab.2023.04.txt
+      run: python -m pip install -r ./tests/requirements.colab.2024.02.txt
 
     - name: pytest
       env:
