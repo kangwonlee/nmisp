@@ -47,7 +47,10 @@ def check_link_in_cell(cell, r):
 
         parsed = up.urlparse(url)
 
-        if parsed.netloc.endswith('wikimedia.org'):
+        if (
+            parsed.netloc.endswith('wikimedia.org') or
+            parsed.netloc.endswith('stackoverflow.com')
+        ):
             header = get_header()
         else:
             header = None
