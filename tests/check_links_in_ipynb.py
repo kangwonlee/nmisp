@@ -3,6 +3,7 @@ import pathlib
 import re
 import urllib.parse as up
 import urllib.request as ur
+from typing import Dict
 
 import nbformat
 import requests
@@ -41,7 +42,11 @@ def check_link_in_cell(cell, r):
     # url match loop
     for m in r.finditer(cell['source']):
         # try to open url part of the match
-        req = requests.get(up.unquote(m.group(1)), timeout=60)
+        req = requests.get(
+            up.unquote(m.group(1)),
+            timeout=60,
+            headers=get_header(),
+        )
         # https://2.python-requests.org/en/master/user/quickstart/#response-status-codes
         req.raise_for_status()
 
@@ -75,3 +80,16 @@ def check_links_in_ipynb_cells_list(cells_list):
         check_link_in_cell(cell, get_re_markdown_simple_link())
         # check urls linked to 
         check_link_in_cell(cell, get_re_markdown_image_link())
+
+
+@functools.lru_cache()
+def get_header() -> Dict[str, str]:
+    # How to use Python requests to fake a browser visit a.k.a and generate User Agent,
+    # https://stackoverflow.com/a/27652558
+    return {
+        "User-Agent": (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/605.1.15 (KHTML, like Gecko) "
+            "Version/17.1.2 Safari/605.1.15"
+        )
+    }
