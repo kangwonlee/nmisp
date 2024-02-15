@@ -42,10 +42,20 @@ def check_link_in_cell(cell, r):
     # url match loop
     for m in r.finditer(cell['source']):
         # try to open url part of the match
+
+        url = up.unquote(m.group(1))
+
+        parsed = up.urlparse(url)
+
+        if parsed.netloc.endswith('wikimedia.org'):
+            header = get_header()
+        else:
+            header = None
+
         req = requests.get(
-            up.unquote(m.group(1)),
+            url,
             timeout=60,
-            headers=get_header(),
+            headers=header,
         )
         # https://2.python-requests.org/en/master/user/quickstart/#response-status-codes
         req.raise_for_status()
