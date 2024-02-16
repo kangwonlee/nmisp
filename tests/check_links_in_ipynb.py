@@ -113,5 +113,5 @@ def get_header() -> Dict[str, str]:
     ua = fa.UserAgent()
 
     return {
-        "User-Agent": str(ua.random)
+        "User-Agent": str(ua.firefox)
     }
