@@ -27,6 +27,10 @@ jobs:
       id: list_pakcages
       run: python -m pip list
 
+    - name: list packages
+      id: list_pakcages
+      run: python -m pip list
+
     - name: check links
       id: links
       run: python -m pytest -n auto ./tests/test_check_links_in_ipynb.py ./utils/tests/
