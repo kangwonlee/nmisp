@@ -56,8 +56,11 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
         if parsed.netloc.endswith('wikimedia.org'):
             header = get_header()
         elif (
-            parsed.netloc.endswith('stackoverflow.com') and
-            (os.environ.get('CI', 'false').lower() == 'true')
+            (os.environ.get('CI', 'false').lower() == 'true') and
+            (
+                parsed.netloc.endswith('stackoverflow.com') or
+                parsed.netloc.endswith('stackexchange.com')
+            )
         ):
             # TODO : enable testing for stackoverflow.com on Github Actions
             continue
