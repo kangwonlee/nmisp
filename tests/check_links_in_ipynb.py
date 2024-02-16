@@ -3,8 +3,10 @@ import pathlib
 import re
 import urllib.parse as up
 import urllib.request as ur
+
 from typing import Dict, List
 
+import fake_useragent as fa
 import nbformat
 import requests
 
@@ -107,10 +109,9 @@ def check_links_in_ipynb_cells_list(cells_list):
 def get_header() -> Dict[str, str]:
     # How to use Python requests to fake a browser visit a.k.a and generate User Agent,
     # https://stackoverflow.com/a/27652558
+
+    ua = fa.UserAgent()
+
     return {
-        "User-Agent": (
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/605.1.15 (KHTML, like Gecko) "
-            "Version/17.1.2 Safari/605.1.15"
-        )
+        "User-Agent": str(ua.random)
     }
