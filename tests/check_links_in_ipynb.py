@@ -1,4 +1,5 @@
 import functools
+import os
 import pathlib
 import re
 import urllib.parse as up
@@ -52,11 +53,14 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
 
         parsed = up.urlparse(url)
 
-        if (
-            parsed.netloc.endswith('wikimedia.org') or
-            parsed.netloc.endswith('stackoverflow.com')
-        ):
+        if parsed.netloc.endswith('wikimedia.org'):
             header = get_header()
+        elif (
+            parsed.netloc.endswith('stackoverflow.com') and
+            (os.environ.get('CI', 'false').lower() == 'true')
+        ):
+            # TODO : enable testing for stackoverflow.com on Github Actions
+            continue
         else:
             header = None
 
