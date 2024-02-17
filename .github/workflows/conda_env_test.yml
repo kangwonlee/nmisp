@@ -92,7 +92,7 @@ jobs:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         anaconda: [nightly]
       fail-fast: false
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v3
 
@@ -110,7 +110,7 @@ jobs:
     needs: badges
     name: test ipynb on Google Colab
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v3
 
