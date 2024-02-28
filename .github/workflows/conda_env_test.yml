@@ -21,7 +21,11 @@ jobs:
 
     - name: setup environment
       id: setup
-      run: python -m pip install pytest pytest-xdist requests jupyter lxml numpy matplotlib scipy sympy
+      run: python -m pip install -r tests/requirements.colab.2024.02.txt
+
+    - name: list packages
+      id: list_pakcages
+      run: python -m pip list
 
     - name: check links
       id: links
@@ -88,7 +92,7 @@ jobs:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         anaconda: [nightly]
       fail-fast: false
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v3
 
@@ -106,7 +110,7 @@ jobs:
     needs: badges
     name: test ipynb on Google Colab
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v3
 
@@ -128,10 +132,10 @@ jobs:
       uses: actions/cache@v3
       with:
         path: venv
-        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2023.04.txt') }}
+        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2024.02.txt') }}
 
     - name: install dependencies
-      run: python -m pip install -r ./tests/requirements.colab.2023.04.txt
+      run: python -m pip install -r ./tests/requirements.colab.2024.02.txt
 
     - name: pytest
       env:
