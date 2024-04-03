@@ -83,10 +83,17 @@ pytest -n auto tests/
 
 #### [Anaconda](https://www.anaconda.com/distribution/) <br>
 
-* Python 3.7.x
+* Python 3.7.x 이후<br>Python 3.7.x or latter
 * 2019.07판 이후<br>Latter or equal to 2019.07
 * 명령행에서 실행해야 할 경우, 경로에 추가하도록 설정<br>To run from a command line, configure to add python to the PATH
 * 경로 이름에 한글을 사용할 수 없음<br>Use ASCII characters for path name
+* In addition, some of the following modules may be needed<br>아래 모듈 중 일부 추가 설치가 필요할 수 있음
+
+``` sh
+conda install conda-forge::tensorflow
+conda install pytorch::pytorch
+conda install pytorch::torchvision
+```
 
 ### 깃 버전 관리 소프트웨어 : 그래픽 실행 환경<br>Git Version Control Software : Graphic user interface
 
