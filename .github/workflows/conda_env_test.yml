@@ -7,8 +7,8 @@ on:
   fork:
 
 jobs:
-  test_links_utils:
-    name: Check links in ipynb
+  test_utils:
+    name: Check utils
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -27,13 +27,13 @@ jobs:
       id: list_pakcages
       run: python -m pip list
 
-    - name: check links
-      id: links
-      run: python -m pytest -n auto ./tests/test_check_links_in_ipynb.py ./utils/tests/
+    - name: check utils
+      id: check_utils
+      run: python -m pytest -n auto ./utils/tests/
 
   badges:
     name: Add Google Colab Badges
-    needs: test_links_utils
+    needs: test_utils
     runs-on: ubuntu-latest
     permissions:
       contents: write
