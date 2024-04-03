@@ -10,7 +10,7 @@ jobs:
   test_utils:
     name: Check utils
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
     - name: checkout
       id: checkout
