@@ -58,7 +58,7 @@ jobs:
       id: commit
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message : Add Github badges or remove ipynb `id`s
+        commit_message : "Clean ipynb ${{ github.sha }}"
 
   test_ipynb:
     needs: badges
