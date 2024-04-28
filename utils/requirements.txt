@@ -1,0 +1,9 @@
+bs4
+jupyter
+lxml
+matplotlib
+numpy
+pytest
+pytest-xdist
+scipy
+sympy
