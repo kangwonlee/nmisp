@@ -78,55 +78,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        anaconda: ["2023.09"]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        anaconda: ["2023.09", "nightly"]
       fail-fast: false
     timeout-minutes: 30
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: build environment
-      env:
-        CONDA_PYTHON: ${{ matrix.anaconda }}
-      run: bash ./.github/workflows/build_env.sh
-
-    - name: pytest
-      env:
-        TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: bash ./.github/workflows/run_test.sh
-
-  test_ipynb_nightly:
-    needs: badges
-    name: ${{ matrix.anaconda }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        anaconda: [nightly]
-      fail-fast: false
-    timeout-minutes: 20
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: build environment
-      env:
-        CONDA_PYTHON: ${{ matrix.anaconda }}
-      run: bash ./.github/workflows/build_env.sh
-
-    - name: pytest
-      env:
-        TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: bash ./.github/workflows/run_test.sh
-
-  test_ipynb_osx:
-    needs: badges
-    name: ${{ matrix.anaconda }} on OSX
-    runs-on: macOS-latest
-    strategy:
-      matrix:
-        anaconda: ["2023.09", nightly]
-      fail-fast: false
-    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v4
 
@@ -184,7 +139,7 @@ jobs:
       run: python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
 
   update_nmisp_py:
-    needs: [test_ipynb, test_ipynb_nightly, test_ipynb_osx, test_ipynb_colab]
+    needs: [test_ipynb, test_ipynb_colab]
     name: Update nmisp_py
     runs-on: ubuntu-latest
     timeout-minutes: 5
