@@ -29,11 +29,11 @@ jobs:
       uses: actions/cache@v4
       with:
         path: venv
-        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2024.02.txt') }}
+        key: ${{ runner.os }}-${{ hashFiles('./utils/requirements.txt') }}
 
     - name: setup environment
       id: setup
-      run: python -m pip install -r tests/requirements.colab.2024.02.txt
+      run: python -m pip install -r ./utils/requirements.txt
 
     - name: list packages
       id: list_pakcages
@@ -78,7 +78,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
         anaconda: ["2023.09"]
       fail-fast: false
     timeout-minutes: 30
@@ -101,7 +101,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
         anaconda: [nightly]
       fail-fast: false
     timeout-minutes: 20
@@ -117,6 +117,35 @@ jobs:
       env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
       run: bash ./.github/workflows/run_test.sh
+
+  test_ipynb_osx:
+    needs: badges
+    name: ${{ matrix.anaconda }} on OSX
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        anaconda: ["2023.09", nightly]
+      fail-fast: false
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: setup conda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        activate-environment: test-environment
+        environment-file: ./tests/environment.${{ matrix.anaconda }}.yml
+
+    - name: pytest
+      env:
+        TEST_IPYNB_IGNORE_FOLDER: tutorial
+      run: |
+        conda env list
+        conda activate test-environment
+        conda list
+        python -m pytest --numprocesses=auto -k 'not (links or update_nmisp_py)' ./tests/
+      shell: bash -el {0}
 
   test_ipynb_colab:
     needs: badges
@@ -155,7 +184,7 @@ jobs:
       run: python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
 
   update_nmisp_py:
-    needs: [test_ipynb, test_ipynb_nightly, test_ipynb_colab]
+    needs: [test_ipynb, test_ipynb_nightly, test_ipynb_osx, test_ipynb_colab]
     name: Update nmisp_py
     runs-on: ubuntu-latest
     timeout-minutes: 5
