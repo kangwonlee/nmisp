@@ -1,4 +1,4 @@
-[![master](https://github.com/kangwonlee/nmisp/workflows/CI/badge.svg)](https://github.com/kangwonlee/nmisp/actions)
+[![CI](https://github.com/kangwonlee/nmisp/actions/workflows/conda_env_test.yml/badge.svg)](https://github.com/kangwonlee/nmisp/actions/workflows/conda_env_test.yml)
 
 # 사이파이 수치 해석<br>Numerical Methods in SciPy
 
