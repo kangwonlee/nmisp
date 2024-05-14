@@ -8,6 +8,7 @@
 #         print(f"- {pkg} = {ver}")
 
 Cython==3.0.8
+graphviz==0.20.3
 jupyter-client==6.1.12
 jupyter-console==6.1.0
 jupyter-server==1.24.0
