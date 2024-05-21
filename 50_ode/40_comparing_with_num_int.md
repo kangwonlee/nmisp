@@ -23,4 +23,8 @@ $$
 * The accuracy of both numerical integration and ODE solvers is characterized by their order. Higher-order methods generally provide more accurate results but may be more computationally expensive.<br>수치적분과 상미분방정식 해법 모두 그 차수가 정확도를 결정한다. 차수가 높은 방법이 일반적으로 더 정확한 결과를 제공하지만, 계산 비용은 더 많이 들 수 있다.
 * Consider the simplest methods: 0th order integration uses rectangles to approximate the area under a curve, much like Euler's method for ODEs assumes a constant slope within each interval. Both have first-order accuracy, meaning their global truncation error scales linearly with the step size.<br>가장 간단한 방법 부터 생각해 보자. 0차 적분은 곡선 아래의 면적을 근사하는 데 직사각형을 사용하며, 상미분방정식을 위한 Euler법은 각 구간 내에서 기울기가 일정할 것으로 가정한다. 둘 다 정확도가 1차로, 전역 절단 오차는 간격 길이와 선형적으로 비례한다.
 * Moving to higher order: The trapezoidal rule uses trapezoids for integration, analogous to Heun's method, which averages slopes at the interval's endpoints. Both are second-order methods, with global truncation errors that scale quadratically with the step size.<br>좀 더 차수를 높여서, 적분을 위해 사다리꼴을 사용하는 사다리꼴 규칙은 Heun법과 비슷한데, 이는 구간의 양 끝점에서의 기울기를 평균한다. 둘 다 2차 방법으로, 전역 절단 오차는 간격 길이의 제곱과 비례한다.
-* The Runge-Kutta method (RK4) parallels Simpson's rule for integration. Both emphasize the interval's midpoint, weighting it twice as heavily as the endpoints, and achieve fourth-order accuracy.<br>RK4 법은 심슨 적분과 유사하다. 둘 다 구간의 중점을 강조하여 끝점보다 두 배의 가중치를 둔다. 이렇게 하면 4차 정확도를 달성한다.
+* The Runge-Kutta method (RK4) parallels Simpson's rule for integration. Both emphasize the interval's midpoint, weighting it twice as heavily as the endpoints, and achieve fourth-order accuracy.<br>RK4 법은 심슨 적분과 유사하다. 둘 다 구간의 중점을 강조하여 끝점보다 두 배의 가중치를 둔다. 이렇게 하면 4차 정확도를 달성할 수 있다.
+
+## References<br>참고문헌
+
+* https://en.wikipedia.org/wiki/Euler_method#Global_truncation_error
