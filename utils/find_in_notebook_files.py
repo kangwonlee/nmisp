@@ -128,17 +128,20 @@ class NotebookFile:
         b_modified = False
         source_str = cell.get("source", '')
 
-        if not isinstance(source_str, str):
+        if isinstance(source_str, list):
+            source_str = ''.join(source_str)
+        elif not isinstance(source_str, str):
             raise TypeError(f'"source" is not a str : {type(source_str)}')
 
-        source_lines = source_str.splitlines()
-        new_source_lines = [line.rstrip() for line in source_lines]
+        if source_str:
+            source_lines = source_str.splitlines()
+            new_source_lines = [line.rstrip() for line in source_lines]
 
-        new_source_str = '\n'.join(new_source_lines) + '\n'
+            new_source_str = '\n'.join(new_source_lines) + '\n'
 
-        if source_str != new_source_str:
-            cell["source"] = new_source_str
-            b_modified = True
+            if source_str != new_source_str:
+                cell["source"] = new_source_str
+                b_modified = True
 
         return (b_modified)
 
