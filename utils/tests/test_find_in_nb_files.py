@@ -3,7 +3,7 @@ import json
 import pathlib
 import pytest
 import sys
-import tempfile
+
 
 import nbformat
 
@@ -58,21 +58,19 @@ def notebook_cells_src_splitlines(notebook_cells_src_str) -> fnf.NotebookFile:
 
 
 @pytest.fixture
-def notebook_file__src_str(notebook_cells_src_str):
-    with tempfile.NamedTemporaryFile(mode="w+t", suffix=".ipynb", encoding="utf-8", delete=False) as f:
-        json.dump(notebook_cells_src_str, f, indent=1, ensure_ascii=False)
-        f.seek(0)
+def notebook_file__src_str(notebook_cells_src_str, tmp_path):
+    ipynb_file = tmp_path / "test_notebook.ipynb"
 
-        nb = json.load(f)
+    with ipynb_file.open('w', encoding="utf-8") as f:
+        json.dump(notebook_cells_src_str, f, indent=1, ensure_ascii=False)
+
+    # reload to make sure
+    nb = json.loads(ipynb_file.read_text(encoding='utf-8'))
 
     assert isinstance(nb["cells"][0]["source"], str)
     assert isinstance(nb["cells"][1]["source"], str)
 
-    yield fnf.NotebookFile(f.name)
-
-    nb_path = pathlib.Path(f.name)
-    if nb_path.exists():
-        nb_path.unlink()
+    yield fnf.NotebookFile(ipynb_file)
 
 
 def test_split_source_lines(notebook_file__src_str, notebook_cells_src_splitlines):
