@@ -39,11 +39,14 @@ import pathlib
 import re
 import sys
 
-from typing import Tuple
+from typing import Any, Dict, Tuple
 
 import nbformat
 
 import recursively_convert_units as rcu
+
+
+CELL = Dict[str, Any]
 
 
 class NotebookFile:
