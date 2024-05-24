@@ -75,7 +75,7 @@ class NotebookFile:
     def validate(self):
         return nbformat.validate(self.nb_node)
 
-    def splitline_src(self):
+    def split_source_lines(self):
         """Split cell source code into individual lines."""
         for cell in self.nb_node.cells:
             if "source" in cell and isinstance(cell.source, str):
@@ -84,7 +84,7 @@ class NotebookFile:
     def write(self, new_file_full_path):
         output_path = pathlib.Path(new_file_full_path)
 
-        self.splitline_src()
+        self.split_source_lines()
 
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)

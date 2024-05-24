@@ -58,7 +58,7 @@ def notebook_cells_src_splitlines(notebook_cells_src_str) -> fnf.NotebookFile:
 
 
 @pytest.fixture
-def notebook_file__src_str(notebook_cells_src_str) -> fnf.NotebookFile:
+def notebook_file__src_str(notebook_cells_src_str):
     with tempfile.NamedTemporaryFile(mode="w+t", suffix=".ipynb", encoding="utf-8", delete=False) as f:
         json.dump(notebook_cells_src_str, f, indent=1, ensure_ascii=False)
         f.seek(0)
@@ -75,13 +75,13 @@ def notebook_file__src_str(notebook_cells_src_str) -> fnf.NotebookFile:
         nb_path.unlink()
 
 
-def test_splitline_src(notebook_file__src_str, notebook_cells_src_splitlines):
+def test_split_source_lines(notebook_file__src_str, notebook_cells_src_splitlines):
     nb = notebook_file__src_str
     assert isinstance(nb.nb_node["cells"][0]["source"], str)
     assert isinstance(nb.nb_node["cells"][1]["source"], str)
 
     # function under test
-    nb.splitline_src()
+    nb.split_source_lines()
 
     assert isinstance(nb.nb_node["cells"][0]["source"], list)
     assert isinstance(nb.nb_node["cells"][1]["source"], list)
