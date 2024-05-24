@@ -99,6 +99,7 @@ class NotebookFile:
         return any(b_write_list)
 
     def remove_id_from_a_cell(self, cell) -> bool:
+        """Remove cell IDs from a single code cell."""
         b_write = False
         if "metadata" in cell:
             if "id" in cell["metadata"]:
