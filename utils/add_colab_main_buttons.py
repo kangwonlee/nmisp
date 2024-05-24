@@ -66,9 +66,13 @@ def proc_file(full_path:str):
 
     notebook.validate()
 
+    # remove all ids
     b_write |= notebook.remove_cell_id_from_nodes()
 
     notebook.assert_no_ids()
+
+    # remove all trailing whitespaces
+    b_write |= notebook.remove_blank_spaces_from_nodes()
 
     ipynb_path = pathlib.Path(full_path)
 
