@@ -74,7 +74,8 @@ def notebook_file_with_ids(
     return fnf.NotebookFile(ipynb_file)
 
 
-def test_split_source_lines(notebook_file:fnf.NotebookFile):
+def test_split_source_lines(
+        notebook_file:fnf.NotebookFile):
     """Test splitting cell source code into individual lines."""
     nb = notebook_file
     original_sources = [cell.source for cell in nb.nb_node.cells]
@@ -87,7 +88,8 @@ def test_split_source_lines(notebook_file:fnf.NotebookFile):
         assert cell.source == original_sources[i].splitlines(keepends=True)
 
 
-def test_write(notebook_file:fnf.NotebookFile, tmp_path):
+def test_write(
+        notebook_file:fnf.NotebookFile, tmp_path):
     """Test writing the modified notebook to a new file."""
     nb = notebook_file
     nb.split_source_lines()
@@ -104,7 +106,8 @@ def test_write(notebook_file:fnf.NotebookFile, tmp_path):
         assert original_cell.source == new_cell.source
 
 
-def test_remove_cell_id_from_nodes(notebook_file_with_ids:fnf.NotebookFile):
+def test_remove_cell_id_from_nodes(
+        notebook_file_with_ids:fnf.NotebookFile):
     """Test removing cell IDs from the notebook."""
     nb = notebook_file_with_ids
     assert any("id" in cell or "id" in cell.get("metadata", {}) for cell in nb.nb_node.cells)  
@@ -113,6 +116,58 @@ def test_remove_cell_id_from_nodes(notebook_file_with_ids:fnf.NotebookFile):
     modified = nb.remove_cell_id_from_nodes()
     assert modified  # Check if any IDs were removed
     assert not any("id" in cell or "id" in cell.get("metadata", {}) for cell in nb.nb_node.cells)
+
+
+@pytest.fixture
+def notebook_file_with_trailing_spaces(
+        base_notebook_data:NOTEBOOK,
+        tmp_path:pathlib.Path) -> fnf.NotebookFile:
+    """Fixture creating a temporary notebook with trailing spaces in cells."""
+    nb_data_with_spaces = copy.deepcopy(base_notebook_data)
+    for cell in nb_data_with_spaces["cells"]:
+        if "source" in cell:
+            cell["source"] = cell["source"].replace("\n", "  \n")  # Add trailing spaces
+
+    ipynb_file = tmp_path / "test_notebook_trailing_spaces.ipynb"
+    with ipynb_file.open("w", encoding="utf-8") as f:
+        json.dump(nb_data_with_spaces, f, indent=1, ensure_ascii=False)
+
+    return fnf.NotebookFile(ipynb_file)
+
+
+def test_remove_blank_spaces_from_a_cell(
+        notebook_file_with_trailing_spaces:fnf.NotebookFile):
+    """Test removing trailing spaces from a single cell."""
+    nb = notebook_file_with_trailing_spaces
+    cell = nb.gen_cells().__next__()  # Get the first cell
+
+    assert cell["source"].endswith("  \n")  # Confirm trailing spaces
+    modified = nb.remove_blank_spaces_from_a_cell(cell)
+    assert modified
+    assert not cell["source"].endswith("  \n")  # Confirm spaces removed
+
+
+def test_remove_blank_spaces_from_nodes(
+        notebook_file_with_trailing_spaces:fnf.NotebookFile):
+    """Test removing trailing spaces from all cells in the notebook."""
+    nb = notebook_file_with_trailing_spaces
+    for cell in nb.gen_cells():
+        assert cell["source"].endswith("  \n")  # Confirm trailing spaces
+
+    modified = nb.remove_blank_spaces_from_nodes()
+    assert modified
+
+    for cell in nb.gen_cells():
+        assert not cell["source"].endswith("  \n")  # Confirm spaces removed
+
+
+def test_remove_blank_spaces_from_non_string_source(
+        notebook_file_with_trailing_spaces:fnf.NotebookFile):
+    """Test error handling when the cell source is not a string."""
+    nb = notebook_file_with_trailing_spaces
+    cell = {"source": 123}  # Non-string source
+    with pytest.raises(TypeError):
+        nb.remove_blank_spaces_from_a_cell(cell)
 
 
 if "__main__" == __name__:
