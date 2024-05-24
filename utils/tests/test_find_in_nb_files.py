@@ -110,3 +110,7 @@ def test_write(notebook_file__src_str, notebook_cells_src_splitlines):
         nb_list = notebook_cells_src_splitlines
         assert nb.nb_node["cells"][0]["source"] == nb_list["cells"][0]["source"]
         assert nb.nb_node["cells"][1]["source"] == nb_list["cells"][1]["source"]
+
+
+if "__main__" == __name__:
+    pytest.main([__file__])
