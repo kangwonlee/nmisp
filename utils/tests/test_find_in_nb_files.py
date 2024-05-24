@@ -8,9 +8,12 @@ import tempfile
 import nbformat
 
 
+utils_tests_path = pathlib.Path(__file__).parent.resolve()
+utils_path = utils_tests_path.parent.resolve()
+
 sys.path.insert(
     0,
-    str(pathlib.Path(__file__).parent.parent.absolute()),
+    str(utils_path),
 )
 
 
