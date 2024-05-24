@@ -170,5 +170,31 @@ def test_remove_blank_spaces_from_non_string_source(
         nb.remove_blank_spaces_from_a_cell(cell)
 
 
+@pytest.fixture
+def empty_cell() -> CELL:
+    """Fixture providing an empty cell."""
+    return {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [],
+    }
+
+
+def test_remove_blank_spaces_from_non_string_source(
+        notebook_file_with_trailing_spaces:fnf.NotebookFile,
+        empty_cell:CELL):
+    """Test error handling when the cell source is not a string."""
+    nb = notebook_file_with_trailing_spaces
+
+    input_cell = copy.deepcopy(empty_cell)
+    # function under test
+    result = nb.remove_blank_spaces_from_a_cell(input_cell)
+    # no changes should be made to the cell
+    assert not result
+    assert input_cell == empty_cell
+
+
 if "__main__" == __name__:
     pytest.main([__file__])
