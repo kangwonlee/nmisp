@@ -39,21 +39,23 @@ import pathlib
 import re
 import sys
 
-from typing import Tuple
+from typing import Any, Dict, Tuple
 
 import nbformat
 
 import recursively_convert_units as rcu
 
 
-class NotebookFile(object):
+CELL = Dict[str, Any]
+
+
+class NotebookFile:
+    allowed_id:Tuple[str]=("view-in-github",)
+
     # constructor
     def __init__(self, ipynb_full_path):
         self.ipynb_full_path = ipynb_full_path
         self.nb_node = nbformat.read(ipynb_full_path, nbformat.NO_CONVERT)
-
-    def __del__(self):
-        del self.nb_node
 
     def gen_cells(self):
         """Iterate over cells in the notebook."""
@@ -73,39 +75,82 @@ class NotebookFile(object):
     def validate(self):
         return nbformat.validate(self.nb_node)
 
-    def splitline_src(self):
+    def split_source_lines(self):
         """Split cell source code into individual lines."""
-        for cell in self.nb_node.cells:
+        for cell in self.gen_cells():
             if "source" in cell and isinstance(cell.source, str):
                 cell.source = [line+'\n' for line in cell.source.splitlines()]
 
     def write(self, new_file_full_path):
         output_path = pathlib.Path(new_file_full_path)
 
-        self.splitline_src()
+        self.split_source_lines()
 
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
+    def remove_cell_id_from_nodes(self) -> bool:
         """Remove cell IDs except for those in the allowed list."""
+        b_write_list = []
 
-        for c in self.nb_node["cells"]:
-            if "metadata" in c:
-                if "id" in c["metadata"]:
-                    if c["metadata"]["id"] not in allowed_id:
-                        del c["metadata"]["id"]
-                        b_write = True
-            if "id" in c:
-                del c["id"]
-                b_write = True
+        for cell in self.gen_cells():
+            b_write_list.append(self.remove_id_from_a_cell(cell))
 
-        return b_write
+        return any(b_write_list)
 
+    def remove_id_from_a_cell(self, cell:CELL) -> bool:
+        """Remove cell IDs from a single code cell."""
+        b_write = False
+        if "metadata" in cell:
+            if "id" in cell["metadata"]:
+                if cell["metadata"]["id"] not in self.allowed_id:
+                    del cell["metadata"]["id"]
+                    b_write = True
+        if "id" in cell:
+            del cell["id"]
+            b_write = True
+
+        return (b_write)
+
+    def remove_blank_spaces_from_nodes(self) -> bool:
+        """Remove cell IDs except for those in the allowed list."""
+        b_modified_list = []
+
+        for cell in self.gen_cells():
+            b_modified_list.append(
+                self.remove_blank_spaces_from_a_cell(cell)
+            )
+
+        return any(b_modified_list)
+
+    def remove_blank_spaces_from_a_cell(self, cell:CELL) -> bool:
+        """Remove trailing whitespace from a single code cell."""
+        b_modified = False
+        source_str = cell.get("source", '')
+
+        if isinstance(source_str, list):
+            source_str = ''.join(source_str)
+        elif not isinstance(source_str, str):
+            raise TypeError(f'"source" is not a str : {type(source_str)}')
+
+        if source_str:
+            source_lines = source_str.splitlines()
+            new_source_lines = [line.rstrip() for line in source_lines]
+
+            new_source_str = '\n'.join(new_source_lines) + '\n'
+
+            if source_str != new_source_str:
+                cell["source"] = new_source_str
+                b_modified = True
+
+        return (b_modified)
+
+    def assert_no_ids(self):
         """Assert that no cells have IDs except for allowed ones."""
-        for c in self.nb_node["cells"]:
+        for c in self.gen_cells():
             assert "id" not in c, c
             if "id" in c.get("metadata"):
-                assert c["metadata"]["id"] in allowed_id, c
+                assert c["metadata"]["id"] in self.allowed_id, c
 
 
 class FindOrReplaceNotebookFile(NotebookFile):
