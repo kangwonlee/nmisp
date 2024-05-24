@@ -104,7 +104,7 @@ class NotebookFile:
 
         return b_write
 
-    def assert_has_not_id(self):
+    def assert_no_ids(self):
         """Assert that no cells have IDs except for allowed ones."""
         for c in self.nb_node["cells"]:
             assert "id" not in c, c

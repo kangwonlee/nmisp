@@ -68,7 +68,7 @@ def proc_file(full_path:str):
 
     b_write |= notebook.remove_cell_id_from_nodes()
 
-    notebook.assert_has_not_id()
+    notebook.assert_no_ids()
 
     ipynb_path = pathlib.Path(full_path)
 
