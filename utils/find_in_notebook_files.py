@@ -56,14 +56,17 @@ class NotebookFile(object):
         del self.nb_node
 
     def gen_cells(self):
+        """Iterate over cells in the notebook."""
         for cell in self.nb_node.cells:
             yield cell
 
     def overwrite_cell(self, index:int, cell:dict):
+        """Overwrite a cell at a specific index."""
         new_cell = nbformat.NotebookNode(cell)
         self.nb_node.cells[index] = new_cell
 
     def insert_cell(self, index:int, cell:dict):
+        """Insert a new cell at a specific index."""
         new_cell = nbformat.NotebookNode(cell)
         self.nb_node.cells.insert(index, new_cell)
 
@@ -71,6 +74,7 @@ class NotebookFile(object):
         return nbformat.validate(self.nb_node)
 
     def splitline_src(self):
+        """Split cell source code into individual lines."""
         for cell in self.nb_node.cells:
             if "source" in cell and isinstance(cell.source, str):
                 cell.source = [line+'\n' for line in cell.source.splitlines()]
@@ -83,11 +87,7 @@ class NotebookFile(object):
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
-    def remove_cell_id_from_nodes(self, allowed_id:Tuple[str]=("view-in-github",)) -> bool:
-        """
-        Remove all cell["metadata"]["id"]
-        """
-        b_write = False
+        """Remove cell IDs except for those in the allowed list."""
 
         for c in self.nb_node["cells"]:
             if "metadata" in c:
@@ -101,7 +101,7 @@ class NotebookFile(object):
 
         return b_write
 
-    def assert_has_not_id(self, allowed_id:Tuple[str]=("view-in-github",)):
+        """Assert that no cells have IDs except for allowed ones."""
         for c in self.nb_node["cells"]:
             assert "id" not in c, c
             if "id" in c.get("metadata"):
