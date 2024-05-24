@@ -91,18 +91,25 @@ class NotebookFile:
 
     def remove_cell_id_from_nodes(self) -> bool:
         """Remove cell IDs except for those in the allowed list."""
+        b_write_list = []
 
-        for c in self.nb_node["cells"]:
-            if "metadata" in c:
-                if "id" in c["metadata"]:
-                    if c["metadata"]["id"] not in self.allowed_id:
-                        del c["metadata"]["id"]
-                        b_write = True
-            if "id" in c:
-                del c["id"]
-                b_write = True
+        for cell in self.nb_node["cells"]:
+            b_write_list.append(self.remove_id_from_a_cell(cell))
 
-        return b_write
+        return any(b_write_list)
+
+    def remove_id_from_a_cell(self, cell) -> bool:
+        b_write = False
+        if "metadata" in cell:
+            if "id" in cell["metadata"]:
+                if cell["metadata"]["id"] not in self.allowed_id:
+                    del cell["metadata"]["id"]
+                    b_write = True
+        if "id" in cell:
+            del cell["id"]
+            b_write = True
+
+        return (b_write)
 
     def assert_no_ids(self):
         """Assert that no cells have IDs except for allowed ones."""
