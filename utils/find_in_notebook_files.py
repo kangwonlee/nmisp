@@ -74,7 +74,7 @@ class NotebookFile:
 
     def split_source_lines(self):
         """Split cell source code into individual lines."""
-        for cell in self.nb_node.cells:
+        for cell in self.nb_node["cells"]:
             if "source" in cell and isinstance(cell.source, str):
                 cell.source = [line+'\n' for line in cell.source.splitlines()]
 
