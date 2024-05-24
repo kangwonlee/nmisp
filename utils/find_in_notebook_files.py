@@ -74,7 +74,7 @@ class NotebookFile:
 
     def split_source_lines(self):
         """Split cell source code into individual lines."""
-        for cell in self.nb_node["cells"]:
+        for cell in self.gen_cells():
             if "source" in cell and isinstance(cell.source, str):
                 cell.source = [line+'\n' for line in cell.source.splitlines()]
 
@@ -90,7 +90,7 @@ class NotebookFile:
         """Remove cell IDs except for those in the allowed list."""
         b_write_list = []
 
-        for cell in self.nb_node["cells"]:
+        for cell in self.gen_cells():
             b_write_list.append(self.remove_id_from_a_cell(cell))
 
         return any(b_write_list)
@@ -110,7 +110,7 @@ class NotebookFile:
 
     def assert_no_ids(self):
         """Assert that no cells have IDs except for allowed ones."""
-        for c in self.nb_node["cells"]:
+        for c in self.gen_cells():
             assert "id" not in c, c
             if "id" in c.get("metadata"):
                 assert c["metadata"]["id"] in self.allowed_id, c
