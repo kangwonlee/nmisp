@@ -46,7 +46,9 @@ import nbformat
 import recursively_convert_units as rcu
 
 
-class NotebookFile(object):
+class NotebookFile:
+    allowed_id:Tuple[str]=("view-in-github",)
+
     # constructor
     def __init__(self, ipynb_full_path):
         self.ipynb_full_path = ipynb_full_path
@@ -87,12 +89,13 @@ class NotebookFile(object):
         with output_path.open('w', encoding='utf-8') as f:
             json.dump(self.nb_node, f, indent=1, ensure_ascii=False)
 
+    def remove_cell_id_from_nodes(self) -> bool:
         """Remove cell IDs except for those in the allowed list."""
 
         for c in self.nb_node["cells"]:
             if "metadata" in c:
                 if "id" in c["metadata"]:
-                    if c["metadata"]["id"] not in allowed_id:
+                    if c["metadata"]["id"] not in self.allowed_id:
                         del c["metadata"]["id"]
                         b_write = True
             if "id" in c:
@@ -101,11 +104,12 @@ class NotebookFile(object):
 
         return b_write
 
+    def assert_has_not_id(self):
         """Assert that no cells have IDs except for allowed ones."""
         for c in self.nb_node["cells"]:
             assert "id" not in c, c
             if "id" in c.get("metadata"):
-                assert c["metadata"]["id"] in allowed_id, c
+                assert c["metadata"]["id"] in self.allowed_id, c
 
 
 class FindOrReplaceNotebookFile(NotebookFile):
