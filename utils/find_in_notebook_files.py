@@ -112,6 +112,36 @@ class NotebookFile:
 
         return (b_write)
 
+    def remove_blank_spaces_from_nodes(self) -> bool:
+        """Remove cell IDs except for those in the allowed list."""
+        b_modified_list = []
+
+        for cell in self.gen_cells():
+            b_modified_list.append(
+                self.remove_blank_spaces_from_a_cell(cell)
+            )
+
+        return any(b_modified_list)
+
+    def remove_blank_spaces_from_a_cell(self, cell:CELL) -> bool:
+        """Remove trailing whitespace from a single code cell."""
+        b_modified = False
+        source_str = cell.get("source", '')
+
+        if not isinstance(source_str, str):
+            raise TypeError(f'"source" is not a str : {type(source_str)}')
+
+        source_lines = source_str.splitlines()
+        new_source_lines = [line.rstrip() for line in source_lines]
+
+        new_source_str = '\n'.join(new_source_lines) + '\n'
+
+        if source_str != new_source_str:
+            cell["source"] = new_source_str
+            b_modified = True
+
+        return (b_modified)
+
     def assert_no_ids(self):
         """Assert that no cells have IDs except for allowed ones."""
         for c in self.gen_cells():
