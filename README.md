@@ -163,5 +163,7 @@ alias nb='jupyter notebook --no-browser &'
 
 ## 알림 <br> Acknowledgement
 
-이 소프트웨어는 대한민국 국토교통부 건설교통과학기술진흥원 교통물류연구사업의 지원을 받아 시작되었음 (18TLRP-B117133-03)<br>
-This software was initially supported by the Korea Ministry of Land, Infrastructure, and Transportation. It was also supported by the Korean Agency for Infrastructure Technology Advancement. (18TLRP-B117133-03)
+* This software was initially supported by the Korea Ministry of Land, Infrastructure, and Transportation. It was also supported by the Korean Agency for Infrastructure Technology Advancement. (18TLRP-B117133-03)
+<br>이 소프트웨어는 대한민국 국토교통부 건설교통과학기술진흥원 교통물류연구사업의 지원을 받아 시작되었음. (18TLRP-B117133-03)
+* Also, this software got help from generative artificial intelligence : Google Gemini Advance in improving the text and source code quality.
+<br>또한, 이 소프트웨어는 문장과 코드 품질 향상을 위해 생성형 인공지능 구글 제미니 어드밴스의 도움을 받았음.
