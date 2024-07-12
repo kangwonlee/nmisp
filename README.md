@@ -4,6 +4,8 @@
 
 ## 소개<br>Introduction
 
+[![how to use NMISP repo](https://i.ytimg.com/vi/_GN74MRLYcI/hqdefault.jpg)](https://youtu.be/_GN74MRLYcI)
+
 이 소프트웨어는 다양한 수치 해법을 [`Python`](https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%B4%EC%8D%AC) 언어와 그 확장 기능인 `SciPy` 를 이용하여 설명하고자 함.<br>
 This software aims to describe various numerical methods in [`Python`](https://en.wikipedia.org/wiki/Python_%28programming_language%29) programming language and its extesion `SciPy`.
 
