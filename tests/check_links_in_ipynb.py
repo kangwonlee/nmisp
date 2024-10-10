@@ -43,7 +43,10 @@ def check_link_in_cell(cell:Dict[str, str], r:re.Pattern, just_tested:List[str]=
 
     add_header_list = [
         'wikimedia.org', 'stackoverflow.com', 'askubuntu.com', 'stackexchange.com',
-        'matplotlib.org',
+    ]
+
+    skip_list = [
+        'matplotlib.org', 'github.com', 
     ]
 
     # url match loop
@@ -63,10 +66,8 @@ def check_link_in_cell(cell:Dict[str, str], r:re.Pattern, just_tested:List[str]=
             header = get_header()
         elif (
             (os.environ.get('CI', 'false').lower() == 'true') and
-            (
-                parsed.netloc.endswith('stackoverflow.com') or
-                parsed.netloc.endswith('askubuntu.com') or
-                parsed.netloc.endswith('stackexchange.com')
+            any(
+                map(parsed.netloc.endswith, skip_list)
             )
         ):
             # TODO : enable testing for stackoverflow.com on Github Actions
