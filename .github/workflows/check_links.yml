@@ -2,8 +2,9 @@ name: Check links
 
 on:
   push:
-    branches:
-      - add-header
+    paths:
+      - 'tests/test_check_links_in_ipynb.py'
+      - 'tests/check_links_in_ipynb.py'
   schedule:
     - cron: '45 01 30 * *'
 

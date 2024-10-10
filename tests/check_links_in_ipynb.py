@@ -10,7 +10,7 @@ import nbformat
 import requests
 
 
-def is_cell_markdown(cell):
+def is_cell_markdown(cell) -> bool:
     """
     Is the ipynb cell Markdown?
     """
@@ -18,7 +18,7 @@ def is_cell_markdown(cell):
 
 
 @functools.lru_cache(maxsize=1)
-def get_re_markdown_simple_link():
+def get_re_markdown_simple_link() -> re.Pattern:
     """
     Regular Expression to find markdown urls
     [text](url)
@@ -27,7 +27,7 @@ def get_re_markdown_simple_link():
 
 
 @functools.lru_cache(maxsize=1)
-def get_re_markdown_image_link():
+def get_re_markdown_image_link() -> re.Pattern:
     """
     Regular Expression to find urls linked to images
     [![text](image url)](url)
@@ -35,7 +35,7 @@ def get_re_markdown_image_link():
     return re.compile(r'\[\!\[.+?\]\(.+?\)\]\((.+?)\)')
 
 
-def check_link_in_cell(cell, r, just_tested:List[str]=[]):
+def check_link_in_cell(cell:Dict[str, str], r:re.Pattern, just_tested:List[str]=[]) -> None:
     """
     cell : ipynb cell
     r : regex. return value from get_re_markdown_simple_link() or get_re_markdown_image_link()
@@ -83,7 +83,7 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
         req.raise_for_status()
 
 
-def check_links_in_ipynb(ipynb_file_path:pathlib.Path):
+def check_links_in_ipynb(ipynb_file_path:pathlib.Path) -> None:
     """
     filename : path to an ipynb file
     """
@@ -95,7 +95,7 @@ def check_links_in_ipynb(ipynb_file_path:pathlib.Path):
     )
 
 
-def check_links_in_ipynb_cells_list(cells_list):
+def check_links_in_ipynb_cells_list(cells_list:List[Dict[str, str]]) -> None:
     """
     cells_list : ipynb notebook's cells
 
