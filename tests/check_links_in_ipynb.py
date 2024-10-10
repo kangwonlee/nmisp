@@ -62,9 +62,7 @@ def check_link_in_cell(cell:Dict[str, str], r:re.Pattern, just_tested:List[str]=
 
         parsed = up.urlparse(url)
 
-        if any(map(parsed.netloc.endswith, add_header_list)):
-            header = get_header()
-        elif (
+        if (
             (os.environ.get('CI', 'false').lower() == 'true') and
             any(
                 map(parsed.netloc.endswith, skip_list)
@@ -72,6 +70,8 @@ def check_link_in_cell(cell:Dict[str, str], r:re.Pattern, just_tested:List[str]=
         ):
             # TODO : enable testing for stackoverflow.com on Github Actions
             continue
+        elif any(map(parsed.netloc.endswith, add_header_list)):
+            header = get_header()
         else:
             header = None
 
