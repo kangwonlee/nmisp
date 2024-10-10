@@ -1,6 +1,9 @@
 name: Check links
 
-on: 
+on:
+  push:
+    branches:
+      - add-header
   schedule:
     - cron: '45 01 30 * *'
 
