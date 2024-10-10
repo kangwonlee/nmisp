@@ -40,6 +40,12 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
     cell : ipynb cell
     r : regex. return value from get_re_markdown_simple_link() or get_re_markdown_image_link()
     """
+
+    add_header_list = [
+        'wikimedia.org', 'stackoverflow.com', 'askubuntu.com', 'stackexchange.com',
+        'matplotlib.org',
+    ]
+
     # url match loop
     for m in r.finditer(cell['source']):
         # try to open url part of the match
@@ -53,7 +59,7 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
 
         parsed = up.urlparse(url)
 
-        if parsed.netloc.endswith('wikimedia.org'):
+        if any(map(parsed.netloc.endswith, add_header_list)):
             header = get_header()
         elif (
             (os.environ.get('CI', 'false').lower() == 'true') and
