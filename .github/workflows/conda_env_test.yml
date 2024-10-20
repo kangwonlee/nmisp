@@ -24,23 +24,12 @@ jobs:
         cache-suffix: "uv"
         cache-dependency-glob: "utils/requirements.txt"
 
-    - name: Create venv
-      run: uv venv venv
-
-    - name: Activate venv
-      run: uv venv venv
-
-    - name: setup environment
-      id: setup
-      run: uv pip install -r ./utils/requirements.txt
-
-    - name: list packages
-      id: list_pakcages
-      run: uv pip list
-
-    - name: check utils
-      id: check_utils
-      run: python -m pytest -n auto ./utils/tests/
+    - name: Create venv & test utils
+      run: |
+        uv venv venv
+        uv pip install -r ./utils/requirements.txt
+        uv pip list
+        python -m pytest -n auto ./utils/tests/
 
   badges:
     name: Add Google Colab Badges
