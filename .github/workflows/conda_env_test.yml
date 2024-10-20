@@ -26,7 +26,7 @@ jobs:
 
     - name: Create venv & test utils
       run: |
-        uv venv venv
+        uv venv
         uv pip install -r ./utils/requirements.txt
         uv pip list
         python -m pytest -n auto ./utils/tests/
