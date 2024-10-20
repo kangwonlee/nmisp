@@ -37,9 +37,7 @@ jobs:
 
     - name: check utils
       id: check_utils
-      run: |
-        uv venv
-        python -m pytest -n auto ./utils/tests/
+      run: python -m pytest -n auto ./utils/tests/
 
   badges:
     name: Add Google Colab Badges
