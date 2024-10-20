@@ -28,7 +28,7 @@ jobs:
       run: uv venv venv
 
     - name: Activate venv
-      run: uv venv venv
+      run: uv venv
 
     - name: setup environment
       id: setup
