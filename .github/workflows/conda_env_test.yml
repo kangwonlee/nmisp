@@ -25,9 +25,6 @@ jobs:
         cache-dependency-glob: "utils/requirements.txt"
 
     - name: Create venv
-      run: uv venv venv
-
-    - name: Activate venv
       run: uv venv
 
     - name: setup environment
