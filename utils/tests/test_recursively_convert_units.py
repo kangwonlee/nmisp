@@ -51,10 +51,15 @@ def temp_dir(tmp_path):  # Use tmp_path instead of tmpdir
     return temp_root  # Return the path as a pathlib.Path object
 
 def test_os_walk_if_not_ignore__basic(temp_dir):
-    expected_dirs = {temp_dir / "chapter1", temp_dir / "chapter2"}
     result_dirs = {pathlib.Path(root_name) for root_name, _, _ in rcu.os_walk_if_not_ignore(str(temp_dir))}
+    expected_dirs = {temp_dir, temp_dir / "chapter1", temp_dir / "chapter2"}
     assert result_dirs == expected_dirs
+
 
 def test_os_walk_if_not_ignore__ignore(temp_dir):
     result_dirs = [pathlib.Path(root_name) for root_name, _, _ in rcu.os_walk_if_not_ignore(str(temp_dir))]
     assert temp_dir / "__pycache__" not in result_dirs
+
+
+if "__main__" == __name__:
+    pytest.main([__file__])
