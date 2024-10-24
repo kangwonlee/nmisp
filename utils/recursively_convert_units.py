@@ -11,7 +11,7 @@ def is_ignore(path:pathlib.Path, ignore_set:set=set(ignore_path_list)) -> bool:
     return len(ignore_set.intersection(path_split_set))
 
 
-def os_walk_if_not_ignore(root):
+def os_walk_if_not_ignore(root:pathlib.Path):
     """
     Run an os.walk() loop and yield if not is_ignore()
 
