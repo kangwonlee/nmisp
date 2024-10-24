@@ -82,7 +82,9 @@ def test_iter_ipynb_default_root(temp_proj_root, monkeypatch):
         temp_proj_root / "chapter1" / "notebook1.ipynb",
         temp_proj_root / "chapter2" / "notebook2.ipynb",
     }
-    result_files = set(rcu.iter_ipynb())
+    result_files = set(
+        pathlib.Path(p) for p in rcu.iter_ipynb()
+    )
     assert result_files == expected_files
 
 
@@ -90,14 +92,16 @@ def test_iter_ipynb_specific_root(temp_proj_root):
     """Test with a specific root directory."""
     chapter2_path = temp_proj_root / "chapter2"
     expected_files = {chapter2_path / "notebook2.ipynb"}
-    result_files = set(rcu.iter_ipynb(str(chapter2_path)))  # Pass chapter2 as root
+    result_files = set(
+        pathlib.Path(p) for p in rcu.iter_ipynb(str(chapter2_path))
+    )  # Pass chapter2 as root
     assert result_files == expected_files
 
 
 def test_iter_ipynb_ignores_directories(temp_proj_root, monkeypatch):
     """Test that ignored directories are skipped."""
     monkeypatch.setattr(rcu, "get_proj_root", lambda: temp_proj_root)
-    result_files = list(rcu.iter_ipynb())
+    result_files = map(pathlib.Path,rcu.iter_ipynb())
     for file in result_files:
         assert "__pycache__" not in file.parts
 
