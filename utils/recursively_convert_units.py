@@ -26,17 +26,6 @@ def is_ipynb(path:pathlib.Path) -> bool:
     return '.ipynb' == pathlib.Path(path).suffix
 
 
-def gen_filename_ipynb(filename_list):
-    """
-    Generator for ipynb filenames in the filename_list
-
-    filename_list : list of filenames within a folder
-    """
-    for filename in filename_list:
-        if is_ipynb(filename):
-            yield filename    
-
-
 def gen_ipynb(root):
     """
     Generate ipynb files within each chapter
