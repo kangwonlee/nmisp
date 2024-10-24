@@ -41,20 +41,7 @@ jobs:
 
     - name: check utils
       id: check_utils
-      run: python -m pytest --cov=utils --cov-report=html -n auto ./utils/tests/
-
-    - name: upload artifacts
-      id: artifacts
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: artifacts
-        path: |
-          ./*.png
-          ./*.json
-          ./htmlcov/*.html
-        retention-days: 21
-        overwrite: true
+      run: python -m pytest --cov=utils --cov-report=term-missing -n auto ./utils/tests/
 
   badges:
     name: Add Google Colab Badges
