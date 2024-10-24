@@ -4,6 +4,7 @@ lxml
 matplotlib
 numpy
 pytest
+pytest-cov
 pytest-xdist
 scipy
 sympy
