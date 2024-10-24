@@ -47,11 +47,7 @@ def get_proj_root() -> pathlib.Path:
     return result
 
 
-def iter_ipynb(root:str=None):
-
-    if root is None:
-        root = get_proj_root()
-
+def iter_ipynb(root:pathlib.Path=get_proj_root()):
     for root_name, _, filename_list in os_walk_if_not_ignore(root):
         # ipynb file loop
         for ipynb_filename in filter(is_ipynb, filename_list):

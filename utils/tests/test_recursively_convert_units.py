@@ -72,7 +72,7 @@ def test_os_walk_if_not_ignore__ignore(temp_proj_root:pathlib.Path):
     assert temp_proj_root / "__pycache__" not in result_dirs
 
 
-def test_iter_ipynb_default_root(temp_proj_root:pathlib.Path, monkeypatch):
+def test_iter_ipynb__specific_root(temp_proj_root:pathlib.Path, monkeypatch):
     """Test with the default project root."""
     monkeypatch.setattr(rcu, "get_proj_root", lambda: temp_proj_root)  # Patch get_proj_root
     expected_files = {
@@ -82,31 +82,18 @@ def test_iter_ipynb_default_root(temp_proj_root:pathlib.Path, monkeypatch):
     result_files = set(
         map(
             pathlib.Path,
-            rcu.iter_ipynb(),
+            rcu.iter_ipynb(temp_proj_root),
         )
     )
     assert result_files == expected_files
 
 
-def test_iter_ipynb_specific_root(temp_proj_root:pathlib.Path):
-    """Test with a specific root directory."""
-    chapter2_path = temp_proj_root / "chapter2"
-    expected_files = {chapter2_path / "notebook2.ipynb"}
-    result_files = set(
-        map(
-            pathlib.Path,
-            rcu.iter_ipynb(str(chapter2_path)),
-        )
-    )
-    assert result_files == expected_files
-
-
-def test_iter_ipynb_ignores_directories(temp_proj_root:pathlib.Path, monkeypatch):
+def test_iter_ipynb__ignores_directories(temp_proj_root:pathlib.Path, monkeypatch):
     """Test that ignored directories are skipped."""
     monkeypatch.setattr(rcu, "get_proj_root", lambda: temp_proj_root)
     result_files = map(
         pathlib.Path,
-        rcu.iter_ipynb()
+        rcu.iter_ipynb(temp_proj_root)
     )  # Use map for efficient conversion
     for file in result_files:
         assert "__pycache__" not in file.parts
@@ -120,7 +107,7 @@ def test_gen_ipynb(temp_proj_root:pathlib.Path):
     result_files = set(
         map(
             lambda x: (pathlib.Path(x[0]), x[1]),
-            rcu.gen_ipynb(str(temp_proj_root))
+            rcu.gen_ipynb(temp_proj_root)
         )
     )
     assert len(result_files) == len(expected_files)
