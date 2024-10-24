@@ -56,6 +56,7 @@ def temp_proj_root(tmp_path:pathlib.Path):
     # Ignored directory
     (root / "__pycache__").mkdir()
     (root / "__pycache__" / "cache_file.txt").write_text("content") 
+    (root / "__pycache__" / "do_not_run.ipynb").write_text("content") 
 
     return root
 
