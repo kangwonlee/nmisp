@@ -61,14 +61,25 @@ def temp_proj_root(tmp_path:pathlib.Path):
     return root
 
 
-def test_os_walk_if_not_ignore__basic(temp_proj_root:pathlib.Path):
-    result_dirs = {pathlib.Path(root_name) for root_name, _, _ in rcu.os_walk_if_not_ignore(str(temp_proj_root))}
-    expected_dirs = {temp_proj_root, temp_proj_root / "chapter1", temp_proj_root / "chapter2"}
-    assert result_dirs == expected_dirs
+def test_walk_ipynb__basic(temp_proj_root:pathlib.Path):
+    result_dirs = {pathlib.Path(root_name) for root_name, _, _ in rcu.walk_ipynb(temp_proj_root)}
+    expected_dirs = {temp_proj_root / "chapter1", temp_proj_root / "chapter2"}
+    assert len(result_dirs) == len(expected_dirs), (
+        {
+            'result_dirs': list(map(lambda s:s.name, result_dirs)),
+            'expected_dirs': list(map(lambda s:s.name, expected_dirs)),
+        }
+    )
+    assert result_dirs == expected_dirs, (
+        {
+            'result_dirs': list(map(lambda s:s.name, result_dirs)),
+            'expected_dirs': list(map(lambda s:s.name, expected_dirs)),
+        }
+    )
 
 
-def test_os_walk_if_not_ignore__ignore(temp_proj_root:pathlib.Path):
-    result_dirs = [pathlib.Path(root_name) for root_name, _, _ in rcu.os_walk_if_not_ignore(str(temp_proj_root))]
+def test_walk_ipynb__ignore(temp_proj_root:pathlib.Path):
+    result_dirs = [pathlib.Path(root_name) for root_name, _, _ in rcu.walk_ipynb(temp_proj_root)]
     assert temp_proj_root / "__pycache__" not in result_dirs
 
 
@@ -85,10 +96,19 @@ def test_iter_ipynb__specific_root(temp_proj_root:pathlib.Path, monkeypatch):
             rcu.iter_ipynb(temp_proj_root),
         )
     )
-    assert result_files == expected_files
+    assert len(result_files) == len(expected_files),(
+        list(result_files),
+        list(expected_files),
+    )
+    assert result_files == expected_files, (
+        {
+            'result_files': list(map(lambda s:s.name, result_files)),
+            'expected_files': list(map(lambda s:s.name, expected_files)),
+        }
+    )
 
 
-def test_iter_ipynb__ignores_directories(temp_proj_root:pathlib.Path, monkeypatch):
+def test_iter_ipynb_ignores_directories(temp_proj_root:pathlib.Path, monkeypatch):
     """Test that ignored directories are skipped."""
     monkeypatch.setattr(rcu, "get_proj_root", lambda: temp_proj_root)
     result_files = map(

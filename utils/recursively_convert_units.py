@@ -1,25 +1,25 @@
-import os
 import pathlib
 
 
-ignore_path_list = {'__pycache__', '.ipynb_checkpoints', '.git', '.cache', '.idea', 
-                    'nbutils', 'tests', 'utils', '.github'}
+ignore_path_list = {
+    '__pycache__', '.ipynb_checkpoints', '.git', '.cache', '.idea', 
+    'nbutils', 'tests', 'utils', '.github'}
 
 
 def is_ignore(path:pathlib.Path, ignore_set:set=set(ignore_path_list)) -> bool:
-    path_split_set = set(pathlib.Path(path).parts)
+    path_split_set = set(path.parts)
     return len(ignore_set.intersection(path_split_set))
 
 
-def os_walk_if_not_ignore(root:pathlib.Path):
+def walk_ipynb(root:pathlib.Path):
     """
-    Run an os.walk() loop and yield if not is_ignore()
+    Run an root.rglob() loop and yield if not is_ignore()
 
-    root : a path string to a folder
+    root : a pathlib.Path to a folder
     """
-    for root_name, dir_list, filename_list in os.walk(root):
-        if not is_ignore(root_name):
-            yield root_name, dir_list, filename_list
+    for p in root.rglob("*"):  # Use rglob to traverse all subdirectories
+        if p.is_dir() and not is_ignore(p):  # Check if it's a directory and not ignored
+            yield p, list(p.iterdir()), [f.name for f in p.iterdir() if f.is_file()]
 
 
 def is_ipynb(path:pathlib.Path) -> bool:
@@ -32,7 +32,7 @@ def gen_ipynb(root):
     root(==parent folder of chapter folders) -> chapter_path, ipynb_filename
     """
     # Chapter folder
-    for chapter_path, _, filename_list in os_walk_if_not_ignore(root):
+    for chapter_path, _, filename_list in walk_ipynb(root):
 
         # Notebook file loop
         for ipynb_filename in filter(is_ipynb, filename_list):
@@ -48,8 +48,8 @@ def get_proj_root() -> pathlib.Path:
 
 
 def iter_ipynb(root:pathlib.Path=get_proj_root()):
-    for root_name, _, filename_list in os_walk_if_not_ignore(root):
+    for root_name, _, filename_list in walk_ipynb(root):
         # ipynb file loop
         for ipynb_filename in filter(is_ipynb, filename_list):
-            full_path = os.path.join(root_name, ipynb_filename)
+            full_path = root_name / ipynb_filename
             yield full_path
