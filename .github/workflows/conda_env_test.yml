@@ -52,7 +52,7 @@ jobs:
         path: |
           ./*.png
           ./*.json
-          ./*.html
+          ./htmlcov/*.html
         retention-days: 21
         overwrite: true
 
