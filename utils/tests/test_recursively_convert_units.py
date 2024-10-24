@@ -112,5 +112,20 @@ def test_iter_ipynb_ignores_directories(temp_proj_root:pathlib.Path, monkeypatch
         assert "__pycache__" not in file.parts
 
 
+def test_gen_ipynb(temp_proj_root:pathlib.Path):
+    expected_files = {
+        (temp_proj_root / "chapter1", "notebook1.ipynb"),
+        (temp_proj_root / "chapter2", "notebook2.ipynb"),
+    }
+    result_files = set(
+        map(
+            lambda x: (pathlib.Path(x[0]), x[1]),
+            rcu.gen_ipynb(str(temp_proj_root))
+        )
+    )
+    assert len(result_files) == len(expected_files)
+    assert result_files == expected_files
+
+
 if "__main__" == __name__:
     pytest.main([__file__])
