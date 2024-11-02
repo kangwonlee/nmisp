@@ -62,7 +62,8 @@ jobs:
       with:
         version: "latest"
         enable-cache: true
-        cache-suffix: "uv-badges"
+        cache-suffix: "uv"
+        cache-dependency-glob: "utils/requirements.txt"
 
     - name: Create venv
       run: uv venv my_env
@@ -71,7 +72,13 @@ jobs:
       id: setup
       run: |
         source my_env/bin/activate
-        uv pip install bs4 jupyter lxml
+        uv pip install -r ./utils/requirements.txt
+
+    - name: list packages
+      id: list_pakcages
+      run: |
+        source my_env/bin/activate
+        uv pip list
 
     - name: Add/Update badges
       id: badges
