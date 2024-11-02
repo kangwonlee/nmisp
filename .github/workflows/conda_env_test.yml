@@ -138,29 +138,26 @@ jobs:
 
     - name: Install uv
       uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+        enable-cache: true
+        cache-suffix: "uv"
+        cache-dependency-glob: "tests/requirements.colab.2024.02.txt"
 
     - name: Create venv
-      run: uv venv create venv
+      run: uv venv my_env
 
-    - name: Activate venv
-      run: source venv/bin/activate
-
-    - name: Get uv cache dir
-      id: uv-cache
+    - name: setup environment
+      id: setup
       run: |
-        source venv/bin/activate
-        echo "dir=$(uv cache dir)" >> $GITHUB_OUTPUT
+        source my_env/bin/activate
+        uv pip install -r ./tests/requirements.colab.2024.02.txt
 
-    - name: Cache venv
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.uv-cache.outputs.dir }}
-        key: ${{ runner.os }}-uv-${{ hashFiles('./tests/requirements.colab.2024.02.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-uv-${{ hashFiles('./tests/requirements.colab.2024.02.txt') }}
-
-    - name: install dependencies
-      run: uv pip install -r ./tests/requirements.colab.2024.02.txt
+    - name: list packages
+      id: list_pakcages
+      run: |
+        source my_env/bin/activate
+        uv pip list
 
     - name: pytest
       env:
