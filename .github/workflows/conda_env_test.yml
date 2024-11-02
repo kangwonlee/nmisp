@@ -31,17 +31,17 @@ jobs:
       id: setup
       run: |
         source my_env/bin/activate
-        echo "before ====="
-        uv pip list
         uv pip install -r ./utils/requirements.txt
 
     - name: list packages
       id: list_pakcages
-      run: uv pip list
+      run: |
+        source my_env/bin/activate
+        uv pip list
 
     - name: check utils
       id: check_utils
-      run:  |
+      run: |
         source my_env/bin/activate
         python -m pytest -n auto ./utils/tests/
 
@@ -62,11 +62,15 @@ jobs:
 
     - name: setup environment
       id: setup
-      run: uv pip install bs4 jupyter lxml
+      run: |
+        source my_env/bin/activate
+        uv pip install bs4 jupyter lxml
 
     - name: Add/Update badges
       id: badges
-      run: python ./utils/add_colab_main_buttons.py
+      run: |
+        source my_env/bin/activate
+        python ./utils/add_colab_main_buttons.py
 
     - name: Commit & push
       id: commit
