@@ -182,9 +182,6 @@ jobs:
         python-version: '3.10.12'
         cache: 'pip' 
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v3
-
     - name: run nmisp_py updater
       id: updater
       env:
