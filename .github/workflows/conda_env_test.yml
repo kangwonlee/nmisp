@@ -162,7 +162,9 @@ jobs:
     - name: pytest
       env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
+      run:  |
+        source my_env/bin/activate
+        python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
 
   update_nmisp_py:
     needs: [test_ipynb, test_ipynb_colab]
