@@ -16,32 +16,34 @@ jobs:
       id: checkout
       uses: actions/checkout@v4
 
-    - name: Update pip
-      run: python -m pip install --upgrade pip
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+        enable-cache: true
+        cache-suffix: "uv"
+        cache-dependency-glob: "utils/requirements.txt"
 
     - name: Create venv
-      run: python -m venv venv
-
-    - name: Activate venv
-      run: source venv/bin/activate
-
-    - name: Cache venv
-      uses: actions/cache@v4
-      with:
-        path: venv
-        key: ${{ runner.os }}-${{ hashFiles('./utils/requirements.txt') }}
+      run: uv venv my_env
 
     - name: setup environment
       id: setup
-      run: python -m pip install -r ./utils/requirements.txt
+      run: |
+        source my_env/bin/activate
+        uv pip install -r ./utils/requirements.txt
 
     - name: list packages
       id: list_pakcages
-      run: python -m pip list
+      run: |
+        source my_env/bin/activate
+        uv pip list
 
     - name: check utils
       id: check_utils
-      run: python -m pytest -n auto ./utils/tests/
+      run: |
+        source my_env/bin/activate
+        python -m pytest -n auto ./utils/tests/
 
   badges:
     name: Add Google Colab Badges
@@ -55,16 +57,34 @@ jobs:
       id: checkout
       uses: actions/checkout@v4
 
-    - name: Update pip
-      run: python -m pip install --upgrade pip
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+        enable-cache: true
+        cache-suffix: "uv"
+        cache-dependency-glob: "utils/requirements.txt"
+
+    - name: Create venv
+      run: uv venv my_env
 
     - name: setup environment
       id: setup
-      run: python -m pip install bs4 jupyter lxml
+      run: |
+        source my_env/bin/activate
+        uv pip install -r ./utils/requirements.txt
+
+    - name: list packages
+      id: list_pakcages
+      run: |
+        source my_env/bin/activate
+        uv pip list
 
     - name: Add/Update badges
       id: badges
-      run: python ./utils/add_colab_main_buttons.py
+      run: |
+        source my_env/bin/activate
+        python ./utils/add_colab_main_buttons.py
 
     - name: Commit & push
       id: commit
@@ -116,28 +136,35 @@ jobs:
       with:
         python-version: '3.10.12'
 
-    - name: Update pip
-      run: python -m pip install --upgrade pip
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+        enable-cache: true
+        cache-suffix: "uv"
+        cache-dependency-glob: "tests/requirements.colab.2024.02.txt"
 
     - name: Create venv
-      run: python -m venv venv
+      run: uv venv my_env
 
-    - name: Activate venv
-      run: source venv/bin/activate
+    - name: setup environment
+      id: setup
+      run: |
+        source my_env/bin/activate
+        uv pip install -r ./tests/requirements.colab.2024.02.txt
 
-    - name: Cache venv
-      uses: actions/cache@v4
-      with:
-        path: venv
-        key: ${{ runner.os }}-${{ hashFiles('./tests/requirements.colab.2024.02.txt') }}
-
-    - name: install dependencies
-      run: python -m pip install -r ./tests/requirements.colab.2024.02.txt
+    - name: list packages
+      id: list_pakcages
+      run: |
+        source my_env/bin/activate
+        uv pip list
 
     - name: pytest
       env:
         TEST_IPYNB_IGNORE_FOLDER: tutorial
-      run: python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
+      run:  |
+        source my_env/bin/activate
+        python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
 
   update_nmisp_py:
     needs: [test_ipynb, test_ipynb_colab]
@@ -153,10 +180,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10.12'
-        cache: 'pip'
-
-    - name: Update pip
-      run: python -m pip install --upgrade pip
+        cache: 'pip' 
 
     - name: run nmisp_py updater
       id: updater
