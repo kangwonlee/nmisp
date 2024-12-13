@@ -9,6 +9,7 @@
 
 Cython == 3.0.11
 graphviz == 0.20.3
+html5lib == 1.1
 jupyter-client == 6.1.12
 jupyter-console == 6.1.0
 jupyter-server == 1.24.0
