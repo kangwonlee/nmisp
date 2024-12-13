@@ -51,6 +51,7 @@ CELL = Dict[str, Any]
 
 class NotebookFile:
     allowed_id:Tuple[str]=("view-in-github",)
+    allowed_colab:Tuple[str]=tuple()
 
     # constructor
     def __init__(self, ipynb_full_path):
@@ -97,6 +98,20 @@ class NotebookFile:
             b_write_list.append(self.remove_id_from_a_cell(cell))
 
         return any(b_write_list)
+
+    def remove_colab_from_a_cell(self, cell:CELL) -> bool:
+        """Remove colab from a single code cell."""
+        b_write = False
+        if "metadata" in cell:
+            if "colab" in cell["metadata"]:
+                if cell["metadata"]["colab"] not in self.allowed_colab:
+                    del cell["metadata"]["colab"]
+                    b_write = True
+        if "colab" in cell:
+            del cell["colab"]
+            b_write = True
+
+        return (b_write)
 
     def remove_id_from_a_cell(self, cell:CELL) -> bool:
         """Remove cell IDs from a single code cell."""
