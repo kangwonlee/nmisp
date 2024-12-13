@@ -142,7 +142,7 @@ jobs:
         version: "latest"
         enable-cache: true
         cache-suffix: "uv"
-        cache-dependency-glob: "tests/requirements.colab.2024.02.txt"
+        cache-dependency-glob: "tests/requirements.colab.2024.12.txt"
 
     - name: Create venv
       run: uv venv my_env
@@ -151,7 +151,7 @@ jobs:
       id: setup
       run: |
         source my_env/bin/activate
-        uv pip install -r ./tests/requirements.colab.2024.02.txt
+        uv pip install -r ./tests/requirements.colab.2024.12.txt
 
     - name: list packages
       id: list_pakcages
