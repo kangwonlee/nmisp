@@ -96,6 +96,7 @@ class NotebookFile:
 
         for cell in self.gen_cells():
             b_write_list.append(self.remove_id_from_a_cell(cell))
+            b_write_list.append(self.remove_colab_from_a_cell(cell))
 
         return any(b_write_list)
 
