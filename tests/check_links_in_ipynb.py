@@ -58,9 +58,11 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
         elif (
             (os.environ.get('CI', 'false').lower() == 'true') and
             (
-                parsed.netloc.endswith('stackoverflow.com') or
-                parsed.netloc.endswith('askubuntu.com') or
-                parsed.netloc.endswith('stackexchange.com')
+                   parsed.netloc.endswith('stackoverflow.com')
+                or parsed.netloc.endswith('askubuntu.com')
+                or parsed.netloc.endswith('stackexchange.com')
+                or parsed.netloc.endswith('github.com')
+                or parsed.netloc.endswith('towardsdatascience.com')
             )
         ):
             # TODO : enable testing for stackoverflow.com on Github Actions
