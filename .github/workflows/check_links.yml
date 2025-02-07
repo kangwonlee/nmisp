@@ -19,7 +19,7 @@ jobs:
 
     - name: setup environment
       id: setup
-      run: python -m pip install -r tests/requirements.colab.2024.02.txt
+      run: python -m pip install -r tests/requirements.colab.2025.02.txt
 
     - name: list packages
       id: list_pakcages
