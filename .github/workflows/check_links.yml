@@ -3,7 +3,6 @@ name: Check links
 on: 
   schedule:
     - cron: '45 01 30 * *'
-  push:
 
 jobs:
   test_links_utils:
