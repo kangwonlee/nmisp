@@ -72,6 +72,7 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
             url,
             timeout=60,
             headers=header,
+            allow_redirects=True,
         )
         # https://2.python-requests.org/en/master/user/quickstart/#response-status-codes
         req.raise_for_status()
