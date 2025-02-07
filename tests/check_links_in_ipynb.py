@@ -53,7 +53,7 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
 
         parsed = up.urlparse(url)
 
-        if parsed.netloc.endswith('wikimedia.org'):
+        if needs_header(parsed):
             header = get_header()
         elif (
             (os.environ.get('CI', 'false').lower() == 'true') and
@@ -75,6 +75,14 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
         )
         # https://2.python-requests.org/en/master/user/quickstart/#response-status-codes
         req.raise_for_status()
+
+
+def needs_header(parsed):
+    return (
+        parsed.netloc.endswith('wikimedia.org')
+        or
+        parsed.netloc.endswith('medium.com')
+    )
 
 
 def check_links_in_ipynb(ipynb_file_path:pathlib.Path):
