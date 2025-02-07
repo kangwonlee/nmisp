@@ -53,14 +53,16 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
 
         parsed = up.urlparse(url)
 
-        if parsed.netloc.endswith('wikimedia.org'):
+        if needs_header(parsed):
             header = get_header()
         elif (
             (os.environ.get('CI', 'false').lower() == 'true') and
             (
-                parsed.netloc.endswith('stackoverflow.com') or
-                parsed.netloc.endswith('askubuntu.com') or
-                parsed.netloc.endswith('stackexchange.com')
+                   parsed.netloc.endswith('stackoverflow.com')
+                or parsed.netloc.endswith('askubuntu.com')
+                or parsed.netloc.endswith('stackexchange.com')
+                or parsed.netloc.endswith('github.com')
+                or parsed.netloc.endswith('towardsdatascience.com')
             )
         ):
             # TODO : enable testing for stackoverflow.com on Github Actions
@@ -72,9 +74,18 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
             url,
             timeout=60,
             headers=header,
+            allow_redirects=True,
         )
         # https://2.python-requests.org/en/master/user/quickstart/#response-status-codes
         req.raise_for_status()
+
+
+def needs_header(parsed):
+    return (
+        parsed.netloc.endswith('wikimedia.org')
+        or
+        parsed.netloc.endswith('medium.com')
+    )
 
 
 def check_links_in_ipynb(ipynb_file_path:pathlib.Path):
@@ -117,8 +128,8 @@ def get_header() -> Dict[str, str]:
     # https://stackoverflow.com/a/27652558
     return {
         "User-Agent": (
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/605.1.15 (KHTML, like Gecko) "
-            "Version/17.1.2 Safari/605.1.15"
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/114.0.0.0 Safari/537.36"
         )
     }
