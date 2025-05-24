@@ -50,7 +50,7 @@ def patterns() -> IPYNB:
             'text': '[![CppCon moving pictures](https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg)](https://www.youtube.com/user/CppCon/videos)\n\n',
             'urls': {
                 'https://i.ytimg.com/vi/PorfLSr3DDI/hqdefault.jpg',
-            } 
+            }
         },
         {
             'text': '* You could use following [command](https://stackoverflow.com/questions/8305866/how-to-analyze-a-programs-core-dump-file-with-gdb) to analyze.<br>\n``` sh\ngdb <executable> -c <core-file>\n```',
@@ -132,7 +132,7 @@ def cell_list_re_pattern_test_image_with_links() -> IPYNB:
             'text': '[![alt text](image_link)](link_here)\n\n',
             'urls': {
                 'link_here',
-            } 
+            }
         },
     ]
 

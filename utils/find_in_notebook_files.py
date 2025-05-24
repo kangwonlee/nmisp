@@ -179,7 +179,7 @@ class FindOrReplaceNotebookFile(NotebookFile):
         """
         super().__init__(ipynb_full_path)
 
-        # Find or replace        
+        # Find or replace
         self.replace_this = replace_this
         self.to_this = to_this
 
@@ -257,7 +257,7 @@ class FindOrReplaceNotebookFile(NotebookFile):
         """
         if self.b_replace and self.b_verbose and self.b_arm:
             if (
-                (ipynb_full_path != self.ipynb_full_path) 
+                (ipynb_full_path != self.ipynb_full_path)
                 or (0 < self.count)
                ):
                # If same filename but no replacement count, do not overwrite

@@ -125,7 +125,7 @@ class SymbolConverter(SymbolLister):
         """
         SymbolConverter.process_line()
 
-        Find SymPy 
+        Find SymPy
         """
 
         symbol_names_location = self.find_symbol_name_location(source_line)

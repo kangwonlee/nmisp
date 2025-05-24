@@ -18,7 +18,7 @@ def elimination(AX:np.ndarray, b_verbose:bool=True) -> np.ndarray:
 
         if b_verbose:
             print(f"Row {p+1} is now the Pivot Row.")
-        
+
         one_over_pivot = 1.0 / AX[p, p]
 
         if not math.isclose(1, one_over_pivot):
@@ -37,12 +37,12 @@ def elimination(AX:np.ndarray, b_verbose:bool=True) -> np.ndarray:
             if i != p and (not math.isclose(AX[i, p], 0)):
                 # row operation
                 multiplier = - AX[i, p]
-                
+
                 if b_verbose:
                     print(f"Row {i+1} += ({multiplier}) x Row {p+1}")
-                
+
                 AX[i, :] += multiplier * AX[p, :]
-                
+
                 if b_verbose:
                     print(AX)
 

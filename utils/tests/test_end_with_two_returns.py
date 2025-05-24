@@ -23,9 +23,9 @@ class TestFile(unittest.TestCase):
     def setUp(self):
         self.fp = open(
             os.path.join(
-                os.path.dirname(__file__), 
+                os.path.dirname(__file__),
                 'sample.ipynb'
-            ), 
+            ),
             encoding = 'utf-8'
         )
 
@@ -35,7 +35,7 @@ class TestFile(unittest.TestCase):
 
         self.cell = self.nb['cells'][0]
         self.cell_src_strip = self.cell.source.strip()
-    
+
     def tearDown(self):
         del self.cell_src_strip
         del self.cell

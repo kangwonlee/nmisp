@@ -99,14 +99,14 @@ conda install pytorch::torchvision
 
 ### 깃 버전 관리 소프트웨어 : 그래픽 실행 환경<br>Git Version Control Software : Graphic user interface
 
-아래 가운데 택일<br>Choose one from below 
-* [SourceTree](https://www.sourcetreeapp.com/download/) 
+아래 가운데 택일<br>Choose one from below
+* [SourceTree](https://www.sourcetreeapp.com/download/)
 * [Github Desktop](https://desktop.github.com/)
 
 ### 통합 개발 환경<br>Integrated Development Environment
 
 * iPython 노트북 (`.ipynb`) 파일 사용시는 반드시 필요하지 않을 수 있음<br>May not need one for iPython notebook (`.ipynb`) files
-* 아래 가운데 택일<br>Choose one from below 
+* 아래 가운데 택일<br>Choose one from below
 
 #### Spyder
 
@@ -123,13 +123,13 @@ PyCharm may need [Java Development Kit](http://www.oracle.com/technetwork/java/j
 Installation [button](https://blogs.msdn.microsoft.com/pythonengineering/2018/02/15/visual-studio-code-is-now-shipping-with-anaconda/) available at the end of Anaconda installation<br>
 * [다운로드](https://code.visualstudio.com/download) 받아서 설치도 가능<br>
 Possible to [download](https://code.visualstudio.com/download) and install from the website<br>
-[Setup Overview](https://code.visualstudio.com/docs/setup/setup-overview) / 
+[Setup Overview](https://code.visualstudio.com/docs/setup/setup-overview) /
 [Python Configuration Instruction](https://code.visualstudio.com/docs/python/python-tutorial)
 * Windows 에서 `git-bash`를 내장 터미널로 사용하려면 다음과 같은 추가 설정이 필요함.\[[참고](https://code.visualstudio.com/docs/editor/integrated-terminal)\]<br>
 In Windows, to use `git-bash` as the integrated terminal, following additional settings would eable it.\[[Ref](https://code.visualstudio.com/docs/editor/integrated-terminal)\]
 
 1. File > Preferences > Settings [[참고 Ref](https://code.visualstudio.com/docs/getstarted/settings)\]
-2. 
+2.
 ```json
 "terminal.integrated.shell.windows": **path to bash.exe here**
 ```
@@ -151,7 +151,7 @@ Through a web browser, `jupyter` notebook enables editing & running program code
 * `cmd` 또는 `git bash` 실행한 후 `cd` 명령으로 `clone` 된 지역 저장소 folder로 이동 <br> Start `cmd` or `git bash` and using the `cd` command change working folder to the cloned folder
 * `cmd` 또는 `git bash` 에서 각각 `cd` 또는 `pwd` 로 `clone` 된 folder 인지 확인 <br>Check location using `cd` or `pwd` in `cmd` or `git bash`
 * `jupyter notebook` 실행 <br>Run `jupyter notebook`
-* 필요에 따라 `~/.bashrc` 파일에 다음 내용을 추가<br>As necessary, add following lines to `~/.bashrc` file 
+* 필요에 따라 `~/.bashrc` 파일에 다음 내용을 추가<br>As necessary, add following lines to `~/.bashrc` file
 
 
 ``` sh

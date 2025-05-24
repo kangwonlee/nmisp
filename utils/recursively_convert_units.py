@@ -2,7 +2,7 @@ import os
 import pathlib
 
 
-ignore_path_list = {'__pycache__', '.ipynb_checkpoints', '.git', '.cache', '.idea', 
+ignore_path_list = {'__pycache__', '.ipynb_checkpoints', '.git', '.cache', '.idea',
                     'nbutils', 'tests', 'utils', '.github'}
 
 
@@ -34,7 +34,7 @@ def gen_filename_ipynb(filename_list):
     """
     for filename in filename_list:
         if is_ipynb(filename):
-            yield filename    
+            yield filename
 
 
 def gen_ipynb(root):

@@ -1,6 +1,6 @@
 name: Check links
 
-on: 
+on:
   schedule:
     - cron: '45 01 30 * *'
 
@@ -24,7 +24,7 @@ jobs:
 
     - name: Create venv
       run: uv venv my_env
-  
+
     - name: setup environment
       id: setup
       run: |

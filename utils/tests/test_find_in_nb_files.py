@@ -70,7 +70,7 @@ def notebook_file_with_ids(
 
     with ipynb_file.open("w", encoding="utf-8") as f:
         nbformat.write(nb_data_with_ids, f)  # Use json.dump here
-        
+
     return fnf.NotebookFile(ipynb_file)
 
 
@@ -110,7 +110,7 @@ def test_remove_cell_id_from_nodes(
         notebook_file_with_ids:fnf.NotebookFile):
     """Test removing cell IDs from the notebook."""
     nb = notebook_file_with_ids
-    assert any("id" in cell or "id" in cell.get("metadata", {}) for cell in nb.nb_node.cells)  
+    assert any("id" in cell or "id" in cell.get("metadata", {}) for cell in nb.nb_node.cells)
 
     # function under test
     modified = nb.remove_cell_id_from_nodes()

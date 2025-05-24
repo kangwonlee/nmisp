@@ -28,7 +28,7 @@ def is_markdown_cpp_src(ipynb_cell):
         src = ipynb_cell['source'].strip()
 
         # Multiline code block within ```'s
-        if (src.startswith('```') 
+        if (src.startswith('```')
             and src.endswith('```')):
 
             # check C++ right after ```
@@ -100,7 +100,7 @@ def get_build_command_in_last_line(cpp_txt):
             if 4 < len(line.lower().split()):
                 # Check words
                 if (
-                    ('build' == line.lower().split()[1]) 
+                    ('build' == line.lower().split()[1])
                     and ('command' == line.lower().split()[2])
                     and (':' == line.lower().split()[3])
                 ):

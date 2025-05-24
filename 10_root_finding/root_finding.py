@@ -20,7 +20,7 @@ def sequential(f, x_init, x_interval, epsilon, x_final):
     for x_i in x_array:
         # Evaluate the function
         y_i = f(x_i)
-        
+
         counter += 1
         # Check if absolute value is smaller than epsilon
         if abs(y_i) < epsilon:
@@ -39,7 +39,7 @@ def bisection(f, x_lower, x_upper, epsilon):
     """
     이분법
     Bisection Method
-    
+
     f : f(x) = 0 을 만족하는 x 를 찾고자 하는 함수 Function that we want to find x satisfying f(x) = 0
     x_lower : 초기 구간의 하한 Lower end of the initial interval
     x_upper : 초기 구간의 상한 Upper end of the initial interval
@@ -95,7 +95,7 @@ def newton_raphson(f, df_dx, x_initial, epsilon):
     """
     뉴튼 랩슨 법
     Newton Raphson Method
-    
+
     f : f(x) = 0 을 만족하는 x 를 찾고자 하는 함수 Function that we want to find x satisfying f(x) = 0
     df_dx : f(x) 함수의 x 에 대한 미분 x-derivative of the function above
     x_initial : x의 초기값 Initial value of x

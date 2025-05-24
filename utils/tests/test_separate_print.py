@@ -41,7 +41,7 @@ def sample_seperation_dict() -> dict:
         'print("sy.pi**2 = %s" % sy.pi ** 2)' : 'sy.pi ** 2',
         'print("sy.pi.evalf() = %s" % sy.pi.evalf())' : 'sy.pi.evalf()',
         'print("sy.pi + sy.exp(1) = %s" % (sy.pi + sy.exp(1)))' : '(sy.pi + sy.exp(1))',
-        'print("(sy.pi + sy.exp(1)).evalf() = %s" % ((sy.pi + sy.exp(1)).evalf()))' : '((sy.pi + sy.exp(1)).evalf())',  
+        'print("(sy.pi + sy.exp(1)).evalf() = %s" % ((sy.pi + sy.exp(1)).evalf()))' : '((sy.pi + sy.exp(1)).evalf())',
         'print("sy.oo = %s" % sy.oo)' : 'sy.oo',
         'print("sy.oo > 99999 = %s" % (sy.oo > 99999))' : '(sy.oo > 99999)',
         'print("sy.sqrt(2) = %s" % (sy.sqrt(2).evalf(100)))' : '(sy.sqrt(2).evalf(100))',

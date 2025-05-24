@@ -77,7 +77,7 @@ def rk4_step(f, x0, t0, t1):
     delta_t = (t1 - t0)
     delta_t_half = delta_t * 0.5
     t_half = t0 + delta_t_half
-    
+
     # Step 1
     s1 = f(t0, x0)
 
@@ -118,7 +118,7 @@ def ode_solver(step, dx_dt, t_array, x_0):
 
         time_list.append(t_array[k+1])
         result_list.append(x_i_plus_1)
-        
+
         x_i = x_i_plus_1
 
     return time_list, result_list

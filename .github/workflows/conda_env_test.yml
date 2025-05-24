@@ -1,6 +1,6 @@
 name: CI
 
-on: 
+on:
   schedule:
     - cron: '45 01 30 * *'
   push:
@@ -180,7 +180,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10.12'
-        cache: 'pip' 
+        cache: 'pip'
 
     - name: run nmisp_py updater
       id: updater
