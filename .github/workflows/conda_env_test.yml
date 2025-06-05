@@ -5,6 +5,7 @@ on:
     - cron: '45 01 30 * *'
   push:
   fork:
+  workflow_dispatch:
 
 jobs:
   test_utils:
