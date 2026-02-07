@@ -17,7 +17,7 @@ $$
 |:---------:|:--------------------------------:|:--------:|:------------------------------------------------:|
 | 0th order | $$F_k = f(x_k)\cdot \Delta x$$ |  Euler   | $$x_{k+1} = x_{k} + \Delta t \cdot f(x_k, t_k)$$ |
 | 1st order | $$F_k = \frac{\Delta x}{2}\left[f(x_k) + f(x_{k+1})\right]$$ |  Heun   | $$x_{k+1} = x_{k} + \frac{\Delta t}{2}\left[f(x_k, t_k) + f(\hat{x} _ {k+1}, t _ {k+1})\right]$$ |
-| 2nd order | $$F_k = \frac{\Delta x}{6}\left[f(x_k) + 4 \cdot f(x_{k+1}) + f(x_{k+2})\right]$$ |  Runge-Kutta   | $$x_{k+1} = x_{k} + \frac{\Delta t}{6} \left[f(x_k, t_k) + 2 f(\hat{x}_{k+\frac{1}{2}}, t_{k+\frac{1}{2}})_1+ 2 f(\hat{x}_{k+\frac{1}{2}}, t_{k+\frac{1}{2}})_2 + f(\hat{x}_{k+1}, t_{k+1})\right]$$ |
+| 2nd order | $$F_k = \frac{\Delta x}{6}\left[f(x _ {k}) + 4 \cdot f(x _ {k+1}) + f(x _ {k+2})\right]$$ |  Runge-Kutta   | $$x _ {k+1} = x _ {k} + \frac{\Delta t}{6} \left[f(x _ k, t _ k) + 2 f(\hat{x} _ {k+\frac{1}{2}}, t _ {k+\frac{1}{2}}) _ 1+ 2 f(\hat{x} _ {k+\frac{1}{2}}, t _ {k+\frac{1}{2}}) _ 2 + f(\hat{x} _ {k+1}, t _ {k+1})\right]$$ |
 
 * Numerical integration and ODE solvers share a fundamental principle: approximating solutions using weighted averages. In numerical integration, these averages are of function values, while in ODE solvers, they are of slopes.<br>수치 적분과 상미분방정식 해법은 모두 기본적으로 가중 평균을 사용하여 해를 근사한다. 수치 적분에서는 함수 값의 평균을 사용하고, 상미분 방정식 해법에서는 기울기의 평균을 사용한다.
 * The accuracy of both numerical integration and ODE solvers is characterized by their order. Higher-order methods generally provide more accurate results but may be more computationally expensive.<br>수치적분과 상미분방정식 해법 모두 그 차수가 정확도를 결정한다. 차수가 높은 방법이 일반적으로 더 정확한 결과를 제공하지만, 계산 비용은 더 많이 들 수 있다.
