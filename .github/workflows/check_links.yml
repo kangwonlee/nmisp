@@ -12,15 +12,15 @@ jobs:
     steps:
     - name: checkout
       id: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v3
+      uses: astral-sh/setup-uv@v7
       with:
         version: "latest"
         enable-cache: true
         cache-suffix: "uv"
-        cache-dependency-glob: "tests/requirements.colab.2025.02.txt"
+        cache-dependency-glob: "tests/requirements.colab.2026.02.txt"
 
     - name: Create venv
       run: uv venv my_env
