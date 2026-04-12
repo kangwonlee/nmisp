@@ -119,3 +119,15 @@ ENV/
 
 .DS_Store
 account_module_user.dSYM
+
+# Compiled outputs
+a.out
+*.o
+
+# Backup / scratch notebooks
+*.bak.ipynb
+Untitled.ipynb
+
+# CLAUDE.md and improvements (local working docs)
+CLAUDE.md
+IMPROVEMENTS.md
