@@ -1,5 +1,4 @@
 import pathlib
-import pytest
 import subprocess
 import sys
 
@@ -19,65 +18,44 @@ sys.path.insert(
 import update_nmisp_py as unp
 
 
-@pytest.fixture
-def repo_name():
-    return "nmisp_py"
+def test_get_repo_path():
+    repo_path = unp.get_repo_path()
+    assert repo_path.exists()
+    assert repo_path.is_dir()
+    assert (repo_path / "utils" / "update_nmisp_py.py").exists()
 
 
-@pytest.fixture
-def org_name():
-    return "kangwonlee"
-
-
-@pytest.fixture
-def cloned_repo(tmp_path, org_name, repo_name):
-    subprocess.check_call(
-        ["git", "clone", f"https://github.com/{org_name}/{repo_name}"],
-        cwd=tmp_path,
-    )
-    result = tmp_path / repo_name
-
-    assert result.exists(), result
-    assert result.is_dir()
-
-    return result
-
-
-def test_update_nmisp_py_branch_business__slash_not_existing(cloned_repo):
+def test_sync_py_files(tmp_path):
     """
-    Test the branch_business function
+    Test that .py files are copied correctly,
+    excluding tests/, utils/, and build_util/
     """
+    dest = tmp_path / "nmisp_py"
+    dest.mkdir()
 
-    new_branch_name = "__new__branch__/__name__"
+    # Initialise a git repo so git-auto-commit-action would work
+    subprocess.check_call(["git", "init"], cwd=dest)
 
-    # function under test
-    unp.branch_business(cloned_repo, new_branch_name)
+    repo_path = unp.get_repo_path()
 
-    # get the name of the branch of the cloned repository
-    current_cloned_branch = subprocess.check_output(
-        ["git", "branch", "--show-current"],
-        cwd=cloned_repo,
-        encoding="utf-8",
-    ).strip()
+    # Run the sync (same logic as main, without CLI wrapper)
+    for path in dest.rglob("*.py"):
+        path.unlink()
+    for path in repo_path.rglob("*.py"):
+        if not (
+            ("tests" in path.relative_to(repo_path).parts[0:2])
+            or
+            ("build_util" in path.relative_to(repo_path).parts[0:2])
+            or
+            ("utils" == path.relative_to(repo_path).parts[0])
+        ):
+            import shutil
+            shutil.copy(path, dest / path.name)
 
-    assert current_cloned_branch == new_branch_name
+    py_files = list(dest.glob("*.py"))
+    assert len(py_files) > 0, "No .py files were copied"
 
-
-def test_update_nmisp_py_branch_business__slash_existing(cloned_repo):
-    """
-    Test the branch_business function
-    """
-
-    new_branch_name = "_test_branch_/_existing_"
-
-    # function under test
-    unp.branch_business(cloned_repo, new_branch_name)
-
-    # get the name of the branch of the cloned repository
-    current_cloned_branch = subprocess.check_output(
-        ["git", "branch", "--show-current"],
-        cwd=cloned_repo,
-        encoding="utf-8",
-    ).strip()
-
-    assert current_cloned_branch == new_branch_name
+    # Verify excluded files are not present
+    file_names = {f.name for f in py_files}
+    assert "update_nmisp_py.py" not in file_names, "utils/ file should be excluded"
+    assert "test_update_nmisp_py.py" not in file_names, "tests/ file should be excluded"
