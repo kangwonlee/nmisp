@@ -30,6 +30,8 @@ def main():
 
     # Recursively copy all .py files into the nmisp_py repository
     for path in repo_path.rglob("*.py"):
+        if path.is_relative_to(clone_dest):
+            continue
         if not (
             ("tests" in path.relative_to(repo_path).parts[0:2])
             or
