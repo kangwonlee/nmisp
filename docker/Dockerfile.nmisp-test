@@ -1,0 +1,36 @@
+# syntax=docker/dockerfile:1
+#
+# Pre-built CI test image for nmisp.
+#
+# Two variants are produced (`:latest-2023.09`, `:latest-nightly`) by supplying
+# the `ENV_VARIANT` build arg. The image bakes the conda env declared in
+# `tests/environment.${ENV_VARIANT}.yml` so CI does not pay install cost on
+# every push.
+#
+# Build locally:
+#   docker build --build-arg ENV_VARIANT=2023.09 \
+#       -f docker/Dockerfile.nmisp-test -t nmisp-test:latest-2023.09 .
+#   docker build --build-arg ENV_VARIANT=nightly \
+#       -f docker/Dockerfile.nmisp-test -t nmisp-test:latest-nightly .
+
+ARG ENV_VARIANT=2023.09
+FROM condaforge/miniforge3:latest
+ARG ENV_VARIANT
+
+# git is required by actions/checkout@v6 when run inside a container
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY tests/environment.${ENV_VARIANT}.yml /tmp/env.yml
+RUN conda env create -n test-environment -f /tmp/env.yml \
+    && conda clean -afy \
+    && rm /tmp/env.yml
+
+# Activate the env for all subsequent shells, including GitHub Actions `run:` steps
+ENV PATH=/opt/conda/envs/test-environment/bin:$PATH
+
+# Smoke-test during image build — fail fast if the env doesn't resolve
+RUN python -c "import numpy, scipy, matplotlib, pytest, nbformat; print('env ok')"
+
+WORKDIR /workspace
