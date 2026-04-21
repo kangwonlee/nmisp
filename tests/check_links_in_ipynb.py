@@ -57,15 +57,9 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
             header = get_header()
         elif (
             (os.environ.get('CI', 'false').lower() == 'true') and
-            (
-                   parsed.netloc.endswith('stackoverflow.com')
-                or parsed.netloc.endswith('askubuntu.com')
-                or parsed.netloc.endswith('stackexchange.com')
-                or parsed.netloc.endswith('github.com')
-                or parsed.netloc.endswith('towardsdatascience.com')
-            )
+            parsed.netloc.endswith('github.com')
         ):
-            # TODO : enable testing for stackoverflow.com on Github Actions
+            # GitHub links can be rate-limited for unauthenticated requests from CI runners
             continue
         else:
             header = None
@@ -83,8 +77,11 @@ def check_link_in_cell(cell, r, just_tested:List[str]=[]):
 def needs_header(parsed):
     return (
         parsed.netloc.endswith('wikimedia.org')
-        or
-        parsed.netloc.endswith('medium.com')
+        or parsed.netloc.endswith('medium.com')
+        or parsed.netloc.endswith('stackoverflow.com')
+        or parsed.netloc.endswith('askubuntu.com')
+        or parsed.netloc.endswith('stackexchange.com')
+        or parsed.netloc.endswith('towardsdatascience.com')
     )
 
 
