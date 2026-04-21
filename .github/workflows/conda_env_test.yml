@@ -6,8 +6,34 @@ on:
   push:
   fork:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
+  detect-changes:
+    name: Detect env/Dockerfile changes
+    runs-on: ubuntu-latest
+    outputs:
+      images: ${{ steps.filter.outputs.images }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            images:
+              - 'tests/environment.*.yml'
+              - 'docker/Dockerfile.nmisp-test'
+              - '.github/workflows/build-test-image.yml'
+
+  build-images:
+    name: Build test images
+    needs: detect-changes
+    if: needs.detect-changes.outputs.images == 'true'
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/build-test-image.yml
+
   test_utils:
     name: Check utils
     runs-on: ubuntu-latest
@@ -93,18 +119,54 @@ jobs:
       with:
         commit_message : "Clean ipynb ${{ github.sha }}"
 
-  test_ipynb:
-    needs: badges
-    name: ${{ matrix.anaconda }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  test_ipynb_linux:
+    needs: [badges, build-images]
+    if: always() && needs.badges.result == 'success' && (needs.build-images.result == 'success' || needs.build-images.result == 'skipped')
+    name: ${{ matrix.anaconda }} on linux (container)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/nmisp-test:latest-${{ matrix.anaconda }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
         anaconda: ["2023.09", "nightly"]
       fail-fast: false
     timeout-minutes: 30
     steps:
     - uses: actions/checkout@v6
+
+    - name: pytest
+      env:
+        TEST_IPYNB_IGNORE_FOLDER: tutorial
+      run: |
+        python --version
+        python -m pytest --numprocesses=auto -k 'not (links or update_nmisp_py)' ./tests/
+
+  test_ipynb_native:
+    needs: badges
+    name: ${{ matrix.anaconda }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macOS-latest]
+        anaconda: ["2023.09", "nightly"]
+      fail-fast: false
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Cache conda packages
+      uses: actions/cache@v4
+      env:
+        CACHE_NUMBER: 0
+      with:
+        path: ~/conda_pkgs_dir
+        key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles(format('tests/environment.{0}.yml', matrix.anaconda)) }}
 
     - name: setup conda
       uses: conda-incubator/setup-miniconda@v3
@@ -168,7 +230,7 @@ jobs:
         python -m pytest -n auto -k 'not (links or update_nmisp_py)' ./tests
 
   update_nmisp_py:
-    needs: [test_ipynb, test_ipynb_colab]
+    needs: [test_ipynb_linux, test_ipynb_native, test_ipynb_colab]
     name: Update nmisp_py
     runs-on: ubuntu-latest
     permissions:
