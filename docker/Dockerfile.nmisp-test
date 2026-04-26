@@ -17,9 +17,11 @@ ARG ENV_VARIANT=2023.09
 FROM condaforge/miniforge3:latest
 ARG ENV_VARIANT
 
-# git is required by actions/checkout@v6 when run inside a container
+# git is required by actions/checkout@v6 when run inside a container.
+# g++ is required by tests/test_build_markdown_cpp_cell.py, which shells
+# out to compile C++ snippets extracted from notebook markdown cells.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git \
+    && apt-get install -y --no-install-recommends git g++ \
     && rm -rf /var/lib/apt/lists/*
 
 COPY tests/environment.${ENV_VARIANT}.yml /tmp/env.yml
