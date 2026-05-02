@@ -98,3 +98,12 @@ pytest -n auto tests/
 <br>이 소프트웨어는 대한민국 국토교통부 건설교통과학기술진흥원 교통물류연구사업의 지원을 받아 시작되었음. (18TLRP-B117133-03)
 * Also, this software got help from generative artificial intelligence : Google Gemini Advance and Anthropic Claude Opus 4.6 in improving the text and source code quality.
 <br>또한, 이 소프트웨어는 문장과 코드 품질 향상을 위해 생성형 인공지능 구글 제미니 어드밴스와 앤스로픽 클로드 오퍼스 4.6의 도움을 받았음.
+
+## 추가 참고 자료<br>Further Reading
+
+수치 해석과 과학 계산 교육에 관한 외부 자료. NMISP 의 직접 출처는 아니며, 학습자와 교수자가 함께 보면 도움이 될 만한 묶음.<br>
+External resources on numerical methods and scientific-computing pedagogy. Not direct sources for NMISP — a curated set of pointers useful for learners and instructors.
+
+* Wilson, G. *et al.* (2014). [*Best Practices for Scientific Computing*](https://doi.org/10.1371/journal.pbio.1001745). PLOS Biology. — 과학 계산을 위한 코드 작성 원칙 8 가지<br>Eight principles for writing scientific computing code.
+* [scipy-lecture-notes](https://scipy-lectures.org/) — 파이썬 과학 계산 생태계 전반에 대한 오랜 무료 강의 자료 (2008 ~ )<br>Long-running, freely-available lecture notes on the Python scientific-computing ecosystem (since 2008).
+* [jpmorganchase/python-training](https://github.com/jpmorganchase/python-training) — 비-CS 전공자(애널리스트·트레이더) 대상 파이썬 입문. "같은 함수를 단계적으로 다시 쓰며 라이브러리의 가치를 보여주기" 등 도메인 우선 교육 패턴이 NMISP 의 향후 도입부 노트북 설계에 참고가 됨.<br>Python intro for a non-CS audience (analysts, traders). Domain-first patterns such as "rewrite the same function step by step to motivate each library" inform the design of future NMISP introductory notebooks.
