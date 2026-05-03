@@ -232,6 +232,7 @@ jobs:
 
   update_nmisp_py:
     needs: [test_ipynb_linux, test_ipynb_native, test_ipynb_colab]
+    if: github.actor != 'dependabot[bot]'
     name: Update nmisp_py
     runs-on: ubuntu-latest
     permissions:
