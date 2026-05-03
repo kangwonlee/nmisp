@@ -32,7 +32,7 @@ scipy==1.17.1
 seaborn==0.13.2
 statsmodels==0.14.6
 sympy==1.14.0
-tensorflow==2.19.0
-torch==2.9.0
-torchvision==0.24.0
+tensorflow==2.21.0
+torch==2.11.0
+torchvision==0.26.0
 xlwt
