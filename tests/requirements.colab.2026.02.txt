@@ -7,7 +7,7 @@
 #     if pkg in dep:
 #         print(f"- {pkg} = {ver}")
 
-Cython==3.0.12
+Cython==3.2.4
 graphviz==0.21
 html5lib==1.1
 ipywidgets==7.7.1
