@@ -7,7 +7,7 @@
 #     if pkg in dep:
 #         print(f"- {pkg} = {ver}")
 
-Cython==3.0.8
+Cython==3.2.4
 graphviz==0.20.3
 jupyter-client==6.1.12
 jupyter-console==6.1.0
