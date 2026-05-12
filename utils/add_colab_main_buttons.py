@@ -1,9 +1,18 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "beautifulsoup4",
+#     "lxml",
+#     "nbformat",
+# ]
+# ///
 import argparse
 import copy
 import functools
 import json
 import os
 import pathlib
+import re
 import subprocess
 import sys
 import urllib.parse as up
@@ -98,23 +107,39 @@ def get_github_username_repo(full_path:str) -> Tuple[str]:
 
 
 @functools.lru_cache()
-def get_github_username_repo_folder(ipynb_path:str) -> Tuple[str]:
-    result = subprocess.check_output(
-        ("git", "remote", "-v"),
+def get_github_username_repo_folder(ipynb_path:str) -> Tuple[str, str]:
+    url = subprocess.check_output(
+        ("git", "remote", "get-url", "origin"),
         cwd=ipynb_path,
         encoding='utf-8',
-    )
-    line0 = result.splitlines()[0]
-    split = line0.split()
-    url = split[1]
+    ).strip()
+    return parse_git_remote_url(url)
 
-    parsed = up.urlparse(url)
 
-    path_split = parsed.path.split('/')
+# scp-style SSH URL: [user@]host:path  (no ://)
+SSH_REMOTE_RE = re.compile(r'^[\w.+-]+@[\w.-]+:(?P<path>.+)$')
 
-    name = path_split[-2]
-    repo = os.path.splitext(path_split[-1])[0]
-    return name, repo
+
+def parse_git_remote_url(url:str) -> Tuple[str, str]:
+    """Return (owner, repo) from an HTTPS or SSH/scp-style git remote URL.
+
+    Handles:
+      https://github.com/owner/repo.git
+      https://github.com/owner/repo
+      git@github.com:owner/repo.git
+      ssh://git@github.com/owner/repo.git
+    """
+    url = url.strip()
+
+    m = SSH_REMOTE_RE.match(url) if '://' not in url else None
+    if m is not None:
+        path = m.group('path')
+    else:
+        path = up.urlparse(url).path.lstrip('/')
+
+    owner, _, repo = path.partition('/')
+    repo = os.path.splitext(repo)[0]  # strip trailing .git
+    return owner, repo
 
 
 def is_markdown(cell:Dict) -> bool:
