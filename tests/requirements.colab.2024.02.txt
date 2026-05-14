@@ -32,5 +32,5 @@ statsmodels == 0.14.6
 sympy == 1.14.0
 tensorflow == 2.21.0
 torch == 2.11.0
-torchvision == 0.26.0
+torchvision == 0.27.0
 xlwt
