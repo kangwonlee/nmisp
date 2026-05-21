@@ -12,31 +12,47 @@ $$
 * This reveals a deep connection between solving differential equations and numerical integration.<br>이는 미분방정식을 푸는 과정과 수치적분 사이에 깊은 연관성이 있다는 것을 보여준다.
 
 * The following compares numerical integration methods with their corresponding ODE solvers:<br>아래는 수치적분 방법과 그에 대응하는 미분방정식 해법을 비교한 것이다.
+* Both kinds of method work by **measuring at several points and taking a weighted average**. The pairs below use the **same set of weights**.<br>두 종류의 방법 모두 **여러 점에서 측정한 다음 가중 평균을 취하는** 방식으로 동작한다. 아래 짝지어진 방법들은 **같은 가중치**를 사용한다.
 
-### 0th order 0차 : Rectangle 직사각형 ↔ Euler 오일러
+### Rectangle 직사각형 ↔ Euler 오일러 — 1 sample 한 점 측정
+
+* Measure once at the start of the step. Use that single value for the whole step.<br>구간의 시작점에서 한 번만 측정한 다음, 그 값을 구간 전체에 사용한다.
 
 $$F_k = f(x_k)\cdot \Delta x$$
 
 $$x_{k+1} = x_{k} + \Delta t \cdot f(x_k, t_k)$$
 
-### 1st order 1차 : Trapezoid 사다리꼴 ↔ Heun 훈
+### Trapezoid 사다리꼴 ↔ Heun 훈 — 2 samples 양 끝 점 측정
+
+* Measure at both endpoints; average them with equal weight $\frac{1}{2}, \frac{1}{2}$.<br>양 끝점에서 측정한 다음, 같은 가중치 $\frac{1}{2}, \frac{1}{2}$로 평균을 낸다.
 
 $$F_k = \frac{\Delta x}{2}\left[f(x_k) + f(x_{k+1})\right]$$
 
 $$x_{k+1} = x_{k} + \frac{\Delta t}{2}\left[f(x_k, t_k) + f(\hat{x}_{k+1}, t_{k+1})\right]$$
 
-### 2nd order 2차 : Simpson 심프슨 ↔ Runge-Kutta 룽게-쿠타
+### Simpson 심프슨 ↔ Runge-Kutta 룽게-쿠타 — 3 sampling points (middle counted twice) 가운데를 두 번 세는 3 점 측정
+
+* Measure at start, middle, end. The **middle measurement counts 4 times more** than the endpoints — the weights are $\frac{1}{6}, \frac{4}{6}, \frac{1}{6}$.<br>시작 · 가운데 · 끝에서 측정하되, **가운데 측정값은 끝 점들보다 4배 더 무겁게** 센다. 가중치는 $\frac{1}{6}, \frac{4}{6}, \frac{1}{6}$이다.
 
 $$F_k = \frac{\Delta x}{6}\left[f(x_{k}) + 4 \cdot f(x_{k+1}) + f(x_{k+2})\right]$$
 
+* RK4 has **four** slope measurements: 1 at the start, 2 at the middle, 1 at the end — weighted $\frac{1}{6}, \frac{2}{6}, \frac{2}{6}, \frac{1}{6}$.<br>RK4 는 **네 번** 기울기를 측정한다 : 시작에서 1번, 가운데에서 2번, 끝에서 1번 — 가중치는 $\frac{1}{6}, \frac{2}{6}, \frac{2}{6}, \frac{1}{6}$ 이다.
+* When the **two middle slopes turn out to be the same**, the two middle terms combine: $\frac{2}{6} + \frac{2}{6} = \frac{4}{6}$. The pattern $\frac{1}{6}, \frac{4}{6}, \frac{1}{6}$ becomes exactly Simpson's rule.<br>**가운데에서 잰 두 기울기 값이 같아지면**, 두 가운데 항이 합쳐져 $\frac{2}{6} + \frac{2}{6} = \frac{4}{6}$ 이 된다. 그러면 $\frac{1}{6}, \frac{4}{6}, \frac{1}{6}$ 패턴이 나타나 Simpson 규칙과 정확히 같아진다.
+
 $$x_{k+1} = x_{k} + \frac{\Delta t}{6} \left[f(x_k, t_k) + 2 f(\hat{x}_{k+\frac{1}{2}}, t_{k+\frac{1}{2}})_1+ 2 f(\hat{x}_{k+\frac{1}{2}}, t_{k+\frac{1}{2}})_2 + f(\hat{x}_{k+1}, t_{k+1})\right]$$
 
-* Numerical integration and ODE solvers share a fundamental principle: approximating solutions using weighted averages. In numerical integration, these averages are of function values, while in ODE solvers, they are of slopes.<br>수치 적분과 상미분방정식 해법은 모두 기본적으로 가중 평균을 사용하여 해를 근사한다. 수치 적분에서는 함수 값의 평균을 사용하고, 상미분 방정식 해법에서는 기울기의 평균을 사용한다.
-* The accuracy of both numerical integration and ODE solvers is characterized by their order. Higher-order methods generally provide more accurate results but may be more computationally expensive.<br>수치적분과 상미분방정식 해법 모두 그 차수가 정확도를 결정한다. 차수가 높은 방법이 일반적으로 더 정확한 결과를 제공하지만, 계산 비용은 더 많이 들 수 있다.
-* Consider the simplest methods: 0th order integration uses rectangles to approximate the area under a curve, much like Euler's method for ODEs assumes a constant slope within each interval. Both have first-order accuracy, meaning their global truncation error scales linearly with the step size.<br>가장 간단한 방법 부터 생각해 보자. 0차 적분은 곡선 아래의 면적을 근사하는 데 직사각형을 사용하며, 상미분방정식을 위한 Euler법은 각 구간 내에서 기울기가 일정할 것으로 가정한다. 둘 다 정확도가 1차로, 전역 절단 오차는 간격 길이와 선형적으로 비례한다.
-* Moving to higher order: The trapezoidal rule uses trapezoids for integration, analogous to Heun's method, which averages slopes at the interval's endpoints. Both are second-order methods, with global truncation errors that scale quadratically with the step size.<br>좀 더 차수를 높여서, 적분을 위해 사다리꼴을 사용하는 사다리꼴 규칙은 Heun법과 비슷한데, 이는 구간의 양 끝점에서의 기울기를 평균한다. 둘 다 2차 방법으로, 전역 절단 오차는 간격 길이의 제곱과 비례한다.
-* The Runge-Kutta method (RK4) parallels Simpson's rule for integration. Both emphasize the interval's midpoint, weighting it twice as heavily as the endpoints, and achieve fourth-order accuracy.<br>RK4 법은 심슨 적분과 유사하다. 둘 다 구간의 중점을 강조하여 끝점보다 두 배의 가중치를 둔다. 이렇게 하면 4차 정확도를 달성할 수 있다.
+* Both kinds of method approximate the answer with a **weighted average of measurements**. Integration averages function *values*; ODE solvers average *slopes*.<br>두 종류의 방법 모두 **측정값들의 가중 평균**으로 답을 근사한다. 적분에서는 함수 *값*을, 상미분방정식 해법에서는 *기울기*를 평균한다.
+* More measurement points → smaller error, but more computation per step. Choose the trade-off that fits the problem.<br>측정 점이 많아질수록 오차는 작아지나 한 단계 당 계산량은 늘어난다. 문제에 맞는 절충점을 고르면 된다.
+* The Rectangle/Euler pair: one measurement per step → simple, but error builds up quickly. Good when you just want a rough picture.<br>직사각형/오일러 짝 : 한 단계에 한 번 측정 → 간단하지만 오차가 빠르게 쌓인다. 대략적인 모양만 보고 싶을 때 좋다.
+* The Trapezoid/Heun pair: two measurements per step → much smaller error for only a little more work.<br>사다리꼴/Heun 짝 : 한 단계에 두 번 측정 → 약간의 추가 계산으로 오차가 훨씬 작아진다.
+* The Simpson/RK4 pair: three sampling points, with the middle counted four times → the standard "default" pick for science and engineering when accuracy matters.<br>Simpson/RK4 짝 : 세 군데서 측정하되 가운데를 4배로 셈 → 정확도가 필요한 과학·공학 문제에서 표준으로 사용되는 방법이다.
+
+## See also<br>관련 문서
+
+* [`30_num_int/`](../30_num_int/) — the same comparison from the integration side (Rectangle / Trapezoid / Simpson explained from first principles).<br>적분 쪽에서 같은 비교를 다룬다 (직사각형 / 사다리꼴 / Simpson 규칙을 처음부터).
 
 ## References<br>참고문헌
 
 * https://en.wikipedia.org/wiki/Euler_method#Global_truncation_error
+* https://en.wikipedia.org/wiki/Simpson%27s_rule
+* https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
