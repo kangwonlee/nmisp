@@ -10,8 +10,14 @@ Vector = List[Scalar]
 Matrix = List[Vector]
 
 
-def eigenvalue_algorithm(mat_a:Matrix, epsilon:float=1e-9, b_verbose:bool=False, b_plot:bool=False) -> Tuple[Matrix, Matrix]:
+def eigenvalue_algorithm(mat_a:Matrix, epsilon:float=1e-9, b_verbose:bool=False, b_plot:bool=False, snapshots:List[Matrix]=None) -> Tuple[Matrix, Matrix]:
     mat_a0, mat_x, n, counter = initialize_jacobi_method(mat_a)
+
+    # snapshots 리스트를 주면 매 스윕의 행렬 사본을 모음 (슬라이더용)
+    # if a `snapshots` list is given, collect a copy of the matrix at each
+    # sweep so a caller can scrub through them (see matshow.hinton_step_slider)
+    if snapshots is not None:
+        snapshots.append([row[:] for row in mat_a0])
 
     if b_plot:
       abs_ars, ars, r, s = search_max_off_diagonal(mat_a0, n)
@@ -32,6 +38,9 @@ def eigenvalue_algorithm(mat_a:Matrix, epsilon:float=1e-9, b_verbose:bool=False,
         jacobi_rotation(ars, arr, ass, cos, sin, mat_a0, mat_x, n, r, s)
 
         counter += 1
+
+        if snapshots is not None:
+            snapshots.append([row[:] for row in mat_a0])
 
         if b_verbose:
             print("mat_a%03d" % counter)
