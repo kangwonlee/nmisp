@@ -17,7 +17,7 @@
 | 210 | 자코비 고유치 알고리듬 / Jacobi Eigenvalue Algorithm | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kangwonlee/nmisp/blob/main/60_linear_algebra_2/210_Eigenvalue_Jacobi_Method_numpy.ipynb) |
 | 212 | 일반화 고유치 문제 : 2자유도 진동 / Generalized Eigenvalue Problem : 2-DOF Vibration | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kangwonlee/nmisp/blob/main/60_linear_algebra_2/212_Generalized_Eigenvalue_Vibration.ipynb) |
 | 220 | QR 알고리듬으로 고유치 구하기 / Finding Eigenvalues by the QR Algorithm | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kangwonlee/nmisp/blob/main/60_linear_algebra_2/220_QR_Method_Eigenvalues.ipynb) |
-| 230 | 2 Degree of Freedom Vibration System / 2자유도 진동계 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kangwonlee/nmisp/blob/main/60_linear_algebra_2/230_2DOF_vibration_system.ipynb) |
+| 222 | 2자유도 진동계 : 상태공간 + QR 고유치 / 2-DOF Vibration : state space + QR eigenvalues | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kangwonlee/nmisp/blob/main/60_linear_algebra_2/222_2DOF_vibration_system.ipynb) |
 
 ### 관련 / Related
 
