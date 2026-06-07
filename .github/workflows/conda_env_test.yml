@@ -249,3 +249,80 @@ jobs:
       with:
         commit_message: "Update nmisp_py"
         repository: nmisp_py_dest
+
+  notify-on-failure:
+    # Proactive alert so a silent regression can't go unnoticed — e.g. the #440
+    # case where update_nmisp_py silently 'skipped' for a long time with no red
+    # signal. Opens/updates one 'ci-alert' issue when a watched job FAILS, or
+    # when update_nmisp_py is SKIPPED, and auto-closes it once the watched jobs
+    # pass. test_ipynb_colab is intentionally NOT watched (chronically red 030
+    # dead-kernel) to avoid alerting on every run.
+    needs: [test_utils, badges, test_ipynb_linux, test_ipynb_native, update_nmisp_py]
+    if: always() && github.event_name != 'fork' && github.actor != 'dependabot[bot]'
+    name: Notify on CI failure
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+    - name: Alert on failed or skipped key jobs
+      uses: actions/github-script@v7
+      env:
+        NEEDS: ${{ toJSON(needs) }}
+      with:
+        script: |
+          const needs = JSON.parse(process.env.NEEDS);
+          // Result values that count as a problem, per job. For update_nmisp_py,
+          // 'skipped' is also bad — that is the silent-staleness signal (#440).
+          const watch = {
+            test_utils:        ['failure', 'cancelled'],
+            badges:            ['failure', 'cancelled'],
+            test_ipynb_linux:  ['failure', 'cancelled'],
+            test_ipynb_native: ['failure', 'cancelled'],
+            update_nmisp_py:   ['failure', 'cancelled', 'skipped'],
+          };
+          const bad = Object.keys(watch)
+            .filter(j => needs[j] && watch[j].includes(needs[j].result))
+            .map(j => `${j} → ${needs[j].result}`);
+
+          const { owner, repo } = context.repo;
+          const LABEL = 'ci-alert';
+          const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+          const sha = context.sha.slice(0, 7);
+
+          // ensure the label exists (idempotent)
+          try {
+            await github.rest.issues.getLabel({ owner, repo, name: LABEL });
+          } catch {
+            await github.rest.issues.createLabel({ owner, repo, name: LABEL,
+              color: 'd73a4a', description: 'Automated CI failure / silent-skip alert' }).catch(() => {});
+          }
+
+          const open = (await github.rest.issues.listForRepo({
+            owner, repo, state: 'open', labels: LABEL, per_page: 1 })).data[0];
+
+          if (bad.length === 0) {
+            if (open) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: open.number,
+                body: `✅ Watched jobs green again on \`${context.ref}\` (\`${sha}\`). Auto-closing.\n${runUrl}` });
+              await github.rest.issues.update({ owner, repo, issue_number: open.number, state: 'closed' });
+            }
+            return;
+          }
+
+          const body = [
+            `🔴 **CI alert** on \`${context.ref}\` (commit \`${sha}\`)`,
+            '',
+            'Problem jobs:',
+            ...bad.map(b => `- \`${b}\``),
+            '',
+            `Run: ${runUrl}`,
+            '',
+            '_test_ipynb_colab is not watched (chronically red — 030 dead-kernel). This issue auto-closes when the watched jobs pass._',
+          ].join('\n');
+
+          if (open) {
+            await github.rest.issues.createComment({ owner, repo, issue_number: open.number, body });
+          } else {
+            await github.rest.issues.create({ owner, repo,
+              title: '🔴 CI alert: a key job failed or was skipped', labels: [LABEL], body });
+          }
