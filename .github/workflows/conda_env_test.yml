@@ -265,7 +265,7 @@ jobs:
       issues: write
     steps:
     - name: Alert on failed or skipped key jobs
-      uses: actions/github-script@v7
+      uses: actions/github-script@v9
       env:
         NEEDS: ${{ toJSON(needs) }}
       with:
