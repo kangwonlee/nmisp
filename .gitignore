@@ -84,6 +84,8 @@ celerybeat-schedule
 
 # virtualenv
 .venv
+.venv030
+.venv*/
 venv/
 ENV/
 
