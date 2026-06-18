@@ -11,7 +11,7 @@ Cython==3.2.5
 graphviz==0.21
 html5lib==1.1
 ipywidgets==8.1.8
-jupyter-client==8.8.0
+jupyter-client==8.9.1
 jupyter-console==6.6.3
 jupyter-server==2.19.0
 jupyter_core==5.9.1
